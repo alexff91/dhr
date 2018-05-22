@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import io.openvidu.java.client.Recording;
 import io.openvidu.java.client.OpenVidu;
@@ -25,10 +24,11 @@ import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.TokenOptions;
 import io.openvidu.java.client.OpenViduRole;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class RestController {
+public class OpenViduRestController {
 
 	// OpenVidu object as entrypoint of the SDK
 	private OpenVidu openVidu;
@@ -45,7 +45,7 @@ public class RestController {
 	// Secret shared with our OpenVidu server
 	private String SECRET;
 
-	public RestController(@Value("${openvidu.secret}") String secret, @Value("${openvidu.url}") String openviduUrl) {
+	public OpenViduRestController(@Value("${openvidu.secret}") String secret, @Value("${openvidu.url}") String openviduUrl) {
 		this.SECRET = secret;
 		this.OPENVIDU_URL = openviduUrl;
 		this.openVidu = new OpenVidu(OPENVIDU_URL, SECRET);
