@@ -1,4 +1,4 @@
-package io.openvidu.js.java;
+package com.dhr.controllers;
 
 import java.util.Collection;
 import java.util.List;
@@ -173,6 +173,7 @@ public class OpenViduRestController {
 			this.sessionRecordings.put(sessionId, true);
 			return new ResponseEntity<>(getJsonFromRecording(recording), HttpStatus.OK);
 		} catch (OpenViduJavaClientException | OpenViduHttpException e) {
+			e.printStackTrace();
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}

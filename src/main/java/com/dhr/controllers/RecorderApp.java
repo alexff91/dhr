@@ -1,13 +1,13 @@
-package io.openvidu.js.java;
+package com.dhr.controllers;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class App
+public class RecorderApp
 {
 	public static void main( String[] args )
     {
-    	SpringApplication.run(App.class, args);
+    	SpringApplication.run(RecorderApp.class, args);
     }
 }
