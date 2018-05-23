@@ -82,19 +82,14 @@ var startStopRecording = function () {
         $('#record-pause-resume').show();
     } else {
         window['recorder'].stop()
-            .then(() = > {
-            $('#post-video video'
-    ).
-        hide();
+            .then(() => {
+            $('#post-video video').hide();
         $('#radio-buttons').hide();
         showUploadControls();
         var recordingPreview = window['recorder'].preview('post-video');
         recordingPreview.controls = true;
     })
-    .
-        catch((e) = > {}
-    )
-        ;
+    .catch((e) => {});
     }
     this.recording = !this.recording;
 }
@@ -113,7 +108,7 @@ var pauseResumeRecording = function () {
 }
 
 var upload = function () {
-    window['recorder'].uploadAsMultipartfile('/api/v1/recording')
+    window['recorder'].uploadAsMultipartfile('/api/v1/recording/')
         .then(function (response) {
             console.log(response);
         })
@@ -184,7 +179,7 @@ var navigateTo = function (page) {
     }
 }
 
-var updateInput = function (val) {
+var updateInput = function(val) {
     $('#videoId').val(val);
 }
 
@@ -200,7 +195,7 @@ var listAllVideos = function () {
             var list = $("#list-files");
             list.empty();
             var files = JSON.parse(xmlHttp.responseText);
-            files.forEach(function (file) {
+            files.forEach(function(file) {
                 list.append("<div onclick=\"updateInput('" + file + "')\">" + file + "</div>");
             });
         }
