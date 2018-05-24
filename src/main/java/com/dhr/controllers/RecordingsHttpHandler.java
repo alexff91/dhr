@@ -1,4 +1,4 @@
-package com.dhr.utils;
+package com.dhr.controllers;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dhr.config.PropertiesConfig;
-import com.dhr.controllers.MultipartFileSender;
+import com.dhr.utils.MultipartFileSender;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
