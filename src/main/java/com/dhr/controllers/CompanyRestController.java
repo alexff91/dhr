@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,14 @@ public class CompanyRestController {
     public ResponseEntity createCompany(@RequestBody Company company){
         companyService.save(company);
         company.getInterviews().forEach(i -> interviewService.save(i));
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteCompany(@PathVariable Long companyId){
+        Company company = companyService.get(companyId).get();
+        company.getInterviews().forEach(i -> interviewService.delete(i));
+        companyService.delete(companyService.get(companyId).get());
         return new ResponseEntity(HttpStatus.OK);
     }
 

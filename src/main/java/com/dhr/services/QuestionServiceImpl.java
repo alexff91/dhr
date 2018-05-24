@@ -13,8 +13,9 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionRepository repository;
 
     @Override
-    public void save(Question question) {
+    public Long save(Question question) {
         repository.save(question);
+        return question.getId();
     }
 
     @Override
@@ -23,8 +24,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public void update(Question question) {
+    public Question update(Question question) {
         repository.save(question);
+        return question;
     }
 
     @Override

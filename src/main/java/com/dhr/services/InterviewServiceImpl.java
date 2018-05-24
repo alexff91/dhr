@@ -13,8 +13,9 @@ public class InterviewServiceImpl  implements InterviewService {
     private InterviewRepository repository;
 
     @Override
-    public void save(Interview interview) {
+    public Long save(Interview interview) {
         repository.save(interview);
+        return interview.getInterviewId();
     }
 
     @Override

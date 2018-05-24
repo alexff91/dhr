@@ -14,8 +14,9 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyRepository repository;
 
     @Override
-    public void save(Company company) {
+    public Long save(Company company) {
         repository.save(company);
+        return company.getCompanyId();
     }
 
     @Override
@@ -24,8 +25,9 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void update(Company company) {
+    public Company update(Company company) {
         repository.save(company);
+        return company;
     }
 
     @Override

@@ -1,5 +1,5 @@
 FROM openjdk:8-jre-alpine
-MAINTAINER openvidu@gmail.com
+MAINTAINER alexff91@gmail.com
 
 # Copy Spring Boot app
 COPY target/recording-server-endpoint-1.0.0.jar /

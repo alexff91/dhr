@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface InterviewService {
-    void save(Interview interview);
+    Long save(Interview interview);
 
     void delete(Interview interview);
 
