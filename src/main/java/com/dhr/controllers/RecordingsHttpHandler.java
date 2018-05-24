@@ -40,7 +40,7 @@ public class RecordingsHttpHandler {
 	public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable String filename, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		log.info("GET /recording/{}", filename);
+		log.info("GET /api/v1/recording/{}", filename);
 
 		File file = new File(config.getRecordingsPath() + "/user", filename);
 		if (!file.isFile()) {
@@ -86,7 +86,7 @@ public class RecordingsHttpHandler {
 	public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request,
 			@RequestParam("file") MultipartFile file) throws IOException {
 
-		log.info("POST /recording");
+		log.info("POST /api/v1/recording");
 
 		if (file.isEmpty()) {
 			log.error("File is empty");
