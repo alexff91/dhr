@@ -38,14 +38,11 @@ public class CompanyRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity createCompany(@RequestBody Company company){
         companyService.save(company);
-        company.getInterviews().forEach(i -> interviewService.save(i));
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteCompany(@PathVariable Long companyId){
-        Company company = companyService.get(companyId).get();
-        company.getInterviews().forEach(i -> interviewService.delete(i));
         companyService.delete(companyService.get(companyId).get());
         return new ResponseEntity(HttpStatus.OK);
     }

@@ -2,6 +2,7 @@ package com.dhr.services;
 
 import com.dhr.model.Company;
 import com.dhr.repositories.CompanyRepository;
+import com.dhr.repositories.InterviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +14,19 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private CompanyRepository repository;
 
+    @Autowired
+    private InterviewRepository interviewRepository;
+
     @Override
     public Long save(Company company) {
         repository.save(company);
+        company.getInterviews().forEach(i -> interviewRepository.save(i));
         return company.getCompanyId();
     }
 
     @Override
     public void delete(Company company) {
+        company.getInterviews().forEach(i -> interviewRepository.delete(i));
         repository.delete(company);
     }
 

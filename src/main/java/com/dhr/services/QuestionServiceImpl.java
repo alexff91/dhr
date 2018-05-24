@@ -38,4 +38,9 @@ public class QuestionServiceImpl implements QuestionService {
     public List<Question> getAll() {
         return repository.findAll();
     }
+
+    @Override
+    public List<Question> getAllByInterview(Long id) {
+        return repository.findAllByInterviewId(id);
+    }
 }

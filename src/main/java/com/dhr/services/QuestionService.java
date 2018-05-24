@@ -15,4 +15,6 @@ public interface QuestionService {
     Optional<Question> get(Long id);
 
     List<Question> getAll();
+
+    List<Question> getAllByInterview(Long id);
 }

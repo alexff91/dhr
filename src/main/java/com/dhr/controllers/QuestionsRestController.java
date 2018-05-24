@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/questions")
-//"/api/v1/companies/{companyId}/interviews/{interviewId}/questions"
 public class QuestionsRestController {
     @Autowired
     QuestionServiceImpl questionService;
@@ -21,5 +21,10 @@ public class QuestionsRestController {
     @GetMapping
     public List<Question> getQuestions() {
         return questionService.getAll();
+    }
+
+    @GetMapping("/{interviewId}")
+    public List<Question> getQuestionsByInterview(@PathParam("interviewId") Long id) {
+        return questionService.getAllByInterview(id);
     }
 }

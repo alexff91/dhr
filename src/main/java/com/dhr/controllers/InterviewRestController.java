@@ -37,7 +37,6 @@ public class InterviewRestController {
     @PostMapping
     public ResponseEntity createInterview(@RequestBody Interview interview){
         interviewService.save(interview);
-        interview.getQuestions().forEach(question -> questionService.save(question));
         return new ResponseEntity(HttpStatus.OK);
     }
 

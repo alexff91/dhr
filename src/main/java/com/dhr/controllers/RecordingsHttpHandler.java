@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/v1/recording")
+@RequestMapping("/api/v1/interview/{interviewId}/recordings")
 public class RecordingsHttpHandler {
 
     private static final Logger log = LoggerFactory.getLogger(RecordingsHttpHandler.class);
@@ -38,12 +38,13 @@ public class RecordingsHttpHandler {
     PropertiesConfig config;
 
     @RequestMapping(value = "{filename:.+}", method = RequestMethod.GET)
-    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable String filename, HttpServletRequest request,
+    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable String filename,
+                                                         @PathVariable Long interviewId, HttpServletRequest request,
                                                          HttpServletResponse response) throws Exception {
 
-        log.info("GET /api/v1/recording/{}", filename);
+        log.info("GET /api/v1/recordings/{}", filename);
 
-        File file = new File(config.getRecordingsPath() + "/user", filename);
+        File file = new File(config.getRecordingsPath() + "/user/" + interviewId, filename);
         if (!file.isFile()) {
             file = new File(config.getRecordingsPath() + "/admin", filename);
             if (file.isFile() && !request.isUserInRole("ROLE_ADMIN")) {
@@ -60,11 +61,14 @@ public class RecordingsHttpHandler {
     }
 
     @RequestMapping(value = "all", method = RequestMethod.GET)
-    public ResponseEntity<List<String>> handleGetRecordings(HttpServletRequest request, HttpServletResponse response)
+    public ResponseEntity<List<String>> handleGetRecordings(HttpServletRequest request,
+                                                            @PathVariable Long interviewId,
+                                                            HttpServletResponse response)
             throws Exception {
-        List<String> results = new ArrayList<String>();
+        List<String> results = new ArrayList<>();
 
-        File[] filesUser = new File(config.getRecordingsPath() + "/user").listFiles();
+        File[] filesUser = new File(config.getRecordingsPath() + "/user/" + interviewId).listFiles();
+        assert filesUser != null;
         for (File file : filesUser) {
             if (file.isFile()) {
                 results.add(file.getName());
@@ -73,6 +77,7 @@ public class RecordingsHttpHandler {
 
         if (request.isUserInRole("ROLE_ADMIN")) {
             File[] filesAdmin = new File(config.getRecordingsPath() + "/admin").listFiles();
+            assert filesAdmin != null;
             for (File file : filesAdmin) {
                 if (file.isFile()) {
                     results.add(file.getName());
@@ -84,10 +89,10 @@ public class RecordingsHttpHandler {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request,
+    public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request, @PathVariable Long interviewId,
                                                           @RequestParam("file") MultipartFile file) throws IOException {
 
-        log.info("POST /api/v1/recording");
+        log.info("POST /api/v1/recordings");
 
         if (file.isEmpty()) {
             log.error("File is empty");
@@ -95,7 +100,7 @@ public class RecordingsHttpHandler {
         }
 
         String user = request.isUserInRole("ROLE_ADMIN") ? "admin" : "user";
-        String folder = "/" + user;
+        String folder = "/" + user + "/" + interviewId;
         String fileName = user + "_" + file.getOriginalFilename();
 
         Path path = Paths.get(config.getRecordingsPath() + folder);

@@ -108,7 +108,7 @@ var pauseResumeRecording = function () {
 }
 
 var upload = function () {
-    window['recorder'].uploadAsMultipartfile('/api/v1/recording/')
+    window['recorder'].uploadAsMultipartfile('/api/v1/interview/1/recordings/')
         .then(function (response) {
             console.log(response);
         })
@@ -185,7 +185,7 @@ var updateInput = function(val) {
 
 var getVideo = function () {
     var id = $('#videoId').val();
-    $('#get-video').get(0).src = '/api/v1/recording/' + id;
+    $('#get-video').get(0).src = '/api/v1/interview/1/recordings/' + id;
 }
 
 var listAllVideos = function () {
@@ -200,6 +200,6 @@ var listAllVideos = function () {
             });
         }
     }
-    xmlHttp.open("GET", "/api/v1/recording/all", true); // true for asynchronous
+    xmlHttp.open("GET", "/api/v1/interview/1/recordings/all", true); // true for asynchronous
     xmlHttp.send();
 }
