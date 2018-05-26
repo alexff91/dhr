@@ -1,9 +1,9 @@
 package com.dhr.controllers;
 
-import com.dhr.model.Vacancy;
 import com.dhr.model.Question;
-import com.dhr.services.VacanciesServiceImpl;
+import com.dhr.model.Vacancy;
 import com.dhr.services.QuestionServiceImpl;
+import com.dhr.services.VacanciesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +40,9 @@ public class VacancyRestController {
     }
 
     @PostMapping
-    public ResponseEntity createVacancy(@RequestBody Vacancy vacancy){
+    public ResponseEntity createVacancy(@RequestBody Vacancy vacancy) {
         vacanciesService.save(vacancy);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @GetMapping

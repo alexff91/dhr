@@ -2,6 +2,7 @@ package com.dhr.services;
 
 import com.dhr.model.Company;
 import com.dhr.repositories.CompanyRepository;
+import com.dhr.repositories.UserRepository;
 import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,14 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private VacancyRepository vacancyRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public Long save(Company company) {
         repository.save(company);
         company.getVacancies().forEach(i -> vacancyRepository.save(i));
+        company.getUsers().forEach(i -> userRepository.save(i));
         return company.getCompanyId();
     }
 

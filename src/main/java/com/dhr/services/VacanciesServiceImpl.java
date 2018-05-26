@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class VacanciesServiceImpl implements VacancyService {
     @Autowired
@@ -19,7 +20,10 @@ public class VacanciesServiceImpl implements VacancyService {
     @Override
     public Long save(Vacancy vacancy) {
         repository.save(vacancy);
-        vacancy.getQuestions().forEach(question -> questionRepository.save(question));
+        vacancy.getQuestions().forEach(question -> {
+            question.setVacancyId(vacancy.getVacancyId());
+            questionRepository.save(question);
+        });
         return vacancy.getVacancyId();
     }
 

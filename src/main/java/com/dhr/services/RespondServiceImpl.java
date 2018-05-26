@@ -20,7 +20,10 @@ public class RespondServiceImpl implements RespondService {
     @Override
     public Long save(Respond respond) {
         repository.save(respond);
-        respond.getRespondQuestions().forEach(question -> questionRespondRepository.save(question));
+        respond.getRespondQuestions().forEach(question -> {
+            question.setRespondId(respond.getRespondId());
+            questionRespondRepository.save(question);
+        });
         return respond.getRespondId();
     }
 
@@ -52,6 +55,6 @@ public class RespondServiceImpl implements RespondService {
 
     @Override
     public List<Respond> getByVacancyIdAndRespondId(Long vacancyId, Long respondId) {
-        return repository.findFirstByVacancyIdAndRespondId(vacancyId,respondId);
+        return repository.findFirstByVacancyIdAndRespondId(vacancyId, respondId);
     }
 }
