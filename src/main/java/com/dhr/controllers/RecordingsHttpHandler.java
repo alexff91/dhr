@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,16 +60,15 @@ public class RecordingsHttpHandler {
         }
     }
 
-    @RequestMapping(value = "all", method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<String>> handleGetRecordings(HttpServletRequest request,
                                                             @PathVariable Long vacancyId,
                                                             @PathVariable Long respondId,
-                                                            @PathVariable Long questionId,
                                                             HttpServletResponse response)
             throws Exception {
         List<String> results = new ArrayList<>();
 
-        File[] filesUser = new File(config.getRecordingsPath() + "/vacancy/" + vacancyId + "/responds/" + respondId + "/questions/").listFiles();
+        File[] filesUser = new File(config.getRecordingsPath() + getRecordingPath(vacancyId, respondId)).listFiles();
         assert filesUser != null;
         for (File file : filesUser) {
             if (file.isFile()) {
@@ -76,6 +76,10 @@ public class RecordingsHttpHandler {
             }
         }
         return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+    private String getRecordingPath(@PathVariable Long vacancyId, @PathVariable Long respondId) {
+        return "/vacancy/" + vacancyId + "/responds/" + respondId + "/questions/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{questionId}")
@@ -90,7 +94,7 @@ public class RecordingsHttpHandler {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        String folder = "/vacancy/" + vacancyId + "/responds/" + respondId + "/questions/";
+        String folder = getRecordingPath(vacancyId, respondId);
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
         String fName = questionId + ".webm";
