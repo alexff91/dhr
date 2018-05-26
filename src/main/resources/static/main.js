@@ -108,7 +108,7 @@ var pauseResumeRecording = function () {
 }
 
 var upload = function () {
-    window['recorder'].uploadAsMultipartfile('/api/v1/vacancy/1/responds/1/questions/')
+    window['recorder'].uploadAsMultipartfile('/api/v1/vacancy/1/responds/1/questions/1')
         .then(function (response) {
             console.log(response);
         })
