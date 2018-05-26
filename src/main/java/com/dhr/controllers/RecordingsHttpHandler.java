@@ -78,7 +78,7 @@ public class RecordingsHttpHandler {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = "/{questionId}")
     public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request,
                                                           @PathVariable Long respondId,
                                                           @PathVariable Long vacancyId,
