@@ -13,18 +13,13 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/questions")
+@RequestMapping("/api/v1/respond/{respondId}/questionResponds")
 public class QuestionRespondRestController {
     @Autowired
     QuestionRespondServiceImpl questionService;
 
     @GetMapping
-    public List<QuestionRespond> getQuestionsResponds() {
-        return questionService.getAll();
-    }
-
-    @GetMapping("/{interviewId}")
-    public List<QuestionRespond> getQuestionsByInterview(@PathParam("interviewId") Long id) {
+    public List<QuestionRespond> getQuestionsByInterview(@PathParam("respondId") Long id) {
         return questionService.getAllByRespondId(id);
     }
 }
