@@ -34,6 +34,11 @@ public class VacancyRestController {
         return vacanciesService.get(vacancyId).get().getQuestions();
     }
 
+    @RequestMapping(value = "{vacancyId}", method = RequestMethod.GET)
+    public Vacancy getByVacancyId(@PathVariable Long vacancyId) {
+        return vacanciesService.get(vacancyId).get();
+    }
+
     @PostMapping
     public ResponseEntity createVacancy(@RequestBody Vacancy vacancy){
         vacanciesService.save(vacancy);
