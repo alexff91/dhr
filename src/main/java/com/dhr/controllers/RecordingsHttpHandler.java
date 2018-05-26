@@ -1,18 +1,5 @@
 package com.dhr.controllers;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.dhr.config.PropertiesConfig;
 import com.dhr.utils.MultipartFileSender;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -29,9 +16,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.dhr.utils.FileUtils.findFileName;
+import static com.dhr.utils.FileUtils.getFileName;
+import static com.google.common.io.Files.getFileExtension;
+
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/interview/{interviewId}/recordings")
+@RequestMapping("/api/v1/interview/{interviewId}/responds/{respondId}/questions/")
 public class RecordingsHttpHandler {
 
     private static final Logger log = LoggerFactory.getLogger(RecordingsHttpHandler.class);
@@ -39,20 +42,14 @@ public class RecordingsHttpHandler {
     @Autowired
     PropertiesConfig config;
 
-    @RequestMapping(value = "{filename:.+}", method = RequestMethod.GET)
-    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable String filename,
-                                                         @PathVariable Long interviewId, HttpServletRequest request,
+    @RequestMapping(value = "/{questionId}/{filename:.+}", method = RequestMethod.GET)
+    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable Long interviewId,
+                                                         @PathVariable Long respondId,
+                                                         @PathVariable Long questionId,
+                                                         HttpServletRequest request,
                                                          HttpServletResponse response) throws Exception {
 
-        log.info("GET /api/v1/recordings/{}", filename);
-
-        File file = new File(config.getRecordingsPath() + "/user/" + interviewId, filename);
-        if (!file.isFile()) {
-            file = new File(config.getRecordingsPath() + "/admin", filename);
-            if (file.isFile() && !request.isUserInRole("ROLE_ADMIN")) {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-        }
+        File file = new File(config.getRecordingsPath() + "/interview/" + interviewId + "/responds/" + respondId + "/questions/", questionId + ".webm");
 
         if (file.isFile()) {
             MultipartFileSender.fromPath(file.toPath()).with(request).with(response).serveResource();
@@ -65,91 +62,45 @@ public class RecordingsHttpHandler {
     @RequestMapping(value = "all", method = RequestMethod.GET)
     public ResponseEntity<List<String>> handleGetRecordings(HttpServletRequest request,
                                                             @PathVariable Long interviewId,
+                                                            @PathVariable Long respondId,
+                                                            @PathVariable Long questionId,
                                                             HttpServletResponse response)
             throws Exception {
         List<String> results = new ArrayList<>();
 
-        File[] filesUser = new File(config.getRecordingsPath() + "/user/" + interviewId).listFiles();
+        File[] filesUser = new File(config.getRecordingsPath() + "/interview/" + interviewId + "/responds/" + respondId + "/questions/").listFiles();
         assert filesUser != null;
         for (File file : filesUser) {
             if (file.isFile()) {
                 results.add(file.getName());
             }
         }
-
-        if (request.isUserInRole("ROLE_ADMIN")) {
-            File[] filesAdmin = new File(config.getRecordingsPath() + "/admin").listFiles();
-            assert filesAdmin != null;
-            for (File file : filesAdmin) {
-                if (file.isFile()) {
-                    results.add(file.getName());
-                }
-            }
-        }
-
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request, @PathVariable Long interviewId,
+    public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request,
+                                                          @PathVariable Long respondId,
+                                                          @PathVariable Long interviewId,
+                                                          @PathVariable Long questionId,
                                                           @RequestParam("file") MultipartFile file) throws IOException {
-
-        log.info("POST /api/v1/recordings");
 
         if (file.isEmpty()) {
             log.error("File is empty");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        String user = request.isUserInRole("ROLE_ADMIN") ? "admin" : "user";
-        String folder = "/" + user + "/" + interviewId;
-        String fileName = user + "_" + file.getOriginalFilename();
+        String folder = "/interview/" + interviewId + "/responds/" + respondId + "/questions/";
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
-        String fName = findFileName(config.getRecordingsPath() + folder, getFileName(fileName),
-                getFileExtension(fileName));
+        String fName = questionId + ".webm";
 
         File uploadedFile = new File(path.toFile(), fName);
         InputStream initialStream = file.getInputStream();
         Files.copy(initialStream, uploadedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         IOUtils.closeQuietly(initialStream);
 
-        log.info("File succesfully uploaded to path '{}'", uploadedFile.getPath());
-
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    private String findFileName(final String dir, final String baseName, final String extension) {
-        String name = String.format("%s.%s", baseName, extension);
-        Path ret = Paths.get(dir, name);
-        if (!Files.exists(ret))
-            return name;
-
-        for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            name = String.format("%s%d.%s", baseName, i, extension);
-            ret = Paths.get(dir, name);
-            if (!Files.exists(ret))
-                return name;
-        }
-        throw new IllegalStateException("Fail finding file name");
-    }
-
-    private String getFileName(String file) {
-        String extension = "";
-        int i = file.lastIndexOf('.');
-        if (i > 0) {
-            extension = file.substring(0, i);
-        }
-        return extension;
-    }
-
-    private String getFileExtension(String file) {
-        String extension = "";
-        int i = file.lastIndexOf('.');
-        if (i > 0) {
-            extension = file.substring(i + 1);
-        }
-        return extension;
     }
 
 }

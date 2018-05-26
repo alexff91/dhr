@@ -7,21 +7,18 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
-@Document(collection = "interviews")
-public class Interview {
+@Document(collection = "responds")
+public class Respond {
     @Id
+    private Long respondId;
     private Long interviewId;
-    private Long companyId;
-    private Long userId;
-    private String position;
-    private String description;
-    private Date creationDate;
+    private Long responderId;
+    private String status;
     @DBRef
-    private List<Question> questions;
+    private List<QuestionRespond> respondQuestions;
 }

@@ -1,0 +1,28 @@
+{
+  "companyDescription": "NEXIGN",
+  "companyId": 1,
+  "companyLogoPath": "/nexign.png",
+  "companyName": "NEXIGN",
+  "interviews": [
+    {
+      "companyId": 1,
+      "interviewId": 1,
+      "position": "CEO",
+      "questions": [
+        {
+          "answered": false,
+          "duration": 50000,
+          "durationMax": 60000,
+          "durationToRead": 10000,
+          "id": 1,
+          "interviewId": 1,
+          "isCompulsory": true,
+          "orderNumber": 0,
+          "posterSrc": "/nexign.png",
+          "question": "Hello?",
+          "videoSrc": null
+        }
+      ]
+    }
+  ]
+}

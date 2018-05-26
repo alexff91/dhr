@@ -29,7 +29,7 @@ public class CompanyRestController {
     CompanyServiceImpl companyService;
     @Autowired
     InterviewServiceImpl interviewService;
-    @RequestMapping(value = "{companyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{companyId}/interviews", method = RequestMethod.GET)
     public List<Interview> getInterviewsByCompanyId(@PathVariable Long companyId) {
         return companyService.get(companyId).get().getInterviews();
     }

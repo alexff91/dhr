@@ -17,10 +17,6 @@ public class Question {
     private String question;
     private Long durationToRead;
     private Long durationMax;
-    private Long duration;
     private Long orderNumber;
     private Boolean isCompulsory;
-    private Boolean answered;
-    private String videoSrc;
-    private String posterSrc;
 }

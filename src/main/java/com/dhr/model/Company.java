@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -19,6 +20,10 @@ public class Company {
     private String companyName;
     private String companyLogoPath;
     private String companyDescription;
+    private Date creationDate;
+    private Subscription subscription;
     @DBRef
     private List<Interview> interviews;
+    @DBRef
+    private List<User> users;
 }
