@@ -200,6 +200,6 @@ var listAllVideos = function () {
             });
         }
     }
-    xmlHttp.open("GET", "/api/v1/interview/1/recordings/all", true); // true for asynchronous
+    xmlHttp.open("GET", "/api/v1/vacancy/1/responds/1/questions/", true); // true for asynchronous
     xmlHttp.send();
 }
