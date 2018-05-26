@@ -40,7 +40,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getAllByInterview(Long id) {
-        return repository.findAllByInterviewId(id);
+    public List<Question> getAllByVacancy(Long id) {
+        return repository.findAllByVacancyId(id);
     }
 }

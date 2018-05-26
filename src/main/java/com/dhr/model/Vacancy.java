@@ -13,10 +13,10 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@Document(collection = "interviews")
-public class Interview {
+@Document(collection = "vacancies")
+public class Vacancy {
     @Id
-    private Long interviewId;
+    private Long vacancyId;
     private Long companyId;
     private Long userId;
     private String position;

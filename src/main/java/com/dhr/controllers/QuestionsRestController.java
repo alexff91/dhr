@@ -23,8 +23,8 @@ public class QuestionsRestController {
         return questionService.getAll();
     }
 
-    @GetMapping("/{interviewId}")
-    public List<Question> getQuestionsByInterview(@PathParam("interviewId") Long id) {
-        return questionService.getAllByInterview(id);
+    @GetMapping("/{vacancyId}")
+    public List<Question> getQuestionsByVacancy(@PathParam("vacancyId") Long id) {
+        return questionService.getAllByVacancy(id);
     }
 }

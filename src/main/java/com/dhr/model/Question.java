@@ -13,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Question {
     @Id
     private Long id;
-    private Long interviewId;
+    private Long vacancyId;
     private String question;
     private Long durationToRead;
     private Long durationMax;

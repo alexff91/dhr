@@ -1,8 +1,8 @@
 package com.dhr.controllers;
 
-import com.dhr.model.Interview;
+import com.dhr.model.Vacancy;
 import com.dhr.model.Question;
-import com.dhr.services.InterviewServiceImpl;
+import com.dhr.services.VacanciesServiceImpl;
 import com.dhr.services.QuestionServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,33 +21,33 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/interviews")
-public class InterviewRestController {
+@RequestMapping("/api/v1/vacancies")
+public class VacancyRestController {
     @Autowired
-    InterviewServiceImpl interviewService;
+    VacanciesServiceImpl vacanciesService;
 
     @Autowired
     QuestionServiceImpl questionService;
 
-    @RequestMapping(value = "{interviewId}/questions", method = RequestMethod.GET)
-    public List<Question> getQuestionsByInterviewId(@PathVariable Long interviewId) {
-        return interviewService.get(interviewId).get().getQuestions();
+    @RequestMapping(value = "{vacancyId}/questions", method = RequestMethod.GET)
+    public List<Question> getQuestionsByVacancyId(@PathVariable Long vacancyId) {
+        return vacanciesService.get(vacancyId).get().getQuestions();
     }
 
     @PostMapping
-    public ResponseEntity createInterview(@RequestBody Interview interview){
-        interviewService.save(interview);
+    public ResponseEntity createVacancy(@RequestBody Vacancy vacancy){
+        vacanciesService.save(vacancy);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping
-    public List<Interview> getInterviews() {
-        return interviewService.getAll();
+    public List<Vacancy> getVacancies() {
+        return vacanciesService.getAll();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteInterview(@PathVariable Long id) {
-        interviewService.delete(interviewService.get(id).get());
+    public ResponseEntity deleteVacancy(@PathVariable Long id) {
+        vacanciesService.delete(vacanciesService.get(id).get());
         return new ResponseEntity(HttpStatus.OK);
     }
 }

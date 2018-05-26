@@ -46,12 +46,12 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public List<Respond> getAllByInterviewId(Long interviewId) {
-        return repository.findAllByInterviewId(interviewId);
+    public List<Respond> getAllByVacancyId(Long vacancyId) {
+        return repository.findAllByVacancyId(vacancyId);
     }
 
     @Override
-    public List<Respond> getByInterviewIdAndRespondId(Long interviewId, Long respondId) {
-        return repository.findFirstByInterviewIdAndRespondId(interviewId,respondId);
+    public List<Respond> getByVacancyIdAndRespondId(Long vacancyId, Long respondId) {
+        return repository.findFirstByVacancyIdAndRespondId(vacancyId,respondId);
     }
 }

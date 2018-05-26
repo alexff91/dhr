@@ -23,7 +23,7 @@ public class Company {
     private Date creationDate;
     private Subscription subscription;
     @DBRef
-    private List<Interview> interviews;
+    private List<Vacancy> vacancies;
     @DBRef
     private List<User> users;
 }

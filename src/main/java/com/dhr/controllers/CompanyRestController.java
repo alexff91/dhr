@@ -1,10 +1,9 @@
 package com.dhr.controllers;
 
 import com.dhr.model.Company;
-import com.dhr.model.Interview;
-import com.dhr.model.Question;
+import com.dhr.model.Vacancy;
 import com.dhr.services.CompanyServiceImpl;
-import com.dhr.services.InterviewServiceImpl;
+import com.dhr.services.VacanciesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +27,10 @@ public class CompanyRestController {
     @Autowired
     CompanyServiceImpl companyService;
     @Autowired
-    InterviewServiceImpl interviewService;
-    @RequestMapping(value = "/{companyId}/interviews", method = RequestMethod.GET)
-    public List<Interview> getInterviewsByCompanyId(@PathVariable Long companyId) {
-        return companyService.get(companyId).get().getInterviews();
+    VacanciesServiceImpl vacancyService;
+    @RequestMapping(value = "/{companyId}/vacancies", method = RequestMethod.GET)
+    public List<Vacancy> getVacanciesByCompanyId(@PathVariable Long companyId) {
+        return companyService.get(companyId).get().getVacancies();
     }
 
     @PostMapping

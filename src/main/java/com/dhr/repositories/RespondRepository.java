@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface RespondRepository extends MongoRepository<Respond, Long> {
-    List<Respond> findAllByInterviewId(Long interviewId);
+    List<Respond> findAllByVacancyId(Long vacancyId);
 
-    List<Respond> findFirstByInterviewIdAndRespondId(Long interviewId, Long respondId);
+    List<Respond> findFirstByVacancyIdAndRespondId(Long vacancyId, Long respondId);
 }

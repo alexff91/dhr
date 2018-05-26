@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RespondService {
-    Long save(Respond interview);
+    Long save(Respond vacancy);
 
-    void delete(Respond interview);
+    void delete(Respond vacancy);
 
-    void update(Respond interview);
+    void update(Respond vacancy);
 
     Optional<Respond> get(Long id);
 
     List<Respond> getAll();
 
-    List<Respond> getAllByInterviewId(Long interviewId);
+    List<Respond> getAllByVacancyId(Long vacancyId);
 
-    List<Respond> getByInterviewIdAndRespondId(Long interviewId, Long respondId);
+    List<Respond> getByVacancyIdAndRespondId(Long vacancyId, Long respondId);
 }

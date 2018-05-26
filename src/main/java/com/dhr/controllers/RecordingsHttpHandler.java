@@ -34,7 +34,7 @@ import static com.google.common.io.Files.getFileExtension;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/interview/{interviewId}/responds/{respondId}/questions/")
+@RequestMapping("/api/v1/vacancy/{vacancyId}/responds/{respondId}/questions/")
 public class RecordingsHttpHandler {
 
     private static final Logger log = LoggerFactory.getLogger(RecordingsHttpHandler.class);
@@ -43,13 +43,13 @@ public class RecordingsHttpHandler {
     PropertiesConfig config;
 
     @RequestMapping(value = "/{questionId}/{filename:.+}", method = RequestMethod.GET)
-    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable Long interviewId,
+    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable Long vacancyId,
                                                          @PathVariable Long respondId,
                                                          @PathVariable Long questionId,
                                                          HttpServletRequest request,
                                                          HttpServletResponse response) throws Exception {
 
-        File file = new File(config.getRecordingsPath() + "/interview/" + interviewId + "/responds/" + respondId + "/questions/", questionId + ".webm");
+        File file = new File(config.getRecordingsPath() + "/vacancy/" + vacancyId + "/responds/" + respondId + "/questions/", questionId + ".webm");
 
         if (file.isFile()) {
             MultipartFileSender.fromPath(file.toPath()).with(request).with(response).serveResource();
@@ -61,14 +61,14 @@ public class RecordingsHttpHandler {
 
     @RequestMapping(value = "all", method = RequestMethod.GET)
     public ResponseEntity<List<String>> handleGetRecordings(HttpServletRequest request,
-                                                            @PathVariable Long interviewId,
+                                                            @PathVariable Long vacancyId,
                                                             @PathVariable Long respondId,
                                                             @PathVariable Long questionId,
                                                             HttpServletResponse response)
             throws Exception {
         List<String> results = new ArrayList<>();
 
-        File[] filesUser = new File(config.getRecordingsPath() + "/interview/" + interviewId + "/responds/" + respondId + "/questions/").listFiles();
+        File[] filesUser = new File(config.getRecordingsPath() + "/vacancy/" + vacancyId + "/responds/" + respondId + "/questions/").listFiles();
         assert filesUser != null;
         for (File file : filesUser) {
             if (file.isFile()) {
@@ -81,7 +81,7 @@ public class RecordingsHttpHandler {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request,
                                                           @PathVariable Long respondId,
-                                                          @PathVariable Long interviewId,
+                                                          @PathVariable Long vacancyId,
                                                           @PathVariable Long questionId,
                                                           @RequestParam("file") MultipartFile file) throws IOException {
 
@@ -90,7 +90,7 @@ public class RecordingsHttpHandler {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        String folder = "/interview/" + interviewId + "/responds/" + respondId + "/questions/";
+        String folder = "/vacancy/" + vacancyId + "/responds/" + respondId + "/questions/";
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
         String fName = questionId + ".webm";

@@ -13,19 +13,19 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/interviews/{interviewId}/responds")
+@RequestMapping("/api/v1/vacancies/{vacancyId}/responds")
 public class RespondsRestController {
     @Autowired
     RespondServiceImpl respondService;
 
     @GetMapping
-    public List<Respond> getRespondsByInterview(@PathParam("interviewId") Long interviewId) {
-        return respondService.getAllByInterviewId(interviewId);
+    public List<Respond> getRespondsByVacancy(@PathParam("vacancyId") Long vacancyId) {
+        return respondService.getAllByVacancyId(vacancyId);
     }
 
     @GetMapping("/{respondId}")
-    public List<Respond> getRespondById(@PathParam("interviewId") Long interviewId,
+    public List<Respond> getRespondById(@PathParam("vacancyId") Long vacancyId,
                                         @PathParam("respondId") Long respondId) {
-        return respondService.getByInterviewIdAndRespondId(interviewId, respondId);
+        return respondService.getByVacancyIdAndRespondId(vacancyId, respondId);
     }
 }

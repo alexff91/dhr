@@ -16,7 +16,7 @@ import java.util.List;
 public class Respond {
     @Id
     private Long respondId;
-    private Long interviewId;
+    private Long vacancyId;
     private Long responderId;
     private String status;
     @DBRef
