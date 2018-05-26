@@ -10,7 +10,8 @@ db.createUser( { user: "accountAdmin01",
                  
                  
 Build docker:
-docker run -p 80:5443 --restart=always -d -v /browser-recordings:/browser-recordings/ demo
+docker build -t demo .
+docker run -p 443:5443 --restart=always -d -v /browser-recordings:/browser-recordings/ demo
                  
                  
                  
