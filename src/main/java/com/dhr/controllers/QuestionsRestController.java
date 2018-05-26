@@ -30,8 +30,8 @@ public class QuestionsRestController {
     }
 
     @GetMapping("/{vacancyId}")
-    public List<Question> getQuestionsByVacancy(@PathParam("vacancyId") Long id) {
-        return questionService.getAllByVacancy(id);
+    public List<Question> getQuestionsByVacancy(@PathVariable Long vacancyId) {
+        return questionService.getAllByVacancy(vacancyId);
     }
 
     @PostMapping
