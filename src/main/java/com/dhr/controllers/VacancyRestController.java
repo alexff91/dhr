@@ -50,9 +50,9 @@ public class VacancyRestController {
         return vacanciesService.getAll();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteVacancy(@PathVariable Long id) {
-        vacanciesService.delete(vacanciesService.get(id).get());
+    @DeleteMapping("/{vacancyId}")
+    public ResponseEntity deleteVacancy(@PathVariable Long vacancyId) {
+        vacanciesService.delete(vacanciesService.get(vacancyId).get());
         return new ResponseEntity(HttpStatus.OK);
     }
 }
