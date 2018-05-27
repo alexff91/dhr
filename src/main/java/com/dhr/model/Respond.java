@@ -17,6 +17,7 @@ public class Respond {
     @Id
     private Long respondId;
     private Long interviewId;
+    private Long vacancyId;
     private String name;
     private String lastName;
     private String email;
