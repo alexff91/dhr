@@ -1,6 +1,9 @@
 package com.dhr.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
@@ -11,6 +14,9 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Document(collection = "questions-responds")
 public class QuestionRespond {
     @Id
@@ -18,7 +24,6 @@ public class QuestionRespond {
     private Long respondId;
     private Long questionId;
     private Boolean answered;
-    private String comment;
     private String videoPath;
     private Long posterPath;
     private Long duration;

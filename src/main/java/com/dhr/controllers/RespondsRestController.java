@@ -33,7 +33,6 @@ public class RespondsRestController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-
     @GetMapping("/{respondId}")
     public List<Respond> getRespondById(@PathParam("vacancyId") Long vacancyId,
                                         @PathParam("respondId") Long respondId) {

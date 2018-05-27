@@ -16,8 +16,10 @@ import java.util.List;
 public class Respond {
     @Id
     private Long respondId;
-    private Long vacancyId;
-    private Long responderId;
+    private Long interviewId;
+    private String name;
+    private String lastName;
+    private String email;
     private String status;
     @DBRef
     private List<QuestionRespond> respondQuestions;

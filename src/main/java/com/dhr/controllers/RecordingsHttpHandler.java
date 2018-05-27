@@ -1,6 +1,10 @@
 package com.dhr.controllers;
 
 import com.dhr.config.PropertiesConfig;
+import com.dhr.model.QuestionRespond;
+import com.dhr.model.Respond;
+import com.dhr.services.QuestionRespondService;
+import com.dhr.services.RespondService;
 import com.dhr.utils.MultipartFileSender;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -27,6 +31,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.dhr.utils.FileUtils.findFileName;
@@ -42,6 +47,12 @@ public class RecordingsHttpHandler {
 
     @Autowired
     PropertiesConfig config;
+
+    @Autowired
+    QuestionRespondService questionRespondService;
+
+    @Autowired
+    RespondService respondService;
 
     @RequestMapping(value = "/{questionId}/{filename:.+}", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable Long vacancyId,
@@ -104,6 +115,21 @@ public class RecordingsHttpHandler {
         Files.copy(initialStream, uploadedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         IOUtils.closeQuietly(initialStream);
 
+        QuestionRespond questionRespond = QuestionRespond.builder()
+                .questionId(questionId)
+                .respondId(respondId)
+                .videoPath(request.getServletPath() + "/api/v1/vacancy/" + vacancyId +
+                        "/responds/" + respondId +
+                        "/questions/" + questionId + ".webm")
+                .answered(true)
+                .respondTime(new Date())
+                .build();
+
+        Respond respond = respondService.get(respondId).get();
+        List<QuestionRespond> respondQuestions = respond.getRespondQuestions();
+        respondQuestions.add(questionRespond);
+        respondService.save(respond);
+        questionRespondService.save(questionRespond);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
