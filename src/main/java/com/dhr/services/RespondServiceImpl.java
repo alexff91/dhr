@@ -23,20 +23,13 @@ public class RespondServiceImpl implements RespondService {
     @Override
     public String save(Respond respond) {
         respond.setStartDate(new Date());
-        String generatedString = generateRandomString();
-        respond.setRespondId(Integer.toHexString(respond.hashCode()) + generatedString);
+        respond.setRespondId(Integer.toHexString(respond.hashCode()));
         repository.save(respond);
         respond.getRespondQuestions().forEach(question -> {
             question.setRespondId(respond.getRespondId());
             questionRespondRepository.save(question);
         });
         return respond.getRespondId();
-    }
-
-    private String generateRandomString() {
-        byte[] array = new byte[7];
-        new Random().nextBytes(array);
-        return new String(array, Charset.forName("UTF-8"));
     }
 
     @Override
