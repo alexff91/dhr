@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,7 @@ public class RespondsRestController {
     RespondServiceImpl respondService;
 
     @GetMapping
-    public List<Respond> getRespondsByVacancy(@PathParam("vacancyId") Long vacancyId) {
+    public List<Respond> getRespondsByVacancy(@PathVariable Long vacancyId) {
         return respondService.getAllByVacancyId(vacancyId);
     }
     @PostMapping
@@ -33,8 +34,8 @@ public class RespondsRestController {
     }
 
     @GetMapping("/{respondId}")
-    public List<Respond> getRespondById(@PathParam("vacancyId") Long vacancyId,
-                                        @PathParam("respondId") String respondId) {
+    public List<Respond> getRespondById(@PathVariable Long vacancyId,
+                                        @PathVariable String respondId) {
         return respondService.getByVacancyIdAndRespondId(vacancyId, respondId);
     }
 }
