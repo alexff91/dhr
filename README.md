@@ -7,7 +7,14 @@ use dhr
 db.createUser( { user: "mongoadmin",
                  pwd: "secret",
                  roles: []})
-                 
+use admin
+db.createUser( { user: "mongoadmin",
+          pwd: "secret",
+          roles: [ "userAdminAnyDatabase",
+                   "dbAdminAnyDatabase",
+                   "readWriteAnyDatabase"
+
+] } )                 
                  
                  
 Build docker:

@@ -16,10 +16,10 @@ public class CompanyServiceImpl implements CompanyService {
     private CompanyRepository repository;
 
     @Autowired
-    private VacancyRepository vacancyRepository;
+    private VacancyService vacancyRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userRepository;
 
     @Override
     public Long save(Company company) {
