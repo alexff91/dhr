@@ -1,28 +1,157 @@
 {
-  "companyDescription": "NEXIGN",
+  "companyDescription": "Банк",
   "companyId": 1,
-  "companyLogoPath": "/nexign.png",
-  "companyName": "NEXIGN",
+  "companyLogoPath": "https://www.facebook.com/alfabank/photos/a.130567980337900.20732.130567960337902/1052654198129269/?type=1&theater",
+  "companyName": "Альфа банк",
+  "creationDate": "2018-05-27T13:16:30.894Z",
+  "subscription": {
+    "endDate": "2019-05-27T13:16:30.894Z",
+    "id": 1,
+    "startDate": "2018-05-27T13:16:30.894Z",
+    "type": "Gold"
+  },
+  "users": [
+    {
+      "avatarPath": "string",
+      "companyId": 1,
+      "email": "vasya.petrov@abanck.ru",
+      "lastName": "Petrov",
+      "name": "Vasya",
+      "role": "admin",
+      "userId": 1
+    }
+  ],
   "vacancies": [
     {
       "companyId": 1,
-      "interviewId": 1,
-      "position": "CEO",
+      "creationDate": "2018-05-27T13:16:30.895Z",
+      "description": "Альфа-Банк – это возможность реализовать свой потенциал и участвовать в амбициозных проектах лидера банковского рынка.
+
+      Начни карьеру в Альфа-Банке!
+
+      ОБЯЗАННОСТИ:
+      - привлечение и консультирование клиентов;
+      - оформление потребительских кредитов;
+      - ведение статистики и формирование отчетности.
+
+      ТРЕБОВАНИЯ:
+      - образование не ниже среднего специального;
+      - уверенный пользователь ПК;
+      - приветствуется опыт работы в аналогичной должности (кредитный эксперт, специалист по оформлению кредитов и т.д.) / опыт активных продаж (менеджер по привлечению клиентов, продавец бытовой техники и электроники, промоутер);
+      - рассматриваем кандидатов без опыта работы.
+
+      УСЛОВИЯ:
+      - место работы: магазины-партнеры Банка (ДНС - ТЦ Парус, Гранд, Макси);
+      - сменный график работы;
+      - средний совокупный доход - от 23 000 руб. (оклад + бонус по результатам выполнения плановых показателей);
+
+      ДМС;
+      - льготные условия на услуги Банка и компаний-партнеров;
+      - отличные возможности для профессионального развития и карьерного роста.",
+      "position": "Кредитный специалист",
       "questions": [
         {
-          "answered": false,
-          "duration": 50000,
           "durationMax": 60000,
-          "durationToRead": 10000,
+          "durationToRead": 20000,
           "id": 1,
-          "interviewId": 1,
           "isCompulsory": true,
-          "orderNumber": 0,
-          "posterSrc": "/nexign.png",
-          "question": "Hello?",
-          "videoSrc": null
+          "orderNumber": 1,
+          "question": "Почему выбрали в качестве постоянной работы должность кредитного специалиста?",
+          "vacancyId": 1
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 2,
+          "isCompulsory": true,
+          "orderNumber": 2,
+          "question": "Вы будете успешны в коллективе? Почему вы так думаете?",
+          "vacancyId": 1
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 3,
+          "isCompulsory": true,
+          "orderNumber": 3,
+          "question": "Перечислите те критерии, которые для вас наиболее важны в этой работе.",
+          "vacancyId": 1
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 3,
+          "isCompulsory": true,
+          "orderNumber": 3,
+          "question": "Назовите минимальный уровень заработной платы, на которую вы готовы согласиться.",
+          "vacancyId": 1
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 1,
+          "isCompulsory": true,
+          "orderNumber": 4,
+          "question": "Как вы видите развитие своей карьеры через 3-5 лет?",
+          "vacancyId": 4
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 5,
+          "isCompulsory": true,
+          "orderNumber": 5,
+          "question": "Какие ваши самые сильные качества?",
+          "vacancyId": 1
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 6,
+          "isCompulsory": true,
+          "orderNumber": 6,
+          "question": "Какие у вас есть недостатки?",
+          "vacancyId": 1
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 7,
+          "isCompulsory": true,
+          "orderNumber": 7,
+          "question": "Расскажите о ваших успехах на предыдущем месте работы.",
+          "vacancyId": 1
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 8,
+          "isCompulsory": true,
+          "orderNumber": 8,
+          "question": "Расскажите о ваших провалах на предыдущем месте работы.",
+          "vacancyId": 1
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 9,
+          "isCompulsory": true,
+          "orderNumber": 9,
+          "question": "Представьте, что перед вами клиент. Продайте ему iPhone X",
+          "vacancyId": 1
+        },
+        {
+          "durationMax": 60000,
+          "durationToRead": 20000,
+          "id": 10,
+          "isCompulsory": true,
+          "orderNumber": 10,
+          "question": "Клиент сказал что это дорого. Что вы ему ответите?",
+          "vacancyId": 1
         }
-      ]
+      ],
+      "userId": 1,
+      "vacancyId": 1
     }
   ]
 }
