@@ -19,7 +19,6 @@ import java.util.List;
 public class Respond {
     @Id
     private String respondId;
-    private Long interviewId;
     private Long vacancyId;
     private String name;
     private String lastName;
