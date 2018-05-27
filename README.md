@@ -12,7 +12,7 @@ db.createUser( { user: "mongoadmin",
                  
 Build docker:
 docker build -t demo .
-docker run -p 443:5443 --restart=always -d -v /browser-recordings:/browser-recordings/ demo
+docker run -p 443:443 --restart=always -d -v /browser-recordings:/browser-recordings/ demo
                  
                  
                  
