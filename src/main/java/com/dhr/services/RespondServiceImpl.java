@@ -25,7 +25,9 @@ public class RespondServiceImpl implements RespondService {
         if (respond.getStartDate() == null) {
             respond.setStartDate(new Date());
         }
-        respond.setRespondId(Integer.toHexString(respond.hashCode()));
+        if (respond.getRespondId() == null) {
+            respond.setRespondId(Integer.toHexString(respond.hashCode()));
+        }
         repository.save(respond);
         respond.getRespondQuestions().forEach(question -> {
             question.setRespondId(respond.getRespondId());
