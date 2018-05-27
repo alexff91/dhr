@@ -28,14 +28,13 @@ public class RespondsRestController {
         return respondService.getAllByVacancyId(vacancyId);
     }
     @PostMapping
-    public ResponseEntity createRespond(@RequestBody Respond respond){
-        respondService.save(respond);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity<String> createRespond(@RequestBody Respond respond){
+        return new ResponseEntity<>(respondService.save(respond), HttpStatus.CREATED);
     }
 
     @GetMapping("/{respondId}")
     public List<Respond> getRespondById(@PathParam("vacancyId") Long vacancyId,
-                                        @PathParam("respondId") Long respondId) {
+                                        @PathParam("respondId") String respondId) {
         return respondService.getByVacancyIdAndRespondId(vacancyId, respondId);
     }
 }

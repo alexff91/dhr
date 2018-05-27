@@ -74,7 +74,7 @@ public class RecordingsHttpHandler {
     @GetMapping
     public ResponseEntity<List<String>> handleGetRecordings(HttpServletRequest request,
                                                             @PathVariable Long vacancyId,
-                                                            @PathVariable Long respondId,
+                                                            @PathVariable String respondId,
                                                             HttpServletResponse response)
             throws Exception {
         List<String> results = new ArrayList<>();
@@ -89,13 +89,13 @@ public class RecordingsHttpHandler {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    private String getRecordingPath(@PathVariable Long vacancyId, @PathVariable Long respondId) {
+    private String getRecordingPath(@PathVariable Long vacancyId, @PathVariable String respondId) {
         return "/vacancy/" + vacancyId + "/responds/" + respondId + "/questions/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{questionId}")
     public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request,
-                                                          @PathVariable Long respondId,
+                                                          @PathVariable String respondId,
                                                           @PathVariable Long vacancyId,
                                                           @PathVariable Long questionId,
                                                           @RequestParam("file") MultipartFile file) throws IOException {

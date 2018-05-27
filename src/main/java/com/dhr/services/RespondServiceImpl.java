@@ -6,8 +6,11 @@ import com.dhr.repositories.RespondRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.Charset;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class RespondServiceImpl implements RespondService {
@@ -18,13 +21,22 @@ public class RespondServiceImpl implements RespondService {
     private QuestionRespondRepository questionRespondRepository;
 
     @Override
-    public Long save(Respond respond) {
+    public String save(Respond respond) {
+        respond.setStartDate(new Date());
+        String generatedString = generateRandomString();
+        respond.setRespondId(Integer.toHexString(respond.hashCode()) + generatedString);
         repository.save(respond);
         respond.getRespondQuestions().forEach(question -> {
             question.setRespondId(respond.getRespondId());
             questionRespondRepository.save(question);
         });
         return respond.getRespondId();
+    }
+
+    private String generateRandomString() {
+        byte[] array = new byte[7];
+        new Random().nextBytes(array);
+        return new String(array, Charset.forName("UTF-8"));
     }
 
     @Override
@@ -39,7 +51,7 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public Optional<Respond> get(Long id) {
+    public Optional<Respond> get(String id) {
         return repository.findById(id);
     }
 
@@ -54,7 +66,7 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public List<Respond> getByVacancyIdAndRespondId(Long vacancyId, Long respondId) {
+    public List<Respond> getByVacancyIdAndRespondId(Long vacancyId, String respondId) {
         return repository.findFirstByVacancyIdAndRespondId(vacancyId, respondId);
     }
 }

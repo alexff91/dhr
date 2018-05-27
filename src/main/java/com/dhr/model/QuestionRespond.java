@@ -21,7 +21,7 @@ import java.util.Date;
 public class QuestionRespond {
     @Id
     private Long questionRespondId;
-    private Long respondId;
+    private String respondId;
     private Long questionId;
     private Boolean answered;
     private String videoPath;
