@@ -22,7 +22,9 @@ public class RespondServiceImpl implements RespondService {
 
     @Override
     public String save(Respond respond) {
-        respond.setStartDate(new Date());
+        if (respond.getStartDate() == null) {
+            respond.setStartDate(new Date());
+        }
         respond.setRespondId(Integer.toHexString(respond.hashCode()));
         repository.save(respond);
         respond.getRespondQuestions().forEach(question -> {

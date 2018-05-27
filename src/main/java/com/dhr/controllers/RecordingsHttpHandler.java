@@ -34,10 +34,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.dhr.utils.FileUtils.findFileName;
-import static com.dhr.utils.FileUtils.getFileName;
-import static com.google.common.io.Files.getFileExtension;
-
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/vacancy/{vacancyId}/responds/{respondId}/questions/")
@@ -117,6 +113,7 @@ public class RecordingsHttpHandler {
 
         QuestionRespond questionRespond = QuestionRespond.builder()
                 .questionId(questionId)
+                .questionRespondId((long) questionRespondService.getAll().size())
                 .respondId(respondId)
                 .videoPath(request.getServletPath() + "/api/v1/vacancy/" + vacancyId +
                         "/responds/" + respondId +
