@@ -4,8 +4,9 @@ docker run -d --name vacancy-mongo -p 27017:27017 --restart=always -v /data/mong
 
 Create user:
 use dhr
-db.createUser( { user: "accountAdmin01",
-                 pwd: "changeMe"})
+db.createUser( { user: "mongoadmin",
+                 pwd: "secret",
+                 roles: []})
                  
                  
                  
