@@ -29,11 +29,6 @@ public class QuestionsRestController {
     @Autowired
     VacanciesServiceImpl vacancyService;
 
-    @GetMapping
-    public List<Question> getQuestionsByVacancy(@PathVariable Long vacancyId) {
-        return questionService.getAllByVacancy(vacancyId);
-    }
-
     @PostMapping
     public ResponseEntity create(@PathVariable Long vacancyId,@RequestBody Question question) {
         questionService.save(question);
