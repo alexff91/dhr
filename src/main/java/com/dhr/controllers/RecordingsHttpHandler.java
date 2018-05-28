@@ -121,7 +121,9 @@ public class RecordingsHttpHandler {
 
         Respond respond = respondService.get(respondId).get();
         List<QuestionRespond> respondQuestions = respond.getRespondQuestions();
-        respondQuestions.add(questionRespond);
+        if (respondQuestions != null) {
+            respondQuestions.add(questionRespond);
+        }
         respondService.save(respond);
         questionRespondService.save(questionRespond);
         return new ResponseEntity<>(HttpStatus.OK);
