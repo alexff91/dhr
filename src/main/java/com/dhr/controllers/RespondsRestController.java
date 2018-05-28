@@ -29,7 +29,7 @@ public class RespondsRestController {
         return respondService.getAllByVacancyId(vacancyId);
     }
     @PostMapping
-    public ResponseEntity<String> createRespond(@RequestBody Respond respond){
+    public ResponseEntity<Respond> createRespond(@RequestBody Respond respond){
         return new ResponseEntity<>(respondService.save(respond), HttpStatus.CREATED);
     }
 

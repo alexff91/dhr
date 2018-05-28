@@ -6,11 +6,9 @@ import com.dhr.repositories.RespondRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.Charset;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class RespondServiceImpl implements RespondService {
@@ -21,7 +19,7 @@ public class RespondServiceImpl implements RespondService {
     private QuestionRespondRepository questionRespondRepository;
 
     @Override
-    public String save(Respond respond) {
+    public Respond save(Respond respond) {
         if (respond.getStartDate() == null) {
             respond.setStartDate(new Date());
         }
@@ -35,7 +33,7 @@ public class RespondServiceImpl implements RespondService {
                 questionRespondRepository.save(question);
             });
         }
-        return respond.getRespondId();
+        return repository.findById(respond.getRespondId()).get();
     }
 
     @Override
