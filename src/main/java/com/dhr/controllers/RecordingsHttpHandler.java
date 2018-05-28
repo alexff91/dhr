@@ -101,6 +101,7 @@ public class RecordingsHttpHandler {
         String folder = getRecordingPath(respondId);
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
+        new File(path.toString()).mkdir();
         String fName = questionId + ".webm";
 
         File uploadedFile = new File(path.toFile(), fName);
