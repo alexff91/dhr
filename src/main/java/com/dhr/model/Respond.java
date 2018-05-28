@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -26,5 +27,5 @@ public class Respond {
     private String status;
     private Date startDate;
     @DBRef
-    private List<QuestionRespond> respondQuestions;
+    private List<QuestionRespond> respondQuestions = new LinkedList<>();
 }
