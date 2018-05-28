@@ -41,7 +41,7 @@ public class QuestionRespondServiceImpl implements QuestionRespondService {
     }
 
     @Override
-    public List<QuestionRespond> getAllByRespondId(Long id) {
+    public List<QuestionRespond> getAllByRespondId(String id) {
         return repository.findAllByRespondId(id);
     }
 }
