@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -23,7 +24,7 @@ public class Company {
     private Date creationDate;
     private Subscription subscription;
     @DBRef
-    private List<Vacancy> vacancies;
+    private List<Vacancy> vacancies = new LinkedList<>();
     @DBRef
-    private List<User> users;
+    private List<User> users = new LinkedList<>();
 }

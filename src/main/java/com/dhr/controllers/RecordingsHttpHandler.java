@@ -123,6 +123,7 @@ public class RecordingsHttpHandler {
         List<QuestionRespond> respondQuestions = respond.getRespondQuestions();
         if (respondQuestions != null) {
             respondQuestions.add(questionRespond);
+            respond.setRespondQuestions(respondQuestions);
         }
         respondService.save(respond);
         questionRespondService.save(questionRespond);
