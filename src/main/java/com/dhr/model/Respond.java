@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(exclude = "respondQuestions")
+@EqualsAndHashCode(exclude = {"respondQuestions", "startDate"})
 @Document(collection = "responds")
 public class Respond {
     @Id
