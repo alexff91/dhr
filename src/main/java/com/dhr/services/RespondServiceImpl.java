@@ -29,10 +29,12 @@ public class RespondServiceImpl implements RespondService {
             respond.setRespondId(Integer.toHexString(respond.hashCode()));
         }
         repository.save(respond);
-        respond.getRespondQuestions().forEach(question -> {
-            question.setRespondId(respond.getRespondId());
-            questionRespondRepository.save(question);
-        });
+        if (respond.getRespondQuestions() != null) {
+            respond.getRespondQuestions().forEach(question -> {
+                question.setRespondId(respond.getRespondId());
+                questionRespondRepository.save(question);
+            });
+        }
         return respond.getRespondId();
     }
 
