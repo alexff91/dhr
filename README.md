@@ -23,3 +23,4 @@ docker run -p 8080:8080 --restart=always -d -v /browser-recordings:/browser-reco
                  
                  
                  
+jenkins on 8081 port
