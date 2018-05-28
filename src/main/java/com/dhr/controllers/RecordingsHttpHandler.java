@@ -113,7 +113,7 @@ public class RecordingsHttpHandler {
                 .questionId(questionId)
                 .questionRespondId((long) questionRespondService.getAll().size())
                 .respondId(respondId)
-                .videoPath(request.getServletPath() + "/api/v1/responds/" + respondId +
+                .videoPath("https://168.63.13.234:8080/api/v1/responds/" + respondId +
                         "/questions/" + questionId + ".webm")
                 .answered(true)
                 .respondTime(new Date())

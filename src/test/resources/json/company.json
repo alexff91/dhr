@@ -29,8 +29,8 @@
       "position": "Кредитный специалист",
       "questions": [
         {
-          "durationMax": 60000,
-          "durationToRead": 20000,
+          "durationMax": 80000,
+          "durationToRead": 15000,
           "id": 1,
           "isCompulsory": true,
           "orderNumber": 1,
@@ -38,7 +38,7 @@
           "vacancyId": 1
         },
         {
-          "durationMax": 60000,
+          "durationMax": 90000,
           "durationToRead": 20000,
           "id": 2,
           "isCompulsory": true,
@@ -47,7 +47,7 @@
           "vacancyId": 1
         },
         {
-          "durationMax": 60000,
+          "durationMax": 70000,
           "durationToRead": 20000,
           "id": 3,
           "isCompulsory": true,
@@ -56,22 +56,22 @@
           "vacancyId": 1
         },
         {
-          "durationMax": 60000,
+          "durationMax": 30000,
           "durationToRead": 20000,
-          "id": 3,
+          "id": 11,
           "isCompulsory": true,
-          "orderNumber": 3,
+          "orderNumber": 11,
           "question": "Назовите минимальный уровень заработной платы, на которую вы готовы согласиться.",
           "vacancyId": 1
         },
         {
           "durationMax": 60000,
           "durationToRead": 20000,
-          "id": 1,
+          "id": 4,
           "isCompulsory": true,
           "orderNumber": 4,
           "question": "Как вы видите развитие своей карьеры через 3-5 лет?",
-          "vacancyId": 4
+          "vacancyId": 1
         },
         {
           "durationMax": 60000,
