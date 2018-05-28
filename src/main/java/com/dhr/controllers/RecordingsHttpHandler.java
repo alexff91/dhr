@@ -51,7 +51,7 @@ public class RecordingsHttpHandler {
     RespondService respondService;
 
     @RequestMapping(value = "/{questionId}/{filename:.+}", method = RequestMethod.GET)
-    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable Long respondId,
+    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable String respondId,
                                                          @PathVariable Long questionId,
                                                          HttpServletRequest request,
                                                          HttpServletResponse response) throws Exception {
@@ -114,7 +114,7 @@ public class RecordingsHttpHandler {
                 .questionRespondId((long) questionRespondService.getAll().size())
                 .respondId(respondId)
                 .videoPath("https://168.63.13.234:8080/api/v1/responds/" + respondId +
-                        "/questions/" + questionId + ".webm")
+                        "/questions/" + questionId + "/" + questionId + ".webm")
                 .answered(true)
                 .respondTime(new Date())
                 .build();
