@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface QuestionRespondRepository extends MongoRepository<QuestionRespond, String> {
+public interface QuestionRespondRepository extends MongoRepository<QuestionRespond, Long> {
     public List<QuestionRespond> findAllByRespondId(String respondId);
 }

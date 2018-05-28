@@ -19,7 +19,7 @@ public class QuestionRespondRestController {
     QuestionRespondServiceImpl questionService;
 
     @GetMapping
-    public List<QuestionRespond> getQuestionsByVacancy(@PathParam("respondId") Long respondId) {
+    public List<QuestionRespond> getQuestionsByVacancy(@PathParam("respondId") String respondId) {
         return questionService.getAllByRespondId(respondId);
     }
 }

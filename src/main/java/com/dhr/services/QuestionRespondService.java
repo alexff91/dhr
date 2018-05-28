@@ -16,5 +16,5 @@ public interface QuestionRespondService {
 
     List<QuestionRespond> getAll();
 
-    List<QuestionRespond> getAllByRespondId(Long id);
+    List<QuestionRespond> getAllByRespondId(String id);
 }
