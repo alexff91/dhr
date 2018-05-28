@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/vacancy/{vacancyId}/responds/{respondId}/questions/")
+@RequestMapping("/api/v1/responds/{respondId}/questions/")
 public class RecordingsHttpHandler {
 
     private static final Logger log = LoggerFactory.getLogger(RecordingsHttpHandler.class);
@@ -51,13 +51,12 @@ public class RecordingsHttpHandler {
     RespondService respondService;
 
     @RequestMapping(value = "/{questionId}/{filename:.+}", method = RequestMethod.GET)
-    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable Long vacancyId,
-                                                         @PathVariable Long respondId,
+    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable Long respondId,
                                                          @PathVariable Long questionId,
                                                          HttpServletRequest request,
                                                          HttpServletResponse response) throws Exception {
 
-        File file = new File(config.getRecordingsPath() + "/vacancy/" + vacancyId + "/responds/" + respondId + "/questions/", questionId + ".webm");
+        File file = new File(config.getRecordingsPath() + "/responds/" + respondId + "/questions/", questionId + ".webm");
 
         if (file.isFile()) {
             MultipartFileSender.fromPath(file.toPath()).with(request).with(response).serveResource();
@@ -69,13 +68,12 @@ public class RecordingsHttpHandler {
 
     @GetMapping
     public ResponseEntity<List<String>> handleGetRecordings(HttpServletRequest request,
-                                                            @PathVariable Long vacancyId,
                                                             @PathVariable String respondId,
                                                             HttpServletResponse response)
             throws Exception {
         List<String> results = new ArrayList<>();
 
-        File[] filesUser = new File(config.getRecordingsPath() + getRecordingPath(vacancyId, respondId)).listFiles();
+        File[] filesUser = new File(config.getRecordingsPath() + getRecordingPath(respondId)).listFiles();
         assert filesUser != null;
         for (File file : filesUser) {
             if (file.isFile()) {
@@ -85,14 +83,13 @@ public class RecordingsHttpHandler {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
-    private String getRecordingPath(@PathVariable Long vacancyId, @PathVariable String respondId) {
-        return "/vacancy/" + vacancyId + "/responds/" + respondId + "/questions/";
+    private String getRecordingPath(@PathVariable String respondId) {
+        return "/responds/" + respondId + "/questions/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{questionId}")
     public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request,
                                                           @PathVariable String respondId,
-                                                          @PathVariable Long vacancyId,
                                                           @PathVariable Long questionId,
                                                           @RequestParam("file") MultipartFile file) throws IOException {
 
@@ -101,7 +98,7 @@ public class RecordingsHttpHandler {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        String folder = getRecordingPath(vacancyId, respondId);
+        String folder = getRecordingPath(respondId);
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
         String fName = questionId + ".webm";
@@ -115,8 +112,7 @@ public class RecordingsHttpHandler {
                 .questionId(questionId)
                 .questionRespondId((long) questionRespondService.getAll().size())
                 .respondId(respondId)
-                .videoPath(request.getServletPath() + "/api/v1/vacancy/" + vacancyId +
-                        "/responds/" + respondId +
+                .videoPath(request.getServletPath() + "/api/v1/responds/" + respondId +
                         "/questions/" + questionId + ".webm")
                 .answered(true)
                 .respondTime(new Date())
