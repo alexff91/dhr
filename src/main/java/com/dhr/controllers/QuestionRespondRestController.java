@@ -5,10 +5,10 @@ import com.dhr.services.QuestionRespondServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -19,7 +19,7 @@ public class QuestionRespondRestController {
     QuestionRespondServiceImpl questionService;
 
     @GetMapping
-    public List<QuestionRespond> getQuestionsByVacancy(@PathParam("respondId") String respondId) {
+    public List<QuestionRespond> getQuestionsByVacancy(@PathVariable String respondId) {
         return questionService.getAllByRespondId(respondId);
     }
 }
