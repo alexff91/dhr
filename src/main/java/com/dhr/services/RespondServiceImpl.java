@@ -1,5 +1,6 @@
 package com.dhr.services;
 
+import com.dhr.model.QuestionRespond;
 import com.dhr.model.Respond;
 import com.dhr.repositories.QuestionRespondRepository;
 import com.dhr.repositories.RespondRepository;
@@ -27,7 +28,9 @@ public class RespondServiceImpl implements RespondService {
             respond.setRespondId(Integer.toHexString(respond.hashCode()));
         }
         repository.save(respond);
-        if (respond.getRespondQuestions() != null) {
+        List<QuestionRespond> oldRespondQuestions = repository.findById(respond.getRespondId()).get().getRespondQuestions();
+        if (respond.getRespondQuestions() != null || oldRespondQuestions.size() != 0) {
+            respond.getRespondQuestions().addAll(oldRespondQuestions);
             respond.getRespondQuestions().forEach(question -> {
                 question.setRespondId(respond.getRespondId());
                 questionRespondRepository.save(question);
