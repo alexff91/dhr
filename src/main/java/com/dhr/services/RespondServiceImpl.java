@@ -27,7 +27,7 @@ public class RespondServiceImpl implements RespondService {
         if (respond.getRespondId() == null) {
             respond.setRespondId(Integer.toHexString(respond.hashCode()));
         }
-        repository.save(respond);
+
         List<QuestionRespond> oldRespondQuestions = repository.findById(respond.getRespondId()).get().getRespondQuestions();
         if (respond.getRespondQuestions() != null || oldRespondQuestions.size() != 0) {
             respond.getRespondQuestions().addAll(oldRespondQuestions);
@@ -38,6 +38,7 @@ public class RespondServiceImpl implements RespondService {
                 }
             });
         }
+        repository.save(respond);
         return repository.findById(respond.getRespondId()).get();
     }
 
