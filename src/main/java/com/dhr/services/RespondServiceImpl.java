@@ -32,8 +32,10 @@ public class RespondServiceImpl implements RespondService {
         if (respond.getRespondQuestions() != null || oldRespondQuestions.size() != 0) {
             respond.getRespondQuestions().addAll(oldRespondQuestions);
             respond.getRespondQuestions().forEach(question -> {
-                question.setRespondId(respond.getRespondId());
-                questionRespondRepository.save(question);
+                if (question != null) {
+                    question.setRespondId(respond.getRespondId());
+                    questionRespondRepository.save(question);
+                }
             });
         }
         return repository.findById(respond.getRespondId()).get();
