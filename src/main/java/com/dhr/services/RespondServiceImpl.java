@@ -27,14 +27,14 @@ public class RespondServiceImpl implements RespondService {
             respond.setRespondId(Integer.toHexString(respond.hashCode()));
         }
 
-        if (respond.getRespondQuestions() != null) {
+        if (respond.getRespondQuestions() != null && respond.getRespondQuestions().size() !=0) {
             respond.getRespondQuestions().forEach(question -> {
                 if (question != null) {
                     question.setRespondId(respond.getRespondId());
                     questionRespondRepository.save(question);
                 }
             });
-        } else if (repository.findById(respond.getRespondId()).get().getRespondQuestions() != null) {
+        } else if (repository.findById(respond.getRespondId()).get().getRespondQuestions().size() != 0) {
             respond.getRespondQuestions().addAll(repository.findById(respond.getRespondId()).get().getRespondQuestions());
         }
         repository.save(respond);
