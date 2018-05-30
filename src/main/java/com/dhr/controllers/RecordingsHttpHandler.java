@@ -33,6 +33,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -121,7 +123,11 @@ public class RecordingsHttpHandler {
 
         Respond respond = respondService.get(respondId).get();
         List<QuestionRespond> respondQuestions = respond.getRespondQuestions();
-        if (respondQuestions != null) {
+        Optional<QuestionRespond> answeredRespond = respond.getRespondQuestions().stream()
+                .filter(questionRespondAnswered -> Objects.equals(questionRespondAnswered.getQuestionId(), questionRespond.getQuestionId())).findAny();
+        if (answeredRespond.isPresent()) {
+            respond.getRespondQuestions().set(respond.getRespondQuestions().indexOf(answeredRespond.get()), questionRespond);
+        } else if (respondQuestions != null) {
             respondQuestions.add(questionRespond);
             respond.setRespondQuestions(respondQuestions);
         }

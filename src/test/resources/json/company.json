@@ -48,7 +48,7 @@
         },
         {
           "durationMax": 70000,
-          "durationToRead": 20000,
+          "durationToRead": 0,
           "id": 3,
           "isCompulsory": true,
           "orderNumber": 3,
