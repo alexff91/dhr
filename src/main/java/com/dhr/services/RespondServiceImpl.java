@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RespondServiceImpl implements RespondService {
@@ -28,7 +30,7 @@ public class RespondServiceImpl implements RespondService {
             respond.setRespondId(Integer.toHexString(respond.hashCode()));
         }
 
-        List<QuestionRespond> oldRespondQuestions = repository.findById(respond.getRespondId()).get().getRespondQuestions();
+        Set<QuestionRespond> oldRespondQuestions = new HashSet(repository.findById(respond.getRespondId()).get().getRespondQuestions());
         if (respond.getRespondQuestions() != null || oldRespondQuestions.size() != 0) {
             respond.getRespondQuestions().addAll(oldRespondQuestions);
             respond.getRespondQuestions().forEach(question -> {
