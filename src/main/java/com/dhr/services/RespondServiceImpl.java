@@ -30,9 +30,7 @@ public class RespondServiceImpl implements RespondService {
             respond.setRespondId(Integer.toHexString(respond.hashCode()));
         }
 
-        Set<QuestionRespond> oldRespondQuestions = new HashSet(repository.findById(respond.getRespondId()).get().getRespondQuestions());
-        if (respond.getRespondQuestions() != null || oldRespondQuestions.size() != 0) {
-            respond.getRespondQuestions().addAll(oldRespondQuestions);
+        if (respond.getRespondQuestions() != null) {
             respond.getRespondQuestions().forEach(question -> {
                 if (question != null) {
                     question.setRespondId(respond.getRespondId());
