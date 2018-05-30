@@ -1,6 +1,5 @@
 package com.dhr.services;
 
-import com.dhr.model.QuestionRespond;
 import com.dhr.model.Respond;
 import com.dhr.repositories.QuestionRespondRepository;
 import com.dhr.repositories.RespondRepository;
@@ -8,10 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class RespondServiceImpl implements RespondService {
@@ -37,6 +34,8 @@ public class RespondServiceImpl implements RespondService {
                     questionRespondRepository.save(question);
                 }
             });
+        } else if (repository.findById(respond.getRespondId()).get().getRespondQuestions() != null) {
+            respond.getRespondQuestions().addAll(repository.findById(respond.getRespondId()).get().getRespondQuestions());
         }
         repository.save(respond);
         return repository.findById(respond.getRespondId()).get();
