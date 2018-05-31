@@ -42,7 +42,7 @@
           "durationToRead": 20000,
           "id": 2,
           "isCompulsory": true,
-          "orderNumber": 2,
+          "orderNumber": 3,
           "question": "Вы будете успешны в коллективе? Почему вы так думаете?",
           "vacancyId": 1
         },
@@ -51,7 +51,7 @@
           "durationToRead": 0,
           "id": 3,
           "isCompulsory": true,
-          "orderNumber": 3,
+          "orderNumber": 4,
           "question": "Перечислите те критерии, которые для вас наиболее важны в этой работе.",
           "vacancyId": 1
         },
@@ -60,7 +60,7 @@
           "durationToRead": 20000,
           "id": 11,
           "isCompulsory": true,
-          "orderNumber": 11,
+          "orderNumber": 5,
           "question": "Назовите минимальный уровень заработной платы, на которую вы готовы согласиться.",
           "vacancyId": 1
         },
@@ -69,7 +69,7 @@
           "durationToRead": 20000,
           "id": 4,
           "isCompulsory": true,
-          "orderNumber": 4,
+          "orderNumber": 2,
           "question": "Как вы видите развитие своей карьеры через 3-5 лет?",
           "vacancyId": 1
         },
@@ -78,7 +78,7 @@
           "durationToRead": 20000,
           "id": 5,
           "isCompulsory": true,
-          "orderNumber": 5,
+          "orderNumber": 11,
           "question": "Какие ваши самые сильные качества?",
           "vacancyId": 1
         },

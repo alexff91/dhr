@@ -34,8 +34,11 @@ public class RespondServiceImpl implements RespondService {
                     questionRespondRepository.save(question);
                 }
             });
-        } else if (repository.findById(respond.getRespondId()).get().getRespondQuestions().size() != 0) {
-            respond.getRespondQuestions().addAll(repository.findById(respond.getRespondId()).get().getRespondQuestions());
+        } else {
+            Optional<Respond> byId = repository.findById(respond.getRespondId());
+            if (byId.isPresent() && byId.get().getRespondQuestions().size() != 0) {
+                respond.getRespondQuestions().addAll(repository.findById(respond.getRespondId()).get().getRespondQuestions());
+            }
         }
         repository.save(respond);
         return repository.findById(respond.getRespondId()).get();
