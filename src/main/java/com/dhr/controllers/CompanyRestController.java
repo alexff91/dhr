@@ -1,6 +1,8 @@
 package com.dhr.controllers;
 
 import com.dhr.model.Company;
+import com.dhr.model.Respond;
+import com.dhr.model.User;
 import com.dhr.model.Vacancy;
 import com.dhr.services.CompanyServiceImpl;
 import com.dhr.services.VacanciesServiceImpl;
@@ -19,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -34,22 +39,29 @@ public class CompanyRestController {
         return companyService.get(companyId).get().getVacancies();
     }
 
+    @RequestMapping(value = "/{companyId}/users", method = RequestMethod.GET)
+    public ResponseEntity getUsersByCompanyId(@PathVariable Long companyId) {
+        Optional<Company> company = companyService.get(companyId);
+        return company.map(c -> new ResponseEntity(c.getUsers(), OK))
+                .orElseGet(() -> new ResponseEntity(NOT_FOUND));
+    }
+
     @RequestMapping(value = "/{companyId}", method = RequestMethod.GET)
     public Company getByCompanyId(@PathVariable Long companyId) {
         return companyService.get(companyId).get();
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(CREATED)
     public ResponseEntity createCompany(@RequestBody Company company) {
         companyService.save(company);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(CREATED);
     }
 
     @DeleteMapping("{companyId}")
     public ResponseEntity deleteCompany(@PathVariable Long companyId) {
         companyService.delete(companyService.get(companyId).get());
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(OK);
     }
 
     @GetMapping
