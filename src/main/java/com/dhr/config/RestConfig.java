@@ -9,7 +9,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class RestConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*").allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(),
-                HttpMethod.PUT.name(), HttpMethod.DELETE.name()).allowCredentials(false);
+        registry.addMapping("/**").allowedOrigins("*")
+                .allowedMethods(HttpMethod.GET.name(),
+                        HttpMethod.POST.name(),
+                        HttpMethod.PUT.name(),
+                        HttpMethod.DELETE.name(),
+                        HttpMethod.OPTIONS.name(),
+                        HttpMethod.HEAD.name(),
+                        HttpMethod.PATCH.name()).allowCredentials(true);
     }
 }
