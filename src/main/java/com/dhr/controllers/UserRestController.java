@@ -37,6 +37,13 @@ public class UserRestController {
                 .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
     }
 
+    @RequestMapping(value = "/me", method = RequestMethod.GET)
+    public ResponseEntity<User> getUserFromSession() {
+        Optional<User> user = userService.get(1L);
+        return user.map(u -> new ResponseEntity<>(u, OK))
+                .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity createUser(@RequestBody User user) {
