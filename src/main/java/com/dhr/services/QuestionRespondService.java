@@ -14,7 +14,7 @@ public interface QuestionRespondService {
 
     Optional<QuestionRespond> get(Long id);
 
-    List<QuestionRespond> getAll();
+    Iterable<QuestionRespond> getAll();
 
     List<QuestionRespond> getAllByRespondId(String id);
 }

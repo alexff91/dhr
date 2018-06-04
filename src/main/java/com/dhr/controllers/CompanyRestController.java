@@ -1,19 +1,18 @@
 package com.dhr.controllers;
 
 import com.dhr.model.Company;
-import com.dhr.model.Respond;
-import com.dhr.model.User;
 import com.dhr.model.Vacancy;
 import com.dhr.services.CompanyServiceImpl;
 import com.dhr.services.VacanciesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,11 +50,21 @@ public class CompanyRestController {
         return companyService.get(companyId).get();
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(CREATED)
-    public ResponseEntity createCompany(@RequestBody Company company) {
-        companyService.save(company);
-        return new ResponseEntity(CREATED);
+    public ResponseEntity<Long> createCompany(@RequestBody Company company) {
+        return new ResponseEntity<>(companyService.save(company), CREATED);
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(OK)
+    public ResponseEntity updateCompany(@RequestBody Company company) {
+        Company oldCompany = companyService.get(company.getId()).get();
+        oldCompany.setCompanyDescription(company.getCompanyDescription());
+        oldCompany.setCompanyName(company.getCompanyName());
+        oldCompany.setCompanyLogoPath(company.getCompanyLogoPath());
+        companyService.save(oldCompany);
+        return new ResponseEntity(OK);
     }
 
     @DeleteMapping("{companyId}")
@@ -65,7 +74,7 @@ public class CompanyRestController {
     }
 
     @GetMapping
-    public List<Company> getCompanies() {
+    public Iterable<Company> getCompanies() {
         return companyService.getAll();
     }
 }

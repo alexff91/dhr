@@ -1,28 +1,57 @@
 package com.dhr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @ToString
-@Document(collection = "vacancies")
-public class Vacancy {
+@Entity
+@Table(name = "vacancy", schema = "vihr")
+public class Vacancy implements Serializable {
     @Id
-    private Long vacancyId;
-    private Long companyId;
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    private Company company;
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    private User user;
+
+    @Column
     private String position;
+
+    @Column
     private String description;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "creation_date")
     private Date creationDate;
-    @DBRef
-    private List<Question> questions = new LinkedList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "vacancy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("questions")
+    private Set<Question> questions = new LinkedHashSet<>();
 }

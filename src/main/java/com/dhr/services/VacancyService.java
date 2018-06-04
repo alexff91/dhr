@@ -2,7 +2,6 @@ package com.dhr.services;
 
 import com.dhr.model.Vacancy;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface VacancyService {
@@ -14,5 +13,5 @@ public interface VacancyService {
 
     Optional<Vacancy> get(Long id);
 
-    List<Vacancy> getAll();
+    Iterable<Vacancy> getAll();
 }

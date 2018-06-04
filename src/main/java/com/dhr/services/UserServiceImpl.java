@@ -5,7 +5,6 @@ import com.dhr.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,7 +15,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long save(User user) {
         repository.save(user);
-        return user.getCompanyId();
+        return user.getId();
     }
 
     @Override
@@ -36,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
+    public Iterable<User> getAll() {
         return repository.findAll();
     }
 }

@@ -1,7 +1,7 @@
 package com.dhr.repositories;
 
 import com.dhr.model.Company;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface CompanyRepository extends MongoRepository<Company, Long> {
+public interface CompanyRepository extends CrudRepository<Company, Long> {
 }

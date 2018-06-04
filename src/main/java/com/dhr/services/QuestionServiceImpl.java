@@ -35,7 +35,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getAll() {
+    public Iterable<Question> getAll() {
         return repository.findAll();
     }
 

@@ -3,6 +3,7 @@ package com.dhr.controllers;
 import com.dhr.model.Respond;
 import com.dhr.model.Vacancy;
 import com.dhr.services.RespondServiceImpl;
+import com.dhr.services.VacancyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +25,16 @@ public class RespondsRestController {
     @Autowired
     RespondServiceImpl respondService;
 
+    @Autowired
+    VacancyService vacancyService;
+
     @GetMapping
     public List<Respond> getRespondsByVacancy(@PathVariable Long vacancyId) {
         return respondService.getAllByVacancyId(vacancyId);
     }
     @PostMapping
     public ResponseEntity<Respond> createRespond(@RequestBody Respond respond, @PathVariable Long vacancyId){
-        respond.setVacancyId(vacancyId);
+        respond.setVacancy(vacancyService.get(vacancyId).get());
         return new ResponseEntity<>(respondService.save(respond), HttpStatus.CREATED);
     }
 

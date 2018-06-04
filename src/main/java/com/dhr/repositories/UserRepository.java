@@ -1,7 +1,7 @@
 package com.dhr.repositories;
 
 import com.dhr.model.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends MongoRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 }

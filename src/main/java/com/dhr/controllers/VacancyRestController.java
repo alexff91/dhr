@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -30,7 +30,7 @@ public class VacancyRestController {
     QuestionServiceImpl questionService;
 
     @RequestMapping(value = "{vacancyId}/questions", method = RequestMethod.GET)
-    public List<Question> getQuestionsByVacancyId(@PathVariable Long vacancyId) {
+    public Set<Question> getQuestionsByVacancyId(@PathVariable Long vacancyId) {
         return vacanciesService.get(vacancyId).get().getQuestions();
     }
 
@@ -46,7 +46,7 @@ public class VacancyRestController {
     }
 
     @GetMapping
-    public List<Vacancy> getVacancies() {
+    public Iterable<Vacancy> getVacancies() {
         return vacanciesService.getAll();
     }
 

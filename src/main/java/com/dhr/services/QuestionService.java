@@ -14,7 +14,7 @@ public interface QuestionService {
 
     Optional<Question> get(Long id);
 
-    List<Question> getAll();
+    Iterable<Question> getAll();
 
     List<Question> getAllByVacancy(Long id);
 }

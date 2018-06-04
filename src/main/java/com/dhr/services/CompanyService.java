@@ -2,7 +2,6 @@ package com.dhr.services;
 
 import com.dhr.model.Company;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface CompanyService {
@@ -14,5 +13,5 @@ public interface CompanyService {
 
     Optional<Company> get(Long id);
 
-    List<Company> getAll();
+    Iterable<Company> getAll();
 }

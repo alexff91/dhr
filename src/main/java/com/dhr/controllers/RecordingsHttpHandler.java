@@ -4,6 +4,7 @@ import com.dhr.config.PropertiesConfig;
 import com.dhr.model.QuestionRespond;
 import com.dhr.model.Respond;
 import com.dhr.services.QuestionRespondService;
+import com.dhr.services.QuestionService;
 import com.dhr.services.RespondService;
 import com.dhr.utils.MultipartFileSender;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -48,6 +49,9 @@ public class RecordingsHttpHandler {
 
     @Autowired
     QuestionRespondService questionRespondService;
+
+    @Autowired
+    QuestionService questionService;
 
     @Autowired
     RespondService respondService;
@@ -112,10 +116,9 @@ public class RecordingsHttpHandler {
         IOUtils.closeQuietly(initialStream);
 
         QuestionRespond questionRespond = QuestionRespond.builder()
-                .questionId(questionId)
-                .questionRespondId((long) questionRespondService.getAll().size())
-                .respondId(respondId)
-                .videoPath("https://168.63.13.234:8080/api/v1/responds/" + respondId +
+                .question(questionService.get(questionId).get())
+                .respond(respondService.get(respondId).get())
+                .videoPath("https://vi-hr.com:8080/api/v1/responds/" + respondId +
                         "/questions/" + questionId + "/" + questionId + ".webm")
                 .answered(true)
                 .respondTime(new Date())
@@ -124,14 +127,13 @@ public class RecordingsHttpHandler {
         Respond respond = respondService.get(respondId).get();
         List<QuestionRespond> respondQuestions = respond.getRespondQuestions();
         Optional<QuestionRespond> answeredRespond = respond.getRespondQuestions().stream()
-                .filter(questionRespondAnswered -> Objects.equals(questionRespondAnswered.getQuestionId(), questionRespond.getQuestionId())).findAny();
+                .filter(questionRespondAnswered -> Objects.equals(questionRespondAnswered.getQuestion().getId(), questionRespond.getId())).findAny();
         if (answeredRespond.isPresent()) {
             respond.getRespondQuestions().set(respond.getRespondQuestions().indexOf(answeredRespond.get()), questionRespond);
         } else if (respondQuestions != null) {
             respondQuestions.add(questionRespond);
             respond.setRespondQuestions(respondQuestions);
         }
-        respondService.save(respond);
         questionRespondService.save(questionRespond);
         return new ResponseEntity<>(HttpStatus.OK);
     }

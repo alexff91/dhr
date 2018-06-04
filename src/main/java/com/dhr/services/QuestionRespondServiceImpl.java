@@ -16,7 +16,7 @@ public class QuestionRespondServiceImpl implements QuestionRespondService {
     @Override
     public Long save(QuestionRespond question) {
         repository.save(question);
-        return question.getQuestionRespondId();
+        return question.getId();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class QuestionRespondServiceImpl implements QuestionRespondService {
     }
 
     @Override
-    public List<QuestionRespond> getAll() {
+    public Iterable<QuestionRespond> getAll() {
         return repository.findAll();
     }
 

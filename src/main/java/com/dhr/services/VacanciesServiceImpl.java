@@ -6,7 +6,6 @@ import com.dhr.repositories.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,11 +19,7 @@ public class VacanciesServiceImpl implements VacancyService {
     @Override
     public Long save(Vacancy vacancy) {
         repository.save(vacancy);
-        vacancy.getQuestions().forEach(question -> {
-            question.setVacancyId(vacancy.getVacancyId());
-            questionRepository.save(question);
-        });
-        return vacancy.getVacancyId();
+        return vacancy.getId();
     }
 
     @Override
@@ -44,7 +39,7 @@ public class VacanciesServiceImpl implements VacancyService {
     }
 
     @Override
-    public List<Vacancy> getAll() {
+    public Iterable<Vacancy> getAll() {
         return repository.findAll();
     }
 }

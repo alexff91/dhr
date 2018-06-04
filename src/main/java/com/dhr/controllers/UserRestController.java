@@ -2,7 +2,8 @@ package com.dhr.controllers;
 
 import com.dhr.model.Role;
 import com.dhr.model.User;
-import com.dhr.services.UserServiceImpl;
+import com.dhr.services.RoleService;
+import com.dhr.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -28,7 +28,10 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/api/v1/users")
 public class UserRestController {
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
+
+    @Autowired
+    RoleService roleService;
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public ResponseEntity<User> getRolesByUserId(@PathVariable Long userId) {
@@ -61,13 +64,14 @@ public class UserRestController {
         return new ResponseEntity(NOT_FOUND);
     }
 
+    //#TODO add repo for roles
     @GetMapping("/roles")
-    public ResponseEntity<Role[]> getRoles() {
-        return new ResponseEntity<>(Role.values(), HttpStatus.OK);
+    public Iterable<Role> getRoles() {
+        return roleService.getAll();
     }
 
     @GetMapping()
-    public List<User> getUsers() {
+    public Iterable<User> getUsers() {
         return userService.getAll();
     }
 }

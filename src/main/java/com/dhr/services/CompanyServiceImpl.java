@@ -2,52 +2,42 @@ package com.dhr.services;
 
 import com.dhr.model.Company;
 import com.dhr.repositories.CompanyRepository;
-import com.dhr.repositories.UserRepository;
-import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
     @Autowired
-    private CompanyRepository repository;
-
-    @Autowired
-    private VacancyService vacancyRepository;
-
-    @Autowired
-    private UserService userRepository;
+    private CompanyRepository companyRepository;
 
     @Override
     public Long save(Company company) {
-        repository.save(company);
-        company.getVacancies().forEach(i -> vacancyRepository.save(i));
-        company.getUsers().forEach(i -> userRepository.save(i));
-        return company.getCompanyId();
+        company.setCreationDate(new Date());
+        companyRepository.save(company);
+        return company.getId();
     }
 
     @Override
     public void delete(Company company) {
-        company.getVacancies().forEach(i -> vacancyRepository.delete(i));
-        repository.delete(company);
+        companyRepository.delete(company);
     }
 
     @Override
     public Company update(Company company) {
-        repository.save(company);
+        companyRepository.save(company);
         return company;
     }
 
     @Override
     public Optional<Company> get(Long id) {
-        return repository.findById(id);
+        return companyRepository.findById(id);
     }
 
     @Override
-    public List<Company> getAll() {
-        return repository.findAll();
+    public Iterable<Company> getAll() {
+        return companyRepository.findAll();
     }
 }

@@ -20,28 +20,27 @@ public class RespondServiceImpl implements RespondService {
 
     @Override
     public Respond save(Respond respond) {
-        if (respond.getStartDate() == null) {
-            respond.setStartDate(new Date());
-        }
-        if (respond.getRespondId() == null) {
-            respond.setRespondId(Integer.toHexString(respond.hashCode()));
-        }
-
-        if (respond.getRespondQuestions() != null && respond.getRespondQuestions().size() !=0) {
-            respond.getRespondQuestions().forEach(question -> {
-                if (question != null) {
-                    question.setRespondId(respond.getRespondId());
-                    questionRespondRepository.save(question);
-                }
-            });
-        } else {
-            Optional<Respond> byId = repository.findById(respond.getRespondId());
-            if (byId.isPresent() && byId.get().getRespondQuestions().size() != 0) {
-                respond.getRespondQuestions().addAll(repository.findById(respond.getRespondId()).get().getRespondQuestions());
-            }
-        }
+//        if (respond.getStartDate() == null) {
+//            respond.setStartDate(new Date());
+//        }
+//        if (respond.getId() == null) {
+//            respond.setId(Integer.toHexString(respond.hashCode()));
+//        }
+//
+//        if (respond.getRespondQuestions() != null && respond.getRespondQuestions().size() !=0) {
+//            respond.getRespondQuestions().forEach(question -> {
+//                if (question != null) {
+//                    questionRespondRepository.save(question);
+//                }
+//            });
+//        } else {
+//            Optional<Respond> byId = repository.findById(respond.getId());
+//            if (byId.isPresent() && byId.get().getRespondQuestions().size() != 0) {
+//                respond.getRespondQuestions().addAll(repository.findById(respond.getId()).get().getRespondQuestions());
+//            }
+//        }
         repository.save(respond);
-        return repository.findById(respond.getRespondId()).get();
+        return repository.findById(respond.getId()).get();
     }
 
     @Override
@@ -61,7 +60,7 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public List<Respond> getAll() {
+    public Iterable<Respond> getAll() {
         return repository.findAll();
     }
 
@@ -72,6 +71,6 @@ public class RespondServiceImpl implements RespondService {
 
     @Override
     public List<Respond> getByVacancyIdAndRespondId(Long vacancyId, String respondId) {
-        return repository.findFirstByVacancyIdAndRespondId(vacancyId, respondId);
+        return repository.findFirstByVacancyIdAndId(vacancyId, respondId);
     }
 }
