@@ -26,7 +26,7 @@ public class QuestionsRestController {
 
     @PostMapping
     public ResponseEntity create(@PathVariable Long vacancyId, @RequestBody Question question) {
-        questionService.save(question);
+        questionService.save(question, vacancyId);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 

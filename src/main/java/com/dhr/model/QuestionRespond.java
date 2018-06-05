@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,8 +33,10 @@ import java.util.Date;
 @Entity
 @Table(name = "question_respond", schema = "vihr")
 public class QuestionRespond implements Serializable {
+    private static final String SEQUENCE_NAME = "question_respond_id_seq";
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
     @Column(name = "id", nullable = false)
     private Long id;
 

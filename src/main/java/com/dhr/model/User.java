@@ -2,7 +2,6 @@ package com.dhr.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
@@ -25,9 +25,12 @@ import java.util.List;
 @ToString
 @Entity
 @Table(schema = "vihr")
-public class User implements Serializable{
+public class User implements Serializable {
+    private static final String SEQUENCE_NAME = "user_id_seq";
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
+
     @Column(name = "id", nullable = false)
     private Long id;
 
