@@ -20,14 +20,14 @@ public class RespondServiceImpl implements RespondService {
 
     @Override
     public Respond save(Respond respond) {
-//        if (respond.getStartDate() == null) {
-//            respond.setStartDate(new Date());
-//        }
-//        if (respond.getId() == null) {
-//            respond.setId(Integer.toHexString(respond.hashCode()));
-//        }
-//
-//        if (respond.getRespondQuestions() != null && respond.getRespondQuestions().size() !=0) {
+        if (respond.getStartDate() == null) {
+            respond.setStartDate(new Date());
+        }
+        if (respond.getId() == null) {
+            respond.setId(Integer.toHexString(respond.hashCode()));
+        }
+
+//        if (respond.getRespondQuestions() != null && respond.getRespondQuestions().size() != 0) {
 //            respond.getRespondQuestions().forEach(question -> {
 //                if (question != null) {
 //                    questionRespondRepository.save(question);

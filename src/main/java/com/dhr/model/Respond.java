@@ -28,7 +28,6 @@ import java.util.List;
 @Entity
 public class Respond {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private String id;
 
@@ -49,6 +48,7 @@ public class Respond {
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
+    @JsonIgnore
     @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "respond_id")
     private List<QuestionRespond> respondQuestions = new LinkedList<>();

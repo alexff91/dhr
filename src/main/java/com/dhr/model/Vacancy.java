@@ -34,10 +34,12 @@ public class Vacancy implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JsonIgnore
+    @ManyToOne
     private Company company;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JsonIgnore
+    @ManyToOne
     private User user;
 
     @Column
@@ -51,7 +53,7 @@ public class Vacancy implements Serializable {
     private Date creationDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "vacancy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "vacancy", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference("questions")
     private Set<Question> questions = new LinkedHashSet<>();
 }
