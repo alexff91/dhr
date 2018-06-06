@@ -30,7 +30,6 @@ public class Question implements Serializable{
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
-
     @Column(name = "id", nullable = false)
     private Long id;
 
