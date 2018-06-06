@@ -60,6 +60,6 @@ public class Company implements Serializable {
     private List<Vacancy> vacancies = new LinkedList<>();
 
     @JsonIgnore
-    @OneToMany(targetEntity = User.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = User.class)
     private List<User> users = new LinkedList<>();
 }
