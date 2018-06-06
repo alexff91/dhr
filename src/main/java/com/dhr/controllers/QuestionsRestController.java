@@ -32,7 +32,7 @@ public class QuestionsRestController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PostMapping
+    @PostMapping("/batch")
     public ResponseEntity createBatch(@PathVariable String vacancyId, @RequestBody List<Question> questions) {
         questions.forEach(question -> questionService.save(question, vacancyId));
         return new ResponseEntity(HttpStatus.CREATED);
