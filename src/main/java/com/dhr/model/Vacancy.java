@@ -58,4 +58,8 @@ public class Vacancy implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date")
     private Date creationDate;
+
+    @JsonIgnore
+    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
+    private Set<Question> questions = new LinkedHashSet<>();
 }
