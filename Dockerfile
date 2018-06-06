@@ -4,6 +4,6 @@ MAINTAINER alexff91@gmail.com
 # Copy Spring Boot app
 COPY target/recording-server-endpoint-1.0.0.jar /
 
-EXPOSE 8080
+EXPOSE 8082
 
 CMD ["/usr/bin/java", "-jar", "recording-server-endpoint-1.0.0.jar"]
