@@ -3,6 +3,7 @@ package com.dhr.controllers;
 import com.dhr.model.Company;
 import com.dhr.model.Vacancy;
 import com.dhr.services.CompanyServiceImpl;
+import com.dhr.services.UserServiceImpl;
 import com.dhr.services.VacanciesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,18 +32,22 @@ import static org.springframework.http.HttpStatus.*;
 public class CompanyRestController {
     @Autowired
     CompanyServiceImpl companyService;
+
     @Autowired
     VacanciesServiceImpl vacancyService;
 
+    @Autowired
+    UserServiceImpl userService;
+
     @RequestMapping(value = "/{companyId}/vacancies", method = RequestMethod.GET)
     public List<Vacancy> getVacanciesByCompanyId(@PathVariable Long companyId) {
-        return companyService.get(companyId).get().getVacancies();
+        return companyService.getVacanciesByCompanyId(companyId);
     }
 
     @RequestMapping(value = "/{companyId}/users", method = RequestMethod.GET)
     public ResponseEntity getUsersByCompanyId(@PathVariable Long companyId) {
         Optional<Company> company = companyService.get(companyId);
-        return company.map(c -> new ResponseEntity(c.getUsers(), OK))
+        return company.map(c -> new ResponseEntity(userService.getByCompanyId(companyId), OK))
                 .orElseGet(() -> new ResponseEntity(NOT_FOUND));
     }
 

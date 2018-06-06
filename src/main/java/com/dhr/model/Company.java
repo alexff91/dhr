@@ -36,7 +36,7 @@ public class Company implements Serializable {
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
     private String companyName;
@@ -57,11 +57,9 @@ public class Company implements Serializable {
 
     @JsonIgnore
     @OneToMany(targetEntity = Vacancy.class, fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Vacancy> vacancies = new LinkedList<>();
 
     @JsonIgnore
     @OneToMany(targetEntity = User.class)
-    @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> users = new LinkedList<>();
 }

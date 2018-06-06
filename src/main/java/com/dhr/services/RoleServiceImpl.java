@@ -5,6 +5,7 @@ import com.dhr.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +33,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Optional<Role> get(Long id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public List<Role> getByUserId(Long userId) {
+        return repository.findAllByUserId(userId);
     }
 
     @Override

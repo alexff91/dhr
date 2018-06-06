@@ -1,17 +1,23 @@
 package com.dhr.services;
 
 import com.dhr.model.Company;
+import com.dhr.model.Vacancy;
 import com.dhr.repositories.CompanyRepository;
+import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private VacancyRepository vacancyRepository;
 
     @Override
     public Long save(Company company) {
@@ -34,6 +40,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Optional<Company> get(Long id) {
         return companyRepository.findById(id);
+    }
+
+    @Override
+    public List<Vacancy> getVacanciesByCompanyId(Long companyId) {
+        return vacancyRepository.findAllByCompanyId(companyId);
     }
 
     @Override

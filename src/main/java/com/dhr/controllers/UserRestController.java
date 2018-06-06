@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -34,9 +35,9 @@ public class UserRestController {
     RoleService roleService;
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<User> getRolesByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<Role>> getRolesByUserId(@PathVariable Long userId) {
         Optional<User> user = userService.get(userId);
-        return user.map(u -> new ResponseEntity<>(u, OK))
+        return user.map(u -> new ResponseEntity<>(roleService.getByUserId(userId), OK))
                 .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
     }
 
@@ -64,7 +65,6 @@ public class UserRestController {
         return new ResponseEntity(NOT_FOUND);
     }
 
-    //#TODO add repo for roles
     @GetMapping("/roles")
     public Iterable<Role> getRoles() {
         return roleService.getAll();

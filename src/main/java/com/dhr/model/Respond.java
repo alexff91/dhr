@@ -28,7 +28,7 @@ import java.util.List;
 @Entity
 public class Respond {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, unique = true)
     private String id;
 
     @JsonIgnore
