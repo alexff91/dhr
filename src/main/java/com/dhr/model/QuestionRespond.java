@@ -52,10 +52,10 @@ public class QuestionRespond implements Serializable {
 
     private Boolean answered;
 
-    @Column(name = "video_path")
+    @Column(name = "video_path",length = 4000)
     private String videoPath;
 
-    @Column(name = "poster_path")
+    @Column(name = "poster_path",length = 4000)
     private Long posterPath;
 
     private Long duration;

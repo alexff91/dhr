@@ -16,7 +16,7 @@ public class QuestionServiceImpl implements QuestionService {
     private VacancyRepository vacancyRepository;
 
     @Override
-    public Long save(Question question, Long vacancyId) {
+    public Long save(Question question, String vacancyId) {
         question.setVacancy(vacancyRepository.findById(vacancyId).get());
         repository.save(question);
         return question.getId();
@@ -44,7 +44,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> getAllByVacancy(Long id) {
+    public List<Question> getAllByVacancy(String id) {
         return repository.findAllByVacancyId(id);
     }
 }

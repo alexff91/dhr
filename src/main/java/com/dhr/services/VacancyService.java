@@ -5,13 +5,13 @@ import com.dhr.model.Vacancy;
 import java.util.Optional;
 
 public interface VacancyService {
-    Long save(Vacancy vacancy);
+    String save(Vacancy vacancy);
 
     void delete(Vacancy vacancy);
 
     void update(Vacancy vacancy);
 
-    Optional<Vacancy> get(Long id);
+    Optional<Vacancy> get(String id);
 
     Iterable<Vacancy> getAll();
 }

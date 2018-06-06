@@ -32,11 +32,8 @@ import java.util.Set;
 public class Vacancy implements Serializable {
     private static final String SEQUENCE_NAME = "vacancy_id_seq";
     @Id
-    @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
-
     @Column(name = "id", nullable = false)
-    private Long id;
+    private String id;
 
     @JsonIgnore
     @ManyToOne
@@ -46,10 +43,10 @@ public class Vacancy implements Serializable {
     @ManyToOne
     private User user;
 
-    @Column
+    @Column(length = 4000)
     private String position;
 
-    @Column
+    @Column(length = 4000)
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)

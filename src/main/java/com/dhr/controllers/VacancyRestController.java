@@ -30,12 +30,12 @@ public class VacancyRestController {
     QuestionServiceImpl questionService;
 
     @RequestMapping(value = "{vacancyId}/questions", method = RequestMethod.GET)
-    public Set<Question> getQuestionsByVacancyId(@PathVariable Long vacancyId) {
+    public Set<Question> getQuestionsByVacancyId(@PathVariable String vacancyId) {
         return vacanciesService.get(vacancyId).get().getQuestions();
     }
 
     @RequestMapping(value = "{vacancyId}", method = RequestMethod.GET)
-    public Vacancy getByVacancyId(@PathVariable Long vacancyId) {
+    public Vacancy getByVacancyId(@PathVariable String vacancyId) {
         return vacanciesService.get(vacancyId).get();
     }
 
@@ -51,7 +51,7 @@ public class VacancyRestController {
     }
 
     @DeleteMapping("/{vacancyId}")
-    public ResponseEntity deleteVacancy(@PathVariable Long vacancyId) {
+    public ResponseEntity deleteVacancy(@PathVariable String vacancyId) {
         vacanciesService.delete(vacanciesService.get(vacancyId).get());
         return new ResponseEntity(HttpStatus.OK);
     }

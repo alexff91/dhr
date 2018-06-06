@@ -17,7 +17,8 @@ public class VacanciesServiceImpl implements VacancyService {
     private QuestionRepository questionRepository;
 
     @Override
-    public Long save(Vacancy vacancy) {
+    public String save(Vacancy vacancy) {
+        vacancy.setId(Integer.toHexString(vacancy.hashCode()));
         repository.save(vacancy);
         return vacancy.getId();
     }
@@ -34,7 +35,7 @@ public class VacanciesServiceImpl implements VacancyService {
     }
 
     @Override
-    public Optional<Vacancy> get(Long id) {
+    public Optional<Vacancy> get(String id) {
         return repository.findById(id);
     }
 

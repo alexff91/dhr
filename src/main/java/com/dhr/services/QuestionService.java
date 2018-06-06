@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QuestionService {
-    Long save(Question question, Long vacancyId);
+    Long save(Question question, String vacancyId);
 
     void delete(Question question);
 
@@ -16,5 +16,5 @@ public interface QuestionService {
 
     Iterable<Question> getAll();
 
-    List<Question> getAllByVacancy(Long id);
+    List<Question> getAllByVacancy(String id);
 }

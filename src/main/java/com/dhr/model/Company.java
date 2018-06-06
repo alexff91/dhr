@@ -41,8 +41,10 @@ public class Company implements Serializable {
 
     private String companyName;
 
+    @Column(length = 4000)
     private String companyLogoPath;
 
+    @Column(length = 4000)
     private String companyDescription;
 
     @Temporal(TemporalType.TIMESTAMP)

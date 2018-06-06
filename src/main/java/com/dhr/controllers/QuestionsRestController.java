@@ -25,7 +25,7 @@ public class QuestionsRestController {
     VacanciesServiceImpl vacancyService;
 
     @PostMapping
-    public ResponseEntity create(@PathVariable Long vacancyId, @RequestBody Question question) {
+    public ResponseEntity create(@PathVariable String vacancyId, @RequestBody Question question) {
         questionService.save(question, vacancyId);
         return new ResponseEntity(HttpStatus.CREATED);
     }

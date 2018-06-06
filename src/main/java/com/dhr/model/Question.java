@@ -37,6 +37,7 @@ public class Question implements Serializable{
     @JoinColumn(updatable = false, insertable = false)
     private Vacancy vacancy;
 
+    @Column(length = 4000)
     private String question;
 
     @Column(name = "duration_to_read")
