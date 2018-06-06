@@ -8,9 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,22 +43,24 @@ public class QuestionRespond implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "respond_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(updatable = false, insertable = false)
     private Respond respond;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(updatable = false, insertable = false)
     private Question question;
 
     private Boolean answered;
 
-    @Column(name = "video_path",length = 4000)
+    @Column(name = "video_path", length = 4000)
     private String videoPath;
 
-    @Column(name = "poster_path",length = 4000)
+    @Column(name = "poster_path", length = 4000)
     private Long posterPath;
 
     private Long duration;

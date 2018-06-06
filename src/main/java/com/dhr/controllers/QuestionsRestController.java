@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/vacancies/{vacancyId}/questions")
@@ -27,6 +29,12 @@ public class QuestionsRestController {
     @PostMapping
     public ResponseEntity create(@PathVariable String vacancyId, @RequestBody Question question) {
         questionService.save(question, vacancyId);
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @PostMapping
+    public ResponseEntity createBatch(@PathVariable String vacancyId, @RequestBody List<Question> questions) {
+        questions.forEach(question -> questionService.save(question, vacancyId));
         return new ResponseEntity(HttpStatus.CREATED);
     }
 

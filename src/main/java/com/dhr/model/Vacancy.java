@@ -60,7 +60,7 @@ public class Vacancy implements Serializable {
     private Date creationDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "vacancy", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Vacancy.class, mappedBy = "vacancy", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference("questions")
     private Set<Question> questions = new LinkedHashSet<>();
 }
