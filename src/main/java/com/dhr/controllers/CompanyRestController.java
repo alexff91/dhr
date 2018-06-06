@@ -5,6 +5,7 @@ import com.dhr.model.Vacancy;
 import com.dhr.services.CompanyServiceImpl;
 import com.dhr.services.VacanciesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -55,6 +56,14 @@ public class CompanyRestController {
     public ResponseEntity<Long> createCompany(@RequestBody Company company) {
         return new ResponseEntity<>(companyService.save(company), CREATED);
     }
+
+    @PostMapping("/{companyId}/vacancies")
+    public ResponseEntity<String> createVacancy(@PathVariable Long companyId, @RequestBody Vacancy vacancy) {
+        vacancy.setCompany(companyService.get(companyId).get());
+        String vacancyId = vacancyService.save(vacancy);
+        return new ResponseEntity<>(vacancyId, HttpStatus.CREATED);
+    }
+
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(OK)
