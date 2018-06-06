@@ -2,6 +2,7 @@ package com.dhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,6 +29,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@EqualsAndHashCode(exclude = {"creationDate"})
 @Table(name = "vacancy", schema = "vihr")
 public class Vacancy implements Serializable {
     private static final String SEQUENCE_NAME = "vacancy_id_seq";

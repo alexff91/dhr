@@ -40,9 +40,9 @@ public class VacancyRestController {
     }
 
     @PostMapping
-    public ResponseEntity createVacancy(@RequestBody Vacancy vacancy) {
-        vacanciesService.save(vacancy);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity<String> createVacancy(@RequestBody Vacancy vacancy) {
+        String vacancyId = vacanciesService.save(vacancy);
+        return new ResponseEntity<>(vacancyId, HttpStatus.CREATED);
     }
 
     @GetMapping
