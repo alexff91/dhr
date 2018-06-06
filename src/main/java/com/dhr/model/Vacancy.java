@@ -58,9 +58,4 @@ public class Vacancy implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "creation_date")
     private Date creationDate;
-
-    @JsonIgnore
-    @OneToMany(targetEntity = Vacancy.class, mappedBy = "vacancy", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JsonManagedReference("questions")
-    private Set<Question> questions = new LinkedHashSet<>();
 }
