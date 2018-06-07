@@ -1,6 +1,7 @@
 package com.dhr.controllers;
 
 import com.dhr.model.Company;
+import com.dhr.model.User;
 import com.dhr.model.Vacancy;
 import com.dhr.services.CompanyServiceImpl;
 import com.dhr.services.UserServiceImpl;
@@ -67,6 +68,14 @@ public class CompanyRestController {
         vacancy.setCompany(companyService.get(companyId).get());
         String vacancyId = vacancyService.save(vacancy);
         return new ResponseEntity<>(vacancyId, HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/{companyId}/users")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity createUser(@PathVariable Long companyId, @RequestBody User user) {
+        userService.save(companyId, user);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
 

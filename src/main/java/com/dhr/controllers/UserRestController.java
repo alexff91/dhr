@@ -48,13 +48,6 @@ public class UserRestController {
                 .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity createUser(@RequestBody User user) {
-        userService.save(user);
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
-
     @DeleteMapping("{userId}")
     public ResponseEntity deleteUser(@PathVariable Long userId) {
         Optional<User> user = userService.get(userId);
