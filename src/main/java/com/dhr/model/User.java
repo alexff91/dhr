@@ -47,6 +47,7 @@ public class User implements Serializable {
 
     private String phone;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference("roles")
     private List<Role> roles;

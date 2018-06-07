@@ -1,4 +1,4 @@
-package com.dhr.controllers;
+package com.dhr.controllers.manager;
 
 import com.dhr.model.Question;
 import com.dhr.services.QuestionServiceImpl;

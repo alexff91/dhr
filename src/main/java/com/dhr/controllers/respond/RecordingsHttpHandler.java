@@ -1,4 +1,4 @@
-package com.dhr.controllers;
+package com.dhr.controllers.respond;
 
 import com.dhr.config.PropertiesConfig;
 import com.dhr.model.QuestionRespond;

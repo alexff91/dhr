@@ -1,4 +1,4 @@
-package com.dhr.controllers;
+package com.dhr.controllers.manager;
 
 import com.dhr.model.Role;
 import com.dhr.model.User;
