@@ -94,14 +94,14 @@ public class RecordingsHttpHandler {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{questionId}")
-    public ResponseEntity<HttpStatus> handlePostRecording(HttpServletRequest request,
-                                                          @PathVariable String respondId,
-                                                          @PathVariable Long questionId,
-                                                          @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity handlePostRecording(HttpServletRequest request,
+                                                 @PathVariable String respondId,
+                                                 @PathVariable Long questionId,
+                                                 @RequestParam("file") MultipartFile file) throws IOException {
 
         if (file.isEmpty()) {
             log.error("File is empty");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("File is empty", HttpStatus.OK);
         }
 
         String folder = getRecordingPath(respondId);
