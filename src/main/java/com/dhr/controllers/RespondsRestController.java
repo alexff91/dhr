@@ -29,7 +29,7 @@ public class RespondsRestController {
     VacancyService vacancyService;
 
     @GetMapping
-    public List<Respond> getRespondsByVacancy(@PathVariable Long vacancyId) {
+    public List<Respond> getRespondsByVacancy(@PathVariable String vacancyId) {
         return respondService.getAllByVacancyId(vacancyId);
     }
     @PostMapping
@@ -40,7 +40,7 @@ public class RespondsRestController {
     }
 
     @GetMapping("/{respondId}")
-    public List<Respond> getRespondById(@PathVariable Long vacancyId,
+    public List<Respond> getRespondById(@PathVariable String vacancyId,
                                         @PathVariable String respondId) {
         return respondService.getByVacancyIdAndRespondId(vacancyId, respondId);
     }

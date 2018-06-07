@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface RespondRepository extends CrudRepository<Respond, String> {
-    List<Respond> findAllByVacancyId(Long vacancyId);
+    List<Respond> findAllByVacancyId(String vacancyId);
 
-    List<Respond> findAllByVacancyIdAndId(Long vacancyId, String id);
+    List<Respond> findAllByVacancyIdAndId(String vacancyId, String id);
 }
