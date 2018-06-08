@@ -35,7 +35,8 @@ public class VacancyRestController {
         return Sets.newHashSet(questionService.getAllByVacancy(vacancyId));
     }
 
-    @PutMapping("{vacancyId}")
+    @PutMapping(value="/{vacancyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(OK)
     public ResponseEntity updateVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
         vacanciesService.update(vacancyId, vacancy);
         return new ResponseEntity<>(HttpStatus.OK);
