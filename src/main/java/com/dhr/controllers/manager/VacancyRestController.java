@@ -51,7 +51,7 @@ public class VacancyRestController {
         return vacanciesService.getAll();
     }
 
-    @DeleteMapping("/{vacancyId}")
+    @DeleteMapping("/{vacancyId}", method = RequestMethod.GET)
     public ResponseEntity deleteVacancy(@PathVariable String vacancyId) {
         vacanciesService.delete(vacanciesService.get(vacancyId).get());
         return new ResponseEntity(HttpStatus.OK);
