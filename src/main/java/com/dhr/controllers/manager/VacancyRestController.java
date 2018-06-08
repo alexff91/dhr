@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @RestController
@@ -34,6 +33,12 @@ public class VacancyRestController {
     @RequestMapping(value = "{vacancyId}/questions", method = RequestMethod.GET)
     public Set<Question> getQuestionsByVacancyId(@PathVariable String vacancyId) {
         return Sets.newHashSet(questionService.getAllByVacancy(vacancyId));
+    }
+
+    @PutMapping("/{vacancyId}")
+    public ResponseEntity createVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
+        vacanciesService.update(vacancyId, vacancy);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "{vacancyId}", method = RequestMethod.GET)

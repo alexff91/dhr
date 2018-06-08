@@ -25,12 +25,15 @@ public class VacanciesServiceImpl implements VacancyService {
 
     @Override
     public void delete(Vacancy vacancy) {
-        vacancy.getQuestions().forEach(q -> questionRepository.delete(q));
         repository.delete(vacancy);
     }
 
     @Override
-    public void update(Vacancy vacancy) {
+    public void update(String vacancyId, Vacancy vacancy) {
+        Vacancy oldVacancy = repository.findById(vacancy.getId()).get();
+        oldVacancy.setDescription(vacancy.getDescription());
+        oldVacancy.setPosition(vacancy.getPosition());
+        oldVacancy.setQuestions(vacancy.getQuestions());
         repository.save(vacancy);
     }
 
