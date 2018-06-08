@@ -36,7 +36,7 @@ public class VacancyRestController {
     }
 
     @PutMapping("/{vacancyId}")
-    public ResponseEntity createVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
+    public ResponseEntity updateVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
         vacanciesService.update(vacancyId, vacancy);
         return new ResponseEntity<>(HttpStatus.OK);
     }
