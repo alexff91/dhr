@@ -35,13 +35,13 @@ public class VacancyRestController {
         return Sets.newHashSet(questionService.getAllByVacancy(vacancyId));
     }
 
-    @PutMapping(value="/{vacancyId}")
+    @PutMapping("/{vacancyId}")
     public ResponseEntity updateVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
         vacanciesService.update(vacancyId, vacancy);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{vacancyId}")
+    @RequestMapping(value = "{vacancyId}", method = RequestMethod.GET)
     public Vacancy getByVacancyId(@PathVariable String vacancyId) {
         return vacanciesService.get(vacancyId).get();
     }
@@ -51,7 +51,7 @@ public class VacancyRestController {
         return vacanciesService.getAll();
     }
 
-    @DeleteMapping("/{vacancyId}", method = RequestMethod.GET)
+    @DeleteMapping("/{vacancyId}")
     public ResponseEntity deleteVacancy(@PathVariable String vacancyId) {
         vacanciesService.delete(vacanciesService.get(vacancyId).get());
         return new ResponseEntity(HttpStatus.OK);
