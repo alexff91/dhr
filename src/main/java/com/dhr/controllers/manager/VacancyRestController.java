@@ -35,13 +35,13 @@ public class VacancyRestController {
         return Sets.newHashSet(questionService.getAllByVacancy(vacancyId));
     }
 
-    @PutMapping(value="/{vacancyId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value="/{vacancyId}")
     public ResponseEntity updateVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
         vacanciesService.update(vacancyId, vacancy);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{vacancyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "{vacancyId}")
     public Vacancy getByVacancyId(@PathVariable String vacancyId) {
         return vacanciesService.get(vacancyId).get();
     }
