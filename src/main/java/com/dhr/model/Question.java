@@ -16,9 +16,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -52,4 +55,8 @@ public class Question implements Serializable{
 
     @Column(name = "is_compulsory")
     private Boolean isCompulsory;
+
+    @JsonIgnore
+    @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.EAGER)
+    private Set<QuestionRespond> questionResponds = new LinkedHashSet<>();
 }
