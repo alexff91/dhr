@@ -62,4 +62,8 @@ public class Vacancy implements Serializable {
     @JsonIgnore
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     private Set<Question> questions = new LinkedHashSet<>();
+
+    @JsonIgnore
+    @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.EAGER)
+    private Set<QuestionRespond> questionResponds = new LinkedHashSet<>();
 }
