@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -94,10 +95,11 @@ public class RecordingsHttpHandler {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{questionId}")
+    @Transactional
     public ResponseEntity handlePostRecording(HttpServletRequest request,
-                                                 @PathVariable String respondId,
-                                                 @PathVariable Long questionId,
-                                                 @RequestParam("file") MultipartFile file) throws IOException {
+                                              @PathVariable String respondId,
+                                              @PathVariable Long questionId,
+                                              @RequestParam("file") MultipartFile file) throws IOException {
 
         if (file.isEmpty()) {
             log.error("File is empty");
