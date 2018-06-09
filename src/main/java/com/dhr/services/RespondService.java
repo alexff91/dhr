@@ -16,7 +16,7 @@ public interface RespondService {
 
     Iterable<Respond> getAll();
 
-    List<Respond> getAllByVacancyId(Long vacancyId);
+    List<Respond> getAllByVacancyId(String vacancyId);
 
-    List<Respond> getByVacancyIdAndRespondId(Long vacancyId, String respondId);
+    List<Respond> getByVacancyIdAndRespondId(String vacancyId, String respondId);
 }
