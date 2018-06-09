@@ -33,7 +33,7 @@ public class VacanciesServiceImpl implements VacancyService {
         oldVacancy.setDescription(vacancy.getDescription());
         oldVacancy.setPosition(vacancy.getPosition());
         oldVacancy.setQuestions(vacancy.getQuestions());
-        repository.save(vacancy);
+        repository.save(oldVacancy);
     }
 
     @Override
