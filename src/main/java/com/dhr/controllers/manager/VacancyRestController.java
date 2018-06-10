@@ -4,6 +4,8 @@ import com.dhr.model.Question;
 import com.dhr.model.Vacancy;
 import com.dhr.services.QuestionServiceImpl;
 import com.dhr.services.VacanciesServiceImpl;
+import com.dhr.view.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,11 +43,13 @@ public class VacancyRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @JsonView(View.Base.class)
     @RequestMapping(value = "{vacancyId}", method = RequestMethod.GET)
     public Vacancy getByVacancyId(@PathVariable String vacancyId) {
         return vacanciesService.get(vacancyId).get();
     }
 
+    @JsonView(View.Base.class)
     @GetMapping
     public Iterable<Vacancy> getVacancies() {
         return vacanciesService.getAll();
