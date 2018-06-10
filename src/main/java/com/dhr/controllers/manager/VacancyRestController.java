@@ -43,7 +43,6 @@ public class VacancyRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @JsonView(View.Base.class)
     @RequestMapping(value = "{vacancyId}", method = RequestMethod.GET)
     public Vacancy getByVacancyId(@PathVariable String vacancyId) {
         return vacanciesService.get(vacancyId).get();
