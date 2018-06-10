@@ -1,0 +1,48 @@
+logging:
+    level: error
+    level.org.springframework.data: debug
+recordings:
+    path: /browser-recordings
+server:
+    port: 8082
+    ssl:
+        enabled: true
+        key-store: /etc/letsencrypt/live/vi-hr.com/keystore.p12
+        key-store-password: vihr
+        keyAlias: tomcat
+        keyStoreType: PKCS12
+spring:
+    datasource:
+        hikari:
+            minimum-idle: 5
+            maximum-pool-size: 20
+            idleTimeout: 30000
+            pool-name: SpringBootJPAHikariCP
+            auto-commit: false
+            maxLifetime: 2000000
+            connectionTimeout: 30000
+        password: Cucumber_666
+        test-while-idle: true
+        time-between-eviction-runs-millis: 60000
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:postgresql://vi-hr.com:5432/vihr
+        username: postgres
+    jpa:
+        generate-ddl: false
+        hibernate:
+            ddl-auto: none
+            connection:
+              provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+        properties:
+            hibernate:
+                default_batch_fetch_size: 100
+                dialect: org.hibernate.dialect.PostgreSQL9Dialect
+                jdbc:
+                    batch_size: 1000
+                order_inserts: true
+                order_updates: true
+        show-sql: true
+    servlet:
+        multipart:
+            max-file-size: 2048MB
+            max-request-size: 2048MB
