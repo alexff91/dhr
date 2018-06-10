@@ -49,7 +49,6 @@ public class VacancyRestController {
         return vacanciesService.get(vacancyId).get();
     }
 
-    @JsonView(View.Base.class)
     @GetMapping
     public Iterable<Vacancy> getVacancies() {
         return vacanciesService.getAll();
