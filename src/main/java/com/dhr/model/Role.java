@@ -2,11 +2,14 @@ package com.dhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,5 +37,8 @@ public class Role implements Serializable{
     @JoinColumn(updatable = false, insertable = false)
     private User user;
 
-    private String name;
+    @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
+    @NonNull
+    private RoleName name;
 }

@@ -14,12 +14,12 @@ server:
 spring:
     datasource:
         hikari:
-            minimum-idle: 5
-            maximum-pool-size: 20
+            minimumIdle: 5
+            maximumPoolSize: 20
             idleTimeout: 30000
             pool-name: SpringBootJPAHikariCP
             auto-commit: false
-            max-lifetime: 600000
+            maxLifetime: 2000000
             connection-timeout: 30000
         password: Cucumber_666
         test-while-idle: true
