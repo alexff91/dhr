@@ -19,7 +19,7 @@ spring:
             idleTimeout: 30000
             pool-name: SpringBootJPAHikariCP
             auto-commit: false
-            maxLifetime: 580000
+            maxLifetime: 58000
             connection-timeout: 30000
         password: Cucumber_666
         test-while-idle: true
