@@ -56,7 +56,7 @@ public class User implements Serializable {
     @Column(name = "avatar_path")
     private String avatarPath;
 
-    @JsonIgnore
+    
     @ManyToOne
     @JoinColumn(updatable = false, insertable = false)
     private Company company;
