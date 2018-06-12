@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,18 @@ public class QuestionsRestController {
     public ResponseEntity create(@PathVariable String vacancyId, @RequestBody Question question) {
         questionService.save(question, vacancyId);
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity update(@PathVariable String vacancyId, @RequestBody Question question) {
+        Question oldQuestion = questionService.get(question.getId()).get();
+        oldQuestion.setDurationMax(question.getDurationMax());
+        oldQuestion.setDurationToRead(question.getDurationToRead());
+        oldQuestion.setIsCompulsory(question.getIsCompulsory());
+        oldQuestion.setOrderNumber(question.getOrderNumber());
+        oldQuestion.setQuestion(question.getQuestion());
+        questionService.save(oldQuestion, vacancyId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/batch")
