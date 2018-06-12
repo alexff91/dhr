@@ -38,7 +38,7 @@ public class Role implements Serializable{
     private User user;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @NonNull
     private RoleName name;
 }
