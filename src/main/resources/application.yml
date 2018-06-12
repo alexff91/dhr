@@ -42,6 +42,8 @@ spring:
                 order_inserts: true
                 order_updates: true
         show-sql: true
+        validation-query: select 1
+        test-on-borrow: true
     servlet:
         multipart:
             max-file-size: 2048MB
