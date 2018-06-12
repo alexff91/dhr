@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.OPTIONS, RequestMethod.GET
-        , RequestMethod.POST})
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/tokens")
 public class TokenRestController {
     @PostMapping
     public ResponseEntity<Token> generateToken(@RequestBody AuthData authData) {
-        return new ResponseEntity<>(Token.builder().token("hello-pussy").build(), HttpStatus.CREATED);
+        return new ResponseEntity<>(Token.builder().token("sometoken").build(), HttpStatus.CREATED);
     }
 
     @GetMapping
