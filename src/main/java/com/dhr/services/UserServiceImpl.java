@@ -1,7 +1,9 @@
 package com.dhr.services;
 
+import com.dhr.model.Role;
 import com.dhr.model.User;
 import com.dhr.repositories.CompanyRepository;
+import com.dhr.repositories.RoleRepository;
 import com.dhr.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +21,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Override
     public Long save(Long companyId, User user) {
         user.setCompany(companyRepository.findById(companyId).get());
+        user.getRoles().forEach(role -> {
+            roleRepository.save(Role.builder().name(role.getName()).user(user).build());
+        });
         repository.save(user);
         return user.getId();
     }

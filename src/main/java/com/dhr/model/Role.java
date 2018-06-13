@@ -1,6 +1,9 @@
 package com.dhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -23,6 +26,8 @@ import java.io.Serializable;
 @Setter
 @ToString
 @Entity
+@Data
+@Builder
 @Table(schema = "vihr")
 public class Role implements Serializable{
     private static final String SEQUENCE_NAME = "role_id_seq";
