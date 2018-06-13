@@ -27,10 +27,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long save(Long companyId, User user) {
         user.setCompany(companyRepository.findById(companyId).get());
+        User savedUser = repository.save(user);
         user.getRoles().forEach(role -> {
-            roleRepository.save(Role.builder().name(role.getName()).user(user).build());
+            roleRepository.save(Role.builder().name(role.getName()).user(savedUser).build());
         });
-        repository.save(user);
         return user.getId();
     }
 
