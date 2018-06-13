@@ -58,6 +58,6 @@ public class User implements Serializable {
 
     
     @ManyToOne
-    @JoinColumn(updatable = false, insertable = false)
+    @JoinColumn
     private Company company;
 }
