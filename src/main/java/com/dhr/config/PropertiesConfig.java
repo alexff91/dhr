@@ -9,27 +9,18 @@ public class PropertiesConfig {
     @Value("${server.port}")
     private String serverPort;
 
+    @Value("${backendHost}")
+    private String backendHost;
+
     @Value("${recordings.path}")
     private String recordingsPath;
 
+    public String getBackendHost() {
+        return backendHost;
+    }
+
     public String getServerPort() {
         return serverPort;
-    }
-
-    public String getUserLowPermissions() {
-        return "user";
-    }
-
-    public String getPasswordLowPermissions() {
-        return "pass";
-    }
-
-    public String getUserHighPermissions() {
-        return "admin";
-    }
-
-    public String getPasswordHighPermissions() {
-        return "admin";
     }
 
     public String getRecordingsPath() {

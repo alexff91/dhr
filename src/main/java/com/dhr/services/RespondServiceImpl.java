@@ -1,8 +1,10 @@
 package com.dhr.services;
 
 import com.dhr.model.Respond;
+import com.dhr.model.Vacancy;
 import com.dhr.repositories.QuestionRespondRepository;
 import com.dhr.repositories.RespondRepository;
+import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,9 @@ public class RespondServiceImpl implements RespondService {
     @Autowired
     private QuestionRespondRepository questionRespondRepository;
 
+    @Autowired
+    private VacancyRepository vacancyRepository;
+
     @Override
     public Respond save(Respond respond) {
         if (respond.getStartDate() == null) {
@@ -28,7 +33,9 @@ public class RespondServiceImpl implements RespondService {
         if (respond.getId() == null) {
             respond.setId(Integer.toHexString(respond.hashCode()));
         }
-
+        Vacancy vacancy = respond.getVacancy();
+        vacancy.setRespondCount(vacancy.getRespondCount() + 1);
+        vacancyRepository.save(vacancy);
 //        if (respond.getRespondQuestions() != null && respond.getRespondQuestions().size() != 0) {
 //            respond.getRespondQuestions().forEach(question -> {
 //                if (question != null) {

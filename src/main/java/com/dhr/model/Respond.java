@@ -1,8 +1,11 @@
 package com.dhr.model;
 
+import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
@@ -10,6 +13,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,10 +51,21 @@ public class Respond {
 
     private String email;
 
-    private String status;
+    @JsonView(View.Detail.class)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @NonNull
+    private RespondStatus status = RespondStatus.INCOMPLETE;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
+
+
+    @JsonView(View.Detail.class)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @NonNull
+    private ReviewStatus reviewStatus = ReviewStatus.NOT_WATCHED;
 
     @JsonIgnore
     @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.EAGER)

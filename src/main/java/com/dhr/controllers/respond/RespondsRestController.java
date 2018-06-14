@@ -35,7 +35,8 @@ public class RespondsRestController {
     @PostMapping
     public ResponseEntity<Respond> createRespond(@RequestBody Respond respond,
                                                  @PathVariable String vacancyId){
-        respond.setVacancy(vacancyService.get(vacancyId).get());
+        Vacancy vacancy = vacancyService.get(vacancyId).get();
+        respond.setVacancy(vacancy);
         return new ResponseEntity<>(respondService.save(respond), HttpStatus.CREATED);
     }
 

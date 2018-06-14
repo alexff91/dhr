@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
@@ -14,6 +15,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -61,6 +64,10 @@ public class Vacancy implements Serializable {
     @Column(name = "creation_date")
     private Date creationDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date")
+    private Date updateDate;
+
     @JsonIgnore
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     private Set<Question> questions = new LinkedHashSet<>();
@@ -68,4 +75,16 @@ public class Vacancy implements Serializable {
     @JsonIgnore
     @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.EAGER)
     private Set<QuestionRespond> questionResponds = new LinkedHashSet<>();
+
+    @JsonView(View.Detail.class)
+    private Long viewCount;
+
+    @JsonView(View.Detail.class)
+    private Long respondCount;
+
+    @JsonView(View.Detail.class)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @NonNull
+    private VacancyStatus status;
 }

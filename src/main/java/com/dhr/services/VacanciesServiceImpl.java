@@ -2,11 +2,11 @@ package com.dhr.services;
 
 import com.dhr.model.Vacancy;
 import com.dhr.repositories.VacancyRepository;
-import com.dhr.repositories.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -23,6 +23,13 @@ public class VacanciesServiceImpl implements VacancyService {
     }
 
     @Override
+    public void increaseViewCounter(String vacancyId) {
+        Vacancy vacancy = repository.findById(vacancyId).get();
+        vacancy.setViewCount(vacancy.getViewCount() + 1);
+        repository.save(vacancy);
+    }
+
+    @Override
     public void delete(Vacancy vacancy) {
         repository.delete(vacancy);
     }
@@ -33,6 +40,7 @@ public class VacanciesServiceImpl implements VacancyService {
         oldVacancy.setDescription(vacancy.getDescription());
         oldVacancy.setPosition(vacancy.getPosition());
         oldVacancy.setQuestions(vacancy.getQuestions());
+        oldVacancy.setUpdateDate(new Date());
         repository.save(oldVacancy);
     }
 

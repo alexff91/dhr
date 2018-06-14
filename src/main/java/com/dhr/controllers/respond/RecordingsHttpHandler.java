@@ -3,6 +3,7 @@ package com.dhr.controllers.respond;
 import com.dhr.config.PropertiesConfig;
 import com.dhr.model.QuestionRespond;
 import com.dhr.model.Respond;
+import com.dhr.model.RespondStatus;
 import com.dhr.services.QuestionRespondService;
 import com.dhr.services.QuestionService;
 import com.dhr.services.RespondService;
@@ -101,26 +102,15 @@ public class RecordingsHttpHandler {
                                               @PathVariable Long questionId,
                                               @RequestParam("file") MultipartFile file) throws IOException {
 
-        if (file.isEmpty()) {
-            log.error("File is empty");
+        if (saveVideoToDirectory(respondId, questionId, file))
             return new ResponseEntity<>("File is empty", HttpStatus.OK);
-        }
-
-        String folder = getRecordingPath(respondId);
-
-        Path path = Paths.get(config.getRecordingsPath() + folder);
-        new File(path.toString()).mkdirs();
-        String fName = questionId + ".webm";
-
-        File uploadedFile = new File(path.toFile(), fName);
-        InputStream initialStream = file.getInputStream();
-        Files.copy(initialStream, uploadedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        IOUtils.closeQuietly(initialStream);
 
         QuestionRespond questionRespond = QuestionRespond.builder()
                 .question(questionService.get(questionId).get())
                 .respond(respondService.get(respondId).get())
-                .videoPath("https://vi-hr.com:8080/api/v1/responds/" + respondId +
+                .videoPath("https://" + config.getBackendHost() +
+                        ":" + config.getServerPort() +
+                        "/api/v1/responds/" + respondId +
                         "/questions/" + questionId + "/" + questionId + ".webm")
                 .answered(true)
                 .respondTime(new Date())
@@ -137,7 +127,30 @@ public class RecordingsHttpHandler {
             respond.setRespondQuestions(respondQuestions);
         }
         questionRespondService.save(questionRespond);
+        if (respond.getVacancy().getQuestions().size() == respondQuestions.size()) {
+            respond.setStatus(RespondStatus.COMPLETE);
+            respondService.save(respond);
+        }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private boolean saveVideoToDirectory(@PathVariable String respondId, @PathVariable Long questionId, @RequestParam("file") MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            log.error("File is empty");
+            return true;
+        }
+
+        String folder = getRecordingPath(respondId);
+
+        Path path = Paths.get(config.getRecordingsPath() + folder);
+        boolean mkdirsResult = new File(path.toString()).mkdirs();
+        String fName = questionId + ".webm";
+
+        File uploadedFile = new File(path.toFile(), fName);
+        InputStream initialStream = file.getInputStream();
+        Files.copy(initialStream, uploadedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        IOUtils.closeQuietly(initialStream);
+        return false;
     }
 
 }
