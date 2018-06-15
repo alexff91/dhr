@@ -34,6 +34,7 @@ spring:
         generate-ddl: false
         hibernate:
             ddl-auto: create-drop
+            default_schema: vihr
             connection:
               provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
         properties:
