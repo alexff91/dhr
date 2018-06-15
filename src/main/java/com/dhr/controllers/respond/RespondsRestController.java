@@ -77,15 +77,6 @@ public class RespondsRestController {
         return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
     }
 
-    @PostMapping("/{respondId}/decline")
-    public ResponseEntity<Respond> createRespond(@PathVariable String respondId) {
-        Respond respond = respondService.get(respondId).get();
-        respond.setReviewStatus(ReviewStatus.DECLINED);
-        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
-    }
-
-
-
     @GetMapping("/{respondId}")
     public List<Respond> getRespondById(@PathVariable String vacancyId,
                                         @PathVariable String respondId) {
