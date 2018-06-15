@@ -1,6 +1,7 @@
 package com.dhr.controllers.respond;
 
 import com.dhr.model.Respond;
+import com.dhr.model.ReviewStatus;
 import com.dhr.model.Vacancy;
 import com.dhr.services.RespondServiceImpl;
 import com.dhr.services.VacancyService;
@@ -47,6 +48,43 @@ public class RespondsRestController {
         respond.setVacancy(vacancy);
         return new ResponseEntity<>(respondService.save(respond), HttpStatus.CREATED);
     }
+
+    @PostMapping("/{respondId}/decline")
+    public ResponseEntity<Respond> declineRespond(@PathVariable String respondId) {
+        Respond respond = respondService.get(respondId).get();
+        respond.setReviewStatus(ReviewStatus.DECLINED);
+        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
+    }
+
+    @PostMapping("/{respondId}/accept")
+    public ResponseEntity<Respond> acceptRespond(@PathVariable String respondId) {
+        Respond respond = respondService.get(respondId).get();
+        respond.setReviewStatus(ReviewStatus.ACCEPTED);
+        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
+    }
+
+    @PostMapping("/{respondId}/review")
+    public ResponseEntity<Respond> onReviewRespond(@PathVariable String respondId) {
+        Respond respond = respondService.get(respondId).get();
+        respond.setReviewStatus(ReviewStatus.ON_REVIEW);
+        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
+    }
+
+    @PostMapping("/{respondId}/block")
+    public ResponseEntity<Respond> blockRespond(@PathVariable String respondId) {
+        Respond respond = respondService.get(respondId).get();
+        respond.setReviewStatus(ReviewStatus.BLOCKED);
+        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
+    }
+
+    @PostMapping("/{respondId}/decline")
+    public ResponseEntity<Respond> createRespond(@PathVariable String respondId) {
+        Respond respond = respondService.get(respondId).get();
+        respond.setReviewStatus(ReviewStatus.DECLINED);
+        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
+    }
+
+
 
     @GetMapping("/{respondId}")
     public List<Respond> getRespondById(@PathVariable String vacancyId,

@@ -2,8 +2,10 @@ package com.dhr.controllers.respond;
 
 import com.dhr.model.Respond;
 import com.dhr.model.RespondFeedback;
+import com.dhr.model.User;
 import com.dhr.services.RespondFeedbackService;
 import com.dhr.services.RespondService;
+import com.dhr.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,15 +29,22 @@ public class RespondReviewRestController {
     @Autowired
     RespondService respondService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping
     public List<RespondFeedback> getAllByRespondId(@PathVariable String respondId) {
         return respondFeedbackService.getAllByRespondId(respondId);
     }
 
-    @PostMapping
-    public ResponseEntity createRespondFeedback(@RequestBody RespondFeedback respondFeedback,
-                                                @PathVariable String respondId) {
+    @PostMapping("/{userId}")
+    public ResponseEntity createRespondFeedback(@PathVariable String respondId,
+                                                @PathVariable Long userId,
+                                                @RequestBody RespondFeedback respondFeedback
+                                                ) {
         Respond respond = respondService.get(respondId).get();
+        User user = userService.get(userId).get();
+        respondFeedback.setUser(user);
         respondFeedback.setRespond(respond);
         return new ResponseEntity<>(respondFeedbackService.save(respondFeedback), HttpStatus.CREATED);
     }

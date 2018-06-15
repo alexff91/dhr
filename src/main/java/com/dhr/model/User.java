@@ -1,7 +1,9 @@
 package com.dhr.model;
 
+import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -53,10 +55,14 @@ public class User implements Serializable {
     @JsonBackReference("roles")
     private List<Role> roles;
 
+    @JsonView(View.Detail.class)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference("respondFeedbacks")
+    private List<RespondFeedback> respondFeedbacks;
+
     @Column(name = "avatar_path")
     private String avatarPath;
 
-    
     @ManyToOne
     @JoinColumn
     private Company company;
