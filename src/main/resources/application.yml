@@ -33,7 +33,7 @@ spring:
     jpa:
         generate-ddl: false
         hibernate:
-            ddl-auto: none
+            ddl-auto: drop-create
             connection:
               provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
         properties:
