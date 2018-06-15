@@ -35,7 +35,7 @@ public class RespondsRestController {
     }
 
     @JsonView(View.Detail.class)
-    @GetMapping
+    @GetMapping("/detailed")
     public List<Respond> getRespondsByVacancyDetailed(@PathVariable String vacancyId) {
         return respondService.getAllByVacancyId(vacancyId);
     }
