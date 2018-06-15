@@ -34,7 +34,7 @@ public class RespondServiceImpl implements RespondService {
             respond.setId(Integer.toHexString(respond.hashCode()));
         }
         Vacancy vacancy = respond.getVacancy();
-        vacancy.setRespondCount(vacancy.getRespondCount() + 1);
+        vacancy.setRespondsCount(vacancy.getRespondsCount() + 1);
         vacancyRepository.save(vacancy);
 //        if (respond.getRespondQuestions() != null && respond.getRespondQuestions().size() != 0) {
 //            respond.getRespondQuestions().forEach(question -> {

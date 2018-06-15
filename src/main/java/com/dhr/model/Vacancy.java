@@ -77,14 +77,14 @@ public class Vacancy implements Serializable {
     private Set<QuestionRespond> questionResponds = new LinkedHashSet<>();
 
     @JsonView(View.Detail.class)
-    private Long viewCount;
+    private Long viewsCount = 0L;
 
     @JsonView(View.Detail.class)
-    private Long respondCount;
+    private Long respondsCount = 0L;
 
     @JsonView(View.Detail.class)
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @NonNull
-    private VacancyStatus status = VacancyStatus.CREATED;
+    private VacancyStatus status = VacancyStatus.IN_WORK;
 }

@@ -62,7 +62,6 @@ public class Respond {
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
 
-
     @JsonView(View.Detail.class)
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -70,7 +69,12 @@ public class Respond {
     private ReviewStatus reviewStatus = ReviewStatus.NOT_WATCHED;
 
     @JsonIgnore
-    @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id")
     private List<QuestionRespond> respondQuestions = new LinkedList<>();
+
+    @JsonIgnore
+    @OneToMany(targetEntity = RespondFeedback.class, fetch = FetchType.LAZY)
+    @JoinColumn(name = "respond_id")
+    private List<RespondFeedback> reviewResponds = new LinkedList<>();
 }

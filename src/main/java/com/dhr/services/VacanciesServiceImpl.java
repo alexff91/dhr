@@ -25,7 +25,7 @@ public class VacanciesServiceImpl implements VacancyService {
     @Override
     public void increaseViewCounter(String vacancyId) {
         Vacancy vacancy = repository.findById(vacancyId).get();
-        vacancy.setViewCount(vacancy.getViewCount() + 1);
+        vacancy.setViewsCount(vacancy.getViewsCount() + 1);
         repository.save(vacancy);
     }
 

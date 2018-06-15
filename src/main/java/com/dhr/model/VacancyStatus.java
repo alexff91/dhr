@@ -1,5 +1,5 @@
 package com.dhr.model;
 
 public enum VacancyStatus {
-    CREATED, IN_WORK, ARCHIVED;
+    IN_WORK, ARCHIVED;
 }

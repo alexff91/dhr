@@ -28,6 +28,7 @@ import java.util.Date;
 @Table(schema = "vihr")
 public class RespondFeedback {
     private static final String SEQUENCE_NAME = "respond_fbk_seq";
+
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
@@ -36,7 +37,6 @@ public class RespondFeedback {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Respond respond;
 
