@@ -50,28 +50,32 @@ public class RespondsRestController {
     }
 
     @PostMapping("/{respondId}/decline")
-    public ResponseEntity<Respond> declineRespond(@PathVariable String respondId) {
+    public ResponseEntity<Respond> declineRespond(@PathVariable String respondId,
+                                                  @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.DECLINED);
         return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
     }
 
     @PostMapping("/{respondId}/accept")
-    public ResponseEntity<Respond> acceptRespond(@PathVariable String respondId) {
+    public ResponseEntity<Respond> acceptRespond(@PathVariable String respondId,
+                                                 @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.ACCEPTED);
         return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
     }
 
     @PostMapping("/{respondId}/review")
-    public ResponseEntity<Respond> onReviewRespond(@PathVariable String respondId) {
+    public ResponseEntity<Respond> onReviewRespond(@PathVariable String respondId,
+                                                   @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.ON_REVIEW);
         return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
     }
 
     @PostMapping("/{respondId}/block")
-    public ResponseEntity<Respond> blockRespond(@PathVariable String respondId) {
+    public ResponseEntity<Respond> blockRespond(@PathVariable String respondId,
+                                                @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.BLOCKED);
         return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
