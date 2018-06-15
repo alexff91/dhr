@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -33,6 +34,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode(exclude = {"respondQuestions", "startDate"})
 @Entity
+@Table(schema = "vihr")
 public class Respond {
     @Id
     @Column(name = "id", nullable = false, unique = true)
