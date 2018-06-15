@@ -55,8 +55,21 @@ public class VacancyRestController {
         return vacanciesService.get(vacancyId).get();
     }
 
+    @JsonView(View.Detail.class)
+    @RequestMapping(value = "{vacancyId}/detailed", method = RequestMethod.GET)
+    public Vacancy getByVacancyIdDetailed(@PathVariable String vacancyId) {
+        return vacanciesService.get(vacancyId).get();
+    }
+
+
     @GetMapping
     public Iterable<Vacancy> getVacancies() {
+        return vacanciesService.getAll();
+    }
+
+    @JsonView(View.Detail.class)
+    @GetMapping("/detailed")
+    public Iterable<Vacancy> getVacanciesDetailed() {
         return vacanciesService.getAll();
     }
 

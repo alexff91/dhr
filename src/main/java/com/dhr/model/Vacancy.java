@@ -86,5 +86,5 @@ public class Vacancy implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @NonNull
-    private VacancyStatus status;
+    private VacancyStatus status = VacancyStatus.CREATED;
 }
