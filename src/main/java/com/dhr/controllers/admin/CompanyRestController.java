@@ -82,11 +82,7 @@ public class CompanyRestController {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(OK)
     public ResponseEntity updateCompany(@RequestBody Company company) {
-        Company oldCompany = companyService.get(company.getId()).get();
-        oldCompany.setCompanyDescription(company.getCompanyDescription());
-        oldCompany.setCompanyName(company.getCompanyName());
-        oldCompany.setCompanyLogoPath(company.getCompanyLogoPath());
-        companyService.save(oldCompany);
+        companyService.update(company);
         return new ResponseEntity(OK);
     }
 

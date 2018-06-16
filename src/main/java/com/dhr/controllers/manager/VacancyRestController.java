@@ -61,7 +61,6 @@ public class VacancyRestController {
         return vacanciesService.get(vacancyId).get();
     }
 
-
     @GetMapping
     public Iterable<Vacancy> getVacancies() {
         return vacanciesService.getAll();

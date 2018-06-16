@@ -2,7 +2,6 @@ package com.dhr.controllers.respond;
 
 import com.dhr.model.Respond;
 import com.dhr.model.enums.ReviewStatus;
-import com.dhr.model.Vacancy;
 import com.dhr.services.RespondServiceImpl;
 import com.dhr.services.VacancyService;
 import com.dhr.view.View;
@@ -44,9 +43,7 @@ public class RespondsRestController {
     @PostMapping
     public ResponseEntity<Respond> createRespond(@RequestBody Respond respond,
                                                  @PathVariable String vacancyId) {
-        Vacancy vacancy = vacancyService.get(vacancyId).get();
-        respond.setVacancy(vacancy);
-        return new ResponseEntity<>(respondService.save(respond), HttpStatus.CREATED);
+        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.CREATED);
     }
 
     @PostMapping("/{respondId}/decline")
@@ -54,7 +51,7 @@ public class RespondsRestController {
                                                   @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.DECLINED);
-        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
+        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
     @PostMapping("/{respondId}/accept")
@@ -62,7 +59,7 @@ public class RespondsRestController {
                                                  @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.ACCEPTED);
-        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
+        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
     @PostMapping("/{respondId}/review")
@@ -70,7 +67,7 @@ public class RespondsRestController {
                                                    @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.ON_REVIEW);
-        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
+        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
     @PostMapping("/{respondId}/block")
@@ -78,7 +75,7 @@ public class RespondsRestController {
                                                 @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.BLOCKED);
-        return new ResponseEntity<>(respondService.save(respond), HttpStatus.OK);
+        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
     @GetMapping("/{respondId}")

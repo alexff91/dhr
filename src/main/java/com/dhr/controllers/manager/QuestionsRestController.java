@@ -35,13 +35,7 @@ public class QuestionsRestController {
 
     @PutMapping
     public ResponseEntity update(@PathVariable String vacancyId, @RequestBody Question question) {
-        Question oldQuestion = questionService.get(question.getId()).get();
-        oldQuestion.setDurationMax(question.getDurationMax());
-        oldQuestion.setDurationToRead(question.getDurationToRead());
-        oldQuestion.setIsCompulsory(question.getIsCompulsory());
-        oldQuestion.setOrderNumber(question.getOrderNumber());
-        oldQuestion.setQuestion(question.getQuestion());
-        questionService.save(oldQuestion, vacancyId);
+        questionService.update(question, vacancyId);
         return new ResponseEntity(HttpStatus.OK);
     }
 

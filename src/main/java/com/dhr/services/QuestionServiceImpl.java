@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 @Transactional
 public class QuestionServiceImpl implements QuestionService {
@@ -30,7 +31,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question update(Question question) {
+    public Question update(Question question, String vacancyId) {
+        Question oldQuestion = repository.findById(question.getId()).get();
+        oldQuestion.setDurationMax(question.getDurationMax());
+        oldQuestion.setDurationToRead(question.getDurationToRead());
+        oldQuestion.setIsCompulsory(question.getIsCompulsory());
+        oldQuestion.setOrderNumber(question.getOrderNumber());
+        oldQuestion.setQuestion(question.getQuestion());
         repository.save(question);
         return question;
     }

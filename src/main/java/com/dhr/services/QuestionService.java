@@ -10,7 +10,7 @@ public interface QuestionService {
 
     void delete(Question question);
 
-    Question update(Question question);
+    Question update(Question question, String vacancyId);
 
     Optional<Question> get(Long id);
 

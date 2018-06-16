@@ -26,28 +26,17 @@ public class RespondServiceImpl implements RespondService {
     private VacancyRepository vacancyRepository;
 
     @Override
-    public Respond save(Respond respond) {
+    public Respond save(Respond respond, String vacancyId) {
+        Vacancy vacancy = vacancyRepository.findById(vacancyId).get();
+        respond.setVacancy(vacancy);
         if (respond.getStartDate() == null) {
             respond.setStartDate(new Date());
         }
         if (respond.getId() == null) {
             respond.setId(Integer.toHexString(respond.hashCode()));
         }
-        Vacancy vacancy = respond.getVacancy();
         vacancy.setRespondsCount(vacancy.getRespondsCount() + 1);
         vacancyRepository.save(vacancy);
-//        if (respond.getRespondQuestions() != null && respond.getRespondQuestions().size() != 0) {
-//            respond.getRespondQuestions().forEach(question -> {
-//                if (question != null) {
-//                    questionRespondRepository.save(question);
-//                }
-//            });
-//        } else {
-//            Optional<Respond> byId = repository.findById(respond.getId());
-//            if (byId.isPresent() && byId.get().getRespondQuestions().size() != 0) {
-//                respond.getRespondQuestions().addAll(repository.findById(respond.getId()).get().getRespondQuestions());
-//            }
-//        }
         repository.save(respond);
         return repository.findById(respond.getId()).get();
     }

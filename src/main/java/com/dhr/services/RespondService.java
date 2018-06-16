@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RespondService {
-    Respond save(Respond vacancy);
+    Respond save(Respond respond, String vacancyId);
 
     void delete(Respond vacancy);
 

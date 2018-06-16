@@ -35,6 +35,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company update(Company company) {
+        Company oldCompany = companyRepository.findById(company.getId()).get();
+        oldCompany.setCompanyDescription(company.getCompanyDescription());
+        oldCompany.setCompanyName(company.getCompanyName());
+        oldCompany.setCompanyLogoPath(company.getCompanyLogoPath());
         companyRepository.save(company);
         return company;
     }
