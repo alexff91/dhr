@@ -53,7 +53,7 @@ public class User implements Serializable {
 
     @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference("roles")
     private List<Role> roles;
 
