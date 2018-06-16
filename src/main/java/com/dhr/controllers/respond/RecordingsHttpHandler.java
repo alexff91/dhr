@@ -3,7 +3,7 @@ package com.dhr.controllers.respond;
 import com.dhr.config.PropertiesConfig;
 import com.dhr.model.QuestionRespond;
 import com.dhr.model.Respond;
-import com.dhr.model.RespondStatus;
+import com.dhr.model.enums.RespondStatus;
 import com.dhr.services.QuestionRespondService;
 import com.dhr.services.QuestionService;
 import com.dhr.services.RespondService;

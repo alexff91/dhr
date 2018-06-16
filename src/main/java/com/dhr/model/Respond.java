@@ -1,5 +1,7 @@
 package com.dhr.model;
 
+import com.dhr.model.enums.RespondStatus;
+import com.dhr.model.enums.ReviewStatus;
 import com.dhr.utils.Constants;
 import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,8 +19,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;

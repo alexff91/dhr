@@ -1,5 +1,6 @@
 package com.dhr.model;
 
+import com.dhr.model.enums.RoleName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

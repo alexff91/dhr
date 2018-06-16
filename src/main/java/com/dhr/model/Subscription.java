@@ -1,5 +1,6 @@
 package com.dhr.model;
 
+import com.dhr.model.enums.SubscriptionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NonNull;

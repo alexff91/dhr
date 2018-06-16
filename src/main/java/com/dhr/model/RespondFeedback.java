@@ -34,17 +34,17 @@ public class RespondFeedback {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    private String comment;
+
+    private Long grade = 0L;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id", nullable = false)
     @JsonIgnore
     private Respond respond;
 
-    private String comment;
-
-    private Long grade = 0L;
-
     @JsonIgnore
-    @OneToOne
+    @ManyToOne
     private User user;
 
     @Temporal(TemporalType.TIMESTAMP)

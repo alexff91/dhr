@@ -1,5 +1,6 @@
 package com.dhr.model;
 
+import com.dhr.utils.Constants;
 import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -33,7 +35,6 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
-
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -51,12 +52,14 @@ public class User implements Serializable {
     private String phone;
 
     @JsonIgnore
+    @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference("roles")
     private List<Role> roles;
 
     @JsonView(View.Detail.class)
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference("respondFeedbacks")
     private List<RespondFeedback> respondFeedbacks;
 

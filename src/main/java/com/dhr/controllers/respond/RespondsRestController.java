@@ -1,7 +1,7 @@
 package com.dhr.controllers.respond;
 
 import com.dhr.model.Respond;
-import com.dhr.model.ReviewStatus;
+import com.dhr.model.enums.ReviewStatus;
 import com.dhr.model.Vacancy;
 import com.dhr.services.RespondServiceImpl;
 import com.dhr.services.VacancyService;
