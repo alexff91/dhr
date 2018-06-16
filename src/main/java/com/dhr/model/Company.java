@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -54,10 +55,12 @@ public class Company implements Serializable {
     private Subscription subscription;
 
     @JsonIgnore
-    @OneToMany(targetEntity = Vacancy.class, fetch = FetchType.EAGER)
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    @OneToMany(targetEntity = Vacancy.class, fetch = FetchType.LAZY)
     private List<Vacancy> vacancies = new LinkedList<>();
 
     @JsonIgnore
-    @OneToMany(targetEntity = User.class)
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    @OneToMany(targetEntity = User.class, fetch = FetchType.LAZY)
     private List<User> users = new LinkedList<>();
 }

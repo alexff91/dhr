@@ -1,5 +1,6 @@
 package com.dhr.model;
 
+import com.dhr.utils.Constants;
 import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
@@ -20,6 +21,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -71,10 +73,12 @@ public class Respond {
     @JsonIgnore
     @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id")
+    @JoinTable(schema = Constants.VI_SCHEMA)
     private List<QuestionRespond> respondQuestions = new LinkedList<>();
 
     @JsonIgnore
     @OneToMany(targetEntity = RespondFeedback.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id")
+    @JoinTable(schema = Constants.VI_SCHEMA)
     private List<RespondFeedback> reviewResponds = new LinkedList<>();
 }

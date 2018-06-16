@@ -1,5 +1,6 @@
 package com.dhr.model;
 
+import com.dhr.utils.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -55,6 +57,7 @@ public class Question implements Serializable{
     private Boolean isCompulsory;
 
     @JsonIgnore
-    @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.EAGER)
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.LAZY)
     private Set<QuestionRespond> questionResponds = new LinkedHashSet<>();
 }
