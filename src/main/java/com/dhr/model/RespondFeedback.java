@@ -45,6 +45,7 @@ public class RespondFeedback {
 
     @JsonIgnore
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Temporal(TemporalType.TIMESTAMP)
