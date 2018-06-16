@@ -59,7 +59,7 @@ public class User implements Serializable {
 
     @JsonView(View.Detail.class)
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference("respondFeedbacks")
     private List<RespondFeedback> respondFeedbacks;
 
