@@ -37,8 +37,7 @@ public class RespondServiceImpl implements RespondService {
         }
         vacancy.setRespondsCount(vacancy.getRespondsCount() + 1);
         vacancyRepository.save(vacancy);
-        repository.save(respond);
-        return repository.findById(respond.getId()).get();
+        return repository.save(respond);
     }
 
     @Override
