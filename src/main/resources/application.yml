@@ -30,10 +30,13 @@ spring:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:postgresql://${dbHost}:5432/vihr
         username: postgres
+        driver-class-name: org.postgresql.Driver
+        platform: postgresql
     jpa:
         generate-ddl: false
         hibernate:
             ddl-auto: create
+            dialect: org.hibernate.dialect.PostgreSQL94Dialect
             default_schema: vihr
             connection:
               provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider

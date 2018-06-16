@@ -1,12 +1,10 @@
 package com.dhr.model;
 
+import com.dhr.utils.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +28,7 @@ import java.util.List;
 @Setter
 @ToString
 @Entity
-@Table(schema = "vihr")
+@Table(schema = Constants.VI_SCHEMA)
 public class Company implements Serializable {
     private static final String SEQUENCE_NAME = "company_id_seq";
     @Id
