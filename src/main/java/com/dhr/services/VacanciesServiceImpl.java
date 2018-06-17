@@ -38,8 +38,8 @@ public class VacanciesServiceImpl implements VacancyService {
     }
 
     @Override
-    public void update(Vacancy vacancy) {
-        Vacancy oldVacancy = repository.findById(vacancy.getId()).get();
+    public void update(String vacancyId, Vacancy vacancy) {
+        Vacancy oldVacancy = repository.findById(vacancyId).get();
         oldVacancy.setDescription(vacancy.getDescription());
         oldVacancy.setPosition(vacancy.getPosition());
         vacancy.getQuestions().forEach(question -> question.setVacancy(oldVacancy));

@@ -38,9 +38,9 @@ public class VacancyRestController {
         return Sets.newHashSet(questionService.getAllByVacancy(vacancyId));
     }
 
-    @PutMapping
-    public ResponseEntity updateVacancy(@RequestBody Vacancy vacancy) {
-        vacanciesService.update(vacancy);
+    @PutMapping("{vacancyId}")
+    public ResponseEntity updateVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
+        vacanciesService.update(vacancyId, vacancy);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
