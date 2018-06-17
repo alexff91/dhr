@@ -6,6 +6,8 @@ import com.dhr.model.Vacancy;
 import com.dhr.services.CompanyServiceImpl;
 import com.dhr.services.UserServiceImpl;
 import com.dhr.services.VacanciesServiceImpl;
+import com.dhr.view.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Optional;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -40,6 +44,7 @@ public class CompanyRestController {
     @Autowired
     UserServiceImpl userService;
 
+    @JsonView(View.Detail.class)
     @RequestMapping(value = "/{companyId}/vacancies", method = RequestMethod.GET)
     public List<Vacancy> getVacanciesByCompanyId(@PathVariable Long companyId) {
         return companyService.getVacanciesByCompanyId(companyId);
