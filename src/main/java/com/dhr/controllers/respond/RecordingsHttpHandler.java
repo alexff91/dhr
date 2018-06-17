@@ -130,7 +130,7 @@ public class RecordingsHttpHandler {
             respond.setAnswers(respondQuestions);
         }
         questionRespondService.save(questionAnswer);
-        if (respond.getVacancy().getQuestions().size() == respondQuestions.size()) {
+        if (respond.getVacancy().getQuestions().size() == respond.getAnswers().size()) {
             respond.setStatus(RespondStatus.COMPLETE);
             respondService.save(respond, respond.getVacancy().getId());
         }
