@@ -1,4 +1,4 @@
-package com.dhr.controllers.admin;
+package com.dhr.controllers.manager;
 
 import com.dhr.model.Company;
 import com.dhr.model.User;
