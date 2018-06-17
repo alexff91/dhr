@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +34,7 @@ import java.util.List;
 @Table(schema = Constants.VI_SCHEMA)
 public class Company implements Serializable {
     private static final String SEQUENCE_NAME = "company_id_seq";
+
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
@@ -53,6 +56,7 @@ public class Company implements Serializable {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subscription_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Subscription subscription;
 
     @JsonIgnore

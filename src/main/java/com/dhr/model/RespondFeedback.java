@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,6 +42,7 @@ public class RespondFeedback {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Respond respond;
 
