@@ -44,7 +44,6 @@ public class CompanyRestController {
     @Autowired
     UserServiceImpl userService;
 
-    @JsonView(View.Detail.class)
     @RequestMapping(value = "/{companyId}/vacancies", method = RequestMethod.GET)
     public List<Vacancy> getVacanciesByCompanyId(@PathVariable Long companyId) {
         return companyService.getVacanciesByCompanyId(companyId);

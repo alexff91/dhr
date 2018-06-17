@@ -66,7 +66,6 @@ public class Vacancy implements Serializable {
     @Column(name = "update_date")
     private Date updateDate;
 
-    @JsonView(View.Detail.class)
     @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     private Set<Question> questions = new LinkedHashSet<>();
