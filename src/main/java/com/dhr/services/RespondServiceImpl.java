@@ -33,7 +33,7 @@ public class RespondServiceImpl implements RespondService {
             respond.setStartDate(new Date());
         }
         if (respond.getId() == null) {
-            respond.setId(Integer.toHexString(respond.hashCode()));
+            respond.setId(Integer.toHexString(respond.hashCode()) + Long.toHexString(new Date().getTime()));
         }
         vacancy.setRespondsCount(vacancy.getRespondsCount() + 1);
         vacancy.setUnansweredRespondsCount(vacancy.getUnansweredRespondsCount() + 1);

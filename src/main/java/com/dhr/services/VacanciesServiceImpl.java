@@ -20,7 +20,7 @@ public class VacanciesServiceImpl implements VacancyService {
 
     @Override
     public String save(Vacancy vacancy) {
-        vacancy.setId(Integer.toHexString(vacancy.hashCode()));
+        vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));
         repository.save(vacancy);
         return vacancy.getId();
     }

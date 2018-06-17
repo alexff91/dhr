@@ -43,7 +43,7 @@ public class Vacancy implements Serializable {
     @Column(name = "id", nullable = false, unique = true)
     private String id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "company_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonView(View.Base.class)

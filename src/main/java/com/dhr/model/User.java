@@ -66,7 +66,7 @@ public class User implements Serializable {
     @Column(name = "avatar_path")
     private String avatarPath;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn
     private Company company;
 }

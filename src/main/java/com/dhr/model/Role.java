@@ -11,6 +11,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -42,7 +43,7 @@ public class Role implements Serializable {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(updatable = false, insertable = false)
     private User user;
 
