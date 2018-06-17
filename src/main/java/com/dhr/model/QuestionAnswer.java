@@ -1,5 +1,6 @@
 package com.dhr.model;
 
+import com.dhr.utils.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,9 +35,10 @@ import java.util.Date;
 @EqualsAndHashCode
 @Builder
 @Entity
-@Table(name = "question_respond", schema = "vihr")
-public class QuestionRespond implements Serializable {
+@Table(name = "question_answer", schema = Constants.VI_SCHEMA)
+public class QuestionAnswer implements Serializable {
     private static final String SEQUENCE_NAME = "question_respond_id_seq";
+
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)

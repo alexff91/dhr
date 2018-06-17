@@ -41,12 +41,8 @@ public class RespondReviewRestController {
     public ResponseEntity createRespondFeedback(@PathVariable String respondId,
                                                 @PathVariable Long userId,
                                                 @RequestBody RespondFeedback respondFeedback
-                                                ) {
-        Respond respond = respondService.get(respondId).get();
-        User user = userService.get(userId).get();
-        respondFeedback.setUser(user);
-        respondFeedback.setRespond(respond);
-        return new ResponseEntity<>(respondFeedbackService.save(respondFeedback), HttpStatus.CREATED);
+    ) {
+        return new ResponseEntity<>(respondFeedbackService.save(respondId, userId, respondFeedback), HttpStatus.CREATED);
     }
 
 }

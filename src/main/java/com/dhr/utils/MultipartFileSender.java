@@ -27,7 +27,7 @@ public class MultipartFileSender {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private static final int DEFAULT_BUFFER_SIZE = 20480; // ..bytes = 20KB.
-    private static final long DEFAULT_EXPIRE_TIME = 604800000L; // ..ms = 1 week.
+    private static final long DEFAULT_EXPIRE_TIME = 4800000L; // ..ms = 1 week.
     private static final String MULTIPART_BOUNDARY = "MULTIPART_BYTERANGES";
 
     private static final String MIME_APPLICATION_OCTET_STREAM = "application/octet-stream";

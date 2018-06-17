@@ -11,7 +11,7 @@ public interface VacancyService {
 
     void delete(Vacancy vacancy);
 
-    void update(String vacancyId, Vacancy vacancy);
+    void update(Vacancy vacancy);
 
     Optional<Vacancy> get(String id);
 

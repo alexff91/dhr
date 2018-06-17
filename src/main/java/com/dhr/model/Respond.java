@@ -34,7 +34,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode(exclude = {"respondQuestions", "startDate"})
+@EqualsAndHashCode(exclude = {"answers", "startDate"})
 @Entity
 @Table(schema = "vihr")
 public class Respond {
@@ -71,10 +71,10 @@ public class Respond {
     private ReviewStatus reviewStatus = ReviewStatus.NOT_WATCHED;
 
     @JsonIgnore
-    @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id")
     @JoinTable(schema = Constants.VI_SCHEMA)
-    private List<QuestionRespond> respondQuestions = new LinkedList<>();
+    private List<QuestionAnswer> answers = new LinkedList<>();
 
     @JsonIgnore
     @OneToMany(targetEntity = RespondFeedback.class, fetch = FetchType.LAZY)

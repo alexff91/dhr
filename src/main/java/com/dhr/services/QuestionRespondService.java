@@ -1,20 +1,20 @@
 package com.dhr.services;
 
-import com.dhr.model.QuestionRespond;
+import com.dhr.model.QuestionAnswer;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface QuestionRespondService {
-    Long save(QuestionRespond question);
+    Long save(QuestionAnswer question);
 
-    void delete(QuestionRespond question);
+    void delete(QuestionAnswer question);
 
-    QuestionRespond update(QuestionRespond question);
+    QuestionAnswer update(QuestionAnswer question);
 
-    Optional<QuestionRespond> get(Long id);
+    Optional<QuestionAnswer> get(Long id);
 
-    Iterable<QuestionRespond> getAll();
+    Iterable<QuestionAnswer> getAll();
 
-    List<QuestionRespond> getAllByRespondId(String id);
+    List<QuestionAnswer> getAllByRespondId(String id);
 }

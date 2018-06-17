@@ -66,21 +66,27 @@ public class Vacancy implements Serializable {
     @Column(name = "update_date")
     private Date updateDate;
 
-    @JsonIgnore
+    @JsonView(View.Detail.class)
     @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     private Set<Question> questions = new LinkedHashSet<>();
 
     @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = QuestionRespond.class, fetch = FetchType.LAZY)
-    private Set<QuestionRespond> questionResponds = new LinkedHashSet<>();
+    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY)
+    private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 
     @JsonView(View.Detail.class)
     private Long viewsCount = 0L;
 
     @JsonView(View.Detail.class)
     private Long respondsCount = 0L;
+
+    @JsonView(View.Detail.class)
+    private Long unansweredRespondsCount = 0L;
+
+    @JsonView(View.Detail.class)
+    private Long minReviewCount = 1L;
 
     @JsonView(View.Detail.class)
     @Column(nullable = false)

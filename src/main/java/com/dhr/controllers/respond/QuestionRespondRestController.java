@@ -1,6 +1,6 @@
 package com.dhr.controllers.respond;
 
-import com.dhr.model.QuestionRespond;
+import com.dhr.model.QuestionAnswer;
 import com.dhr.services.QuestionRespondServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,7 +19,7 @@ public class QuestionRespondRestController {
     QuestionRespondServiceImpl questionService;
 
     @GetMapping
-    public List<QuestionRespond> getQuestionsByRespondId(@PathVariable String respondId) {
+    public List<QuestionAnswer> getQuestionsByRespondId(@PathVariable String respondId) {
         return questionService.getAllByRespondId(respondId);
     }
 }

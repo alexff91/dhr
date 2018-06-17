@@ -1,5 +1,5 @@
 package com.dhr.model.enums;
 
 public enum ReviewStatus {
-    NOT_WATCHED, ON_REVIEW, ACCEPTED, DECLINED, BLOCKED;
+    NOT_WATCHED, ON_REVIEW, REVIEWED, ACCEPTED, DECLINED, BLOCKED;
 }

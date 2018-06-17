@@ -1,13 +1,14 @@
 package com.dhr.controllers.respond;
 
 import com.dhr.config.PropertiesConfig;
-import com.dhr.model.QuestionRespond;
+import com.dhr.model.QuestionAnswer;
 import com.dhr.model.Respond;
 import com.dhr.model.enums.RespondStatus;
 import com.dhr.services.QuestionRespondService;
 import com.dhr.services.QuestionService;
 import com.dhr.services.RespondService;
 import com.dhr.utils.MultipartFileSender;
+import com.dhr.utils.StorageService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,13 +60,14 @@ public class RecordingsHttpHandler {
     RespondService respondService;
 
     @RequestMapping(value = "/{questionId}/{filename:.+}", method = RequestMethod.GET)
+    @Transactional
     public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable String respondId,
                                                          @PathVariable Long questionId,
                                                          HttpServletRequest request,
                                                          HttpServletResponse response) throws Exception {
 
-        File file = new File(config.getRecordingsPath() + "/responds/" + respondId + "/questions/", questionId + ".webm");
-
+        Long companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
+        File file = new File(config.getRecordingsPath() + "/company/"+ companyId + "/responds/" + respondId + "/questions/", questionId + ".webm");
         if (file.isFile()) {
             MultipartFileSender.fromPath(file.toPath()).with(request).with(response).serveResource();
             return new ResponseEntity<>(HttpStatus.OK);
@@ -92,7 +94,8 @@ public class RecordingsHttpHandler {
     }
 
     private String getRecordingPath(@PathVariable String respondId) {
-        return "/responds/" + respondId + "/questions/";
+        Long companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
+        return  "/company/"+ companyId + "/responds/" + respondId + "/questions/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{questionId}")
@@ -105,7 +108,7 @@ public class RecordingsHttpHandler {
         if (saveVideoToDirectory(respondId, questionId, file))
             return new ResponseEntity<>("File is empty", HttpStatus.OK);
 
-        QuestionRespond questionRespond = QuestionRespond.builder()
+        QuestionAnswer questionAnswer = QuestionAnswer.builder()
                 .question(questionService.get(questionId).get())
                 .respond(respondService.get(respondId).get())
                 .videoPath("https://" + config.getBackendHost() +
@@ -117,16 +120,16 @@ public class RecordingsHttpHandler {
                 .build();
 
         Respond respond = respondService.get(respondId).get();
-        List<QuestionRespond> respondQuestions = respond.getRespondQuestions();
-        Optional<QuestionRespond> answeredRespond = respond.getRespondQuestions().stream()
-                .filter(questionRespondAnswered -> Objects.equals(questionRespondAnswered.getQuestion().getId(), questionRespond.getId())).findAny();
+        List<QuestionAnswer> respondQuestions = respond.getAnswers();
+        Optional<QuestionAnswer> answeredRespond = respond.getAnswers().stream()
+                .filter(questionRespondAnswered -> Objects.equals(questionRespondAnswered.getQuestion().getId(), questionAnswer.getId())).findAny();
         if (answeredRespond.isPresent()) {
-            respond.getRespondQuestions().set(respond.getRespondQuestions().indexOf(answeredRespond.get()), questionRespond);
+            respond.getAnswers().set(respond.getAnswers().indexOf(answeredRespond.get()), questionAnswer);
         } else if (respondQuestions != null) {
-            respondQuestions.add(questionRespond);
-            respond.setRespondQuestions(respondQuestions);
+            respondQuestions.add(questionAnswer);
+            respond.setAnswers(respondQuestions);
         }
-        questionRespondService.save(questionRespond);
+        questionRespondService.save(questionAnswer);
         if (respond.getVacancy().getQuestions().size() == respondQuestions.size()) {
             respond.setStatus(RespondStatus.COMPLETE);
             respondService.save(respond, respond.getVacancy().getId());

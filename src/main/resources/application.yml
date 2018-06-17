@@ -1,11 +1,11 @@
-backendHost: 168.63.13.234
+backendHost: app.vi-hr.com
 dbHost: 168.63.13.234
 
 logging:
     level: error
     level.org.springframework.data: debug
 recordings:
-    path: /browser-recordings
+    path: /interviews
 server:
     port: 8082
     ssl:
@@ -35,7 +35,7 @@ spring:
     jpa:
         generate-ddl: false
         hibernate:
-            ddl-auto: none
+            ddl-auto: create
             dialect: org.hibernate.dialect.PostgreSQL94Dialect
             default_schema: vihr
             connection:

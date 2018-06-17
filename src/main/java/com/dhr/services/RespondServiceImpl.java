@@ -36,13 +36,14 @@ public class RespondServiceImpl implements RespondService {
             respond.setId(Integer.toHexString(respond.hashCode()));
         }
         vacancy.setRespondsCount(vacancy.getRespondsCount() + 1);
+        vacancy.setUnansweredRespondsCount(vacancy.getUnansweredRespondsCount() + 1);
         vacancyRepository.save(vacancy);
         return repository.save(respond);
     }
 
     @Override
     public void delete(Respond respond) {
-        respond.getRespondQuestions().forEach(q -> questionRespondRepository.delete(q));
+        respond.getAnswers().forEach(q -> questionRespondRepository.delete(q));
         repository.delete(respond);
     }
 

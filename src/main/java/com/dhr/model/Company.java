@@ -38,13 +38,14 @@ public class Company implements Serializable {
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
-    private String companyName;
+    @Column(length = 4000)
+    private String name;
 
     @Column(length = 4000)
-    private String companyLogoPath;
+    private String logoPath;
 
     @Column(length = 4000)
-    private String companyDescription;
+    private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;

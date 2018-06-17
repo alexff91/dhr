@@ -1,6 +1,6 @@
 package com.dhr.services;
 
-import com.dhr.model.QuestionRespond;
+import com.dhr.model.QuestionAnswer;
 import com.dhr.repositories.QuestionRespondRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,34 +16,34 @@ public class QuestionRespondServiceImpl implements QuestionRespondService {
     private QuestionRespondRepository repository;
 
     @Override
-    public Long save(QuestionRespond question) {
+    public Long save(QuestionAnswer question) {
         repository.save(question);
         return question.getId();
     }
 
     @Override
-    public void delete(QuestionRespond question) {
+    public void delete(QuestionAnswer question) {
         repository.delete(question);
     }
 
     @Override
-    public QuestionRespond update(QuestionRespond question) {
+    public QuestionAnswer update(QuestionAnswer question) {
         repository.save(question);
         return question;
     }
 
     @Override
-    public Optional<QuestionRespond> get(Long id) {
+    public Optional<QuestionAnswer> get(Long id) {
         return repository.findById(id);
     }
 
     @Override
-    public Iterable<QuestionRespond> getAll() {
+    public Iterable<QuestionAnswer> getAll() {
         return repository.findAll();
     }
 
     @Override
-    public List<QuestionRespond> getAllByRespondId(String id) {
+    public List<QuestionAnswer> getAllByRespondId(String id) {
         return repository.findAllByRespondId(id);
     }
 }
