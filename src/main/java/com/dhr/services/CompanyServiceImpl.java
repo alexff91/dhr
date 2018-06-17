@@ -38,7 +38,7 @@ public class CompanyServiceImpl implements CompanyService {
         Company oldCompany = companyRepository.findById(company.getId()).get();
         oldCompany.setDescription(company.getDescription());
         oldCompany.setName(company.getName());
-        oldCompany.setLogoPath(company.getLogoPath());
+        oldCompany.setLogo(company.getLogo());
         companyRepository.save(company);
         return company;
     }
