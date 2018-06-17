@@ -1,6 +1,7 @@
 package com.dhr.services;
 
 import com.dhr.model.Question;
+import com.dhr.model.Vacancy;
 import com.dhr.repositories.QuestionRepository;
 import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Long save(Question question, String vacancyId) {
-        question.setVacancy(vacancyRepository.findById(vacancyId).get());
-        repository.save(question);
+        Vacancy vacancy = vacancyRepository.findById(vacancyId).get();
+        question.setVacancy(vacancy);
+        Question savedQuestion = repository.save(question);
+        vacancy.getQuestions().add(savedQuestion);
+        vacancyRepository.save(vacancy);
         return question.getId();
     }
 
