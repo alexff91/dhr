@@ -44,8 +44,8 @@ public class Company implements Serializable {
     @Column(length = 4000)
     private String name;
 
-    @Column(length = 4000)
-    private String logoPath;
+    @Column(columnDefinition = "TEXT")
+    private String logo;
 
     @Column(length = 4000)
     private String description;
