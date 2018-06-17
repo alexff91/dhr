@@ -13,6 +13,7 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -66,14 +67,6 @@ public class Vacancy implements Serializable {
     @Column(name = "update_date")
     private Date updateDate;
 
-    @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
-    private Set<Question> questions = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY)
-    private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 
     @JsonView(View.Detail.class)
     private Long viewsCount = 0L;
@@ -92,4 +85,13 @@ public class Vacancy implements Serializable {
     @Enumerated(EnumType.STRING)
     @NonNull
     private VacancyStatus status = VacancyStatus.IN_WORK;
+
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER, cascade= CascadeType.ALL)
+    private Set<Question> questions = new LinkedHashSet<>();
+
+    @JsonIgnore
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 }
