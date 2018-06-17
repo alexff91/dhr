@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,6 +40,7 @@ public class Question implements Serializable{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vacancy_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Vacancy vacancy;
 
