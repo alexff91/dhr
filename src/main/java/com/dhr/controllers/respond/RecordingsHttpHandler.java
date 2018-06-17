@@ -132,7 +132,7 @@ public class RecordingsHttpHandler {
         questionRespondService.save(questionAnswer);
         if (respond.getVacancy().getQuestions().size() == respond.getAnswers().size()) {
             respond.setStatus(RespondStatus.COMPLETE);
-            respondService.save(respond, respond.getVacancy().getId());
+            respondService.update(respond);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
