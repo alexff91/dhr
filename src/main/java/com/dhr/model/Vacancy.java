@@ -87,11 +87,11 @@ public class Vacancy implements Serializable {
     private VacancyStatus status = VacancyStatus.IN_WORK;
 
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER, cascade= CascadeType.ALL)
+    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Question> questions = new LinkedHashSet<>();
 
     @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY)
     private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 }
