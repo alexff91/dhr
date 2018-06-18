@@ -4,11 +4,10 @@ import com.dhr.config.PropertiesConfig;
 import com.dhr.model.QuestionAnswer;
 import com.dhr.model.Respond;
 import com.dhr.model.enums.RespondStatus;
-import com.dhr.services.QuestionRespondService;
+import com.dhr.services.QuestionAnswerService;
 import com.dhr.services.QuestionService;
 import com.dhr.services.RespondService;
 import com.dhr.utils.MultipartFileSender;
-import com.dhr.utils.StorageService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +50,7 @@ public class RecordingsHttpHandler {
     PropertiesConfig config;
 
     @Autowired
-    QuestionRespondService questionRespondService;
+    QuestionAnswerService questionAnswerService;
 
     @Autowired
     QuestionService questionService;
@@ -129,7 +128,7 @@ public class RecordingsHttpHandler {
             respondQuestions.add(questionAnswer);
             respond.setAnswers(respondQuestions);
         }
-        questionRespondService.save(questionAnswer);
+        questionAnswerService.save(questionAnswer);
         if (respond.getVacancy().getQuestions().size() == respond.getAnswers().size()) {
             respond.setStatus(RespondStatus.COMPLETE);
             respondService.update(respond);

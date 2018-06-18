@@ -1,7 +1,7 @@
 package com.dhr.controllers.respond;
 
 import com.dhr.model.QuestionAnswer;
-import com.dhr.services.QuestionRespondServiceImpl;
+import com.dhr.services.QuestionAnswerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api/v1/respond/{respondId}/questionResponds")
 public class QuestionRespondRestController {
     @Autowired
-    QuestionRespondServiceImpl questionService;
+    QuestionAnswerServiceImpl questionService;
 
     @GetMapping
     public List<QuestionAnswer> getQuestionsByRespondId(@PathVariable String respondId) {

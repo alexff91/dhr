@@ -5,7 +5,7 @@ import com.dhr.model.QuestionAnswerFeedback;
 import java.util.Optional;
 
 public interface QuestionAnswerFeedbackService {
-    Long save(QuestionAnswerFeedback feedback);
+    Long save(Long questionAnswerId, Long userId, QuestionAnswerFeedback feedback);
 
     void delete(QuestionAnswerFeedback feedback);
 
@@ -14,4 +14,6 @@ public interface QuestionAnswerFeedbackService {
     Optional<QuestionAnswerFeedback> get(Long id);
 
     Iterable<QuestionAnswerFeedback> getAll();
+
+    Iterable<QuestionAnswerFeedback> getAllByQuestionAnswerId(Long id);
 }

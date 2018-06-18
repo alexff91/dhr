@@ -1,7 +1,7 @@
 package com.dhr.controllers.respond;
 
-import com.dhr.model.RespondFeedback;
-import com.dhr.services.RespondFeedbackService;
+import com.dhr.model.QuestionAnswerFeedback;
+import com.dhr.services.QuestionAnswerFeedbackService;
 import com.dhr.services.RespondService;
 import com.dhr.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/vacancies/{vacancyId}/responds/{respondId}/answer/{questionId}/review/")
-public class AnswerRespondRestController {
+@RequestMapping("/api/v1/responds/{respondId}/answer/{answerId}/review")
+public class RespondAnswerRestController {
     @Autowired
-    RespondFeedbackService respondFeedbackService;
+    QuestionAnswerFeedbackService feedbackService;
 
     @Autowired
     RespondService respondService;
@@ -31,16 +29,16 @@ public class AnswerRespondRestController {
     UserService userService;
 
     @GetMapping
-    public List<RespondFeedback> getAllByRespondId(@PathVariable String respondId) {
-        return respondFeedbackService.getAllByRespondId(respondId);
+    public Iterable<QuestionAnswerFeedback> getAllByAnswerId(@PathVariable Long answerId) {
+        return feedbackService.getAllByQuestionAnswerId(answerId);
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity createRespondFeedback(@PathVariable String respondId,
-                                                @PathVariable Long userId,
-                                                @RequestBody RespondFeedback respondFeedback
+    @PostMapping("/user/{userId}")
+    public ResponseEntity createAnswerFeedback(@PathVariable String respondId,
+                                               @PathVariable Long userId,
+                                               @RequestBody QuestionAnswerFeedback answerFeedback
     ) {
-        return new ResponseEntity<>(respondFeedbackService.save(respondId, userId, respondFeedback), HttpStatus.CREATED);
+        return new ResponseEntity<>(feedbackService.save(respondId, userId, answerFeedback), HttpStatus.CREATED);
     }
 
 }

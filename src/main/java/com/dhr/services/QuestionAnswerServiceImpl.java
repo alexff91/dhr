@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class QuestionRespondServiceImpl implements QuestionRespondService {
+public class QuestionAnswerServiceImpl implements QuestionAnswerService {
     @Autowired
     private QuestionRespondRepository repository;
 

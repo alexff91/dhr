@@ -5,7 +5,7 @@ import com.dhr.model.QuestionAnswer;
 import java.util.List;
 import java.util.Optional;
 
-public interface QuestionRespondService {
+public interface QuestionAnswerService {
     Long save(QuestionAnswer question);
 
     void delete(QuestionAnswer question);
