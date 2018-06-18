@@ -46,11 +46,6 @@ public class Skill implements Serializable {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vacancy_id", nullable = false)
-    private Vacancy vacancy;
-
     @Column(name = "skill_type", nullable = false)
     @Enumerated(EnumType.STRING)
     @NonNull

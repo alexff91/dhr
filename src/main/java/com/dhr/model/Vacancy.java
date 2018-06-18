@@ -93,9 +93,4 @@ public class Vacancy implements Serializable {
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference("questions")
     private Set<Question> questions = new LinkedHashSet<>();
-
-    @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = Skill.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference("skills")
-    private List<Skill> skills = new LinkedList<>();
 }
