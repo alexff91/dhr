@@ -44,7 +44,6 @@ public class Skill implements Serializable {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
 
     @Column(name = "skill_type", nullable = false)
