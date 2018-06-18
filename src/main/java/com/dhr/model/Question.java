@@ -1,6 +1,7 @@
 package com.dhr.model;
 
 import com.dhr.utils.Constants;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,5 +64,6 @@ public class Question implements Serializable {
     @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY)
+    @JsonBackReference("questionAnswers")
     private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 }

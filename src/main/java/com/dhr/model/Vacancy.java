@@ -3,6 +3,7 @@ package com.dhr.model;
 import com.dhr.model.enums.VacancyStatus;
 import com.dhr.utils.Constants;
 import com.dhr.view.View;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.EqualsAndHashCode;
@@ -88,5 +89,6 @@ public class Vacancy implements Serializable {
 
     @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference("questions")
     private Set<Question> questions = new LinkedHashSet<>();
 }
