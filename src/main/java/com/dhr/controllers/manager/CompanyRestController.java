@@ -82,14 +82,14 @@ public class CompanyRestController {
         return new ResponseEntity<>(vacancyId, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{companyId}/skills")
+    @PostMapping("/{companyId}/skills")
     public ResponseEntity<Long> createSkill(@PathVariable Long companyId, @RequestBody Skill skill) {
         skill.setCompany(companyService.get(companyId).get());
         Long skillId = skillService.save(skill);
         return new ResponseEntity<>(skillId, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{companyId}/skills/{skillId}")
+    @DeleteMapping("/{companyId}/skills/{skillId}")
     public ResponseEntity createSkill(@PathVariable Long companyId, @PathVariable Long skillId) {
         Skill skill = skillService.get(skillId).get();
         skillService.delete(skill);
