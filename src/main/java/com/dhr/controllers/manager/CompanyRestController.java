@@ -72,13 +72,13 @@ public class CompanyRestController {
         return companyService.get(companyId).get();
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(CREATED)
     public ResponseEntity<Long> createCompany(@RequestBody Company company) {
         return new ResponseEntity<>(companyService.save(company), CREATED);
     }
 
-    @PostMapping("/{companyId}/vacancies")
+    @PostMapping(value = "/{companyId}/vacancies", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> createVacancy(@PathVariable Long companyId, @RequestBody Vacancy vacancy) {
         vacancy.setCompany(companyService.get(companyId).get());
         String vacancyId = vacancyService.save(vacancy);
