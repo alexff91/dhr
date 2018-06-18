@@ -2,6 +2,7 @@ package com.dhr.model;
 
 import com.dhr.model.enums.SkillStatus;
 import com.dhr.view.View;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.NonNull;
@@ -40,12 +41,14 @@ public class Skill implements Serializable {
     
     String name;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonView(View.Base.class)
     private Company company;
 
+    @JsonIgnore
     @Column(name = "skill_type", nullable = false)
     @Enumerated(EnumType.ORDINAL)
     @NonNull
