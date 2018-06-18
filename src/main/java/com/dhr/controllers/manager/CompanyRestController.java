@@ -90,7 +90,7 @@ public class CompanyRestController {
     }
 
     @DeleteMapping("/{companyId}/skills/{skillId}")
-    public ResponseEntity createSkill(@PathVariable Long companyId, @PathVariable Long skillId) {
+    public ResponseEntity deleteSkill(@PathVariable Long companyId, @PathVariable Long skillId) {
         Skill skill = skillService.get(skillId).get();
         skillService.delete(skill);
         return new ResponseEntity<>(HttpStatus.OK);
