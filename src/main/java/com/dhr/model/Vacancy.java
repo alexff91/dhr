@@ -68,7 +68,6 @@ public class Vacancy implements Serializable {
     @Column(name = "update_date")
     private Date updateDate;
 
-
     @JsonView(View.Detail.class)
     private Long viewsCount = 0L;
 
