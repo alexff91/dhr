@@ -45,9 +45,8 @@ public class Skill implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "company_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonView(View.Base.class)
     private Company company;
-    
+
     @Column(name = "skill_type", nullable = false)
     @Enumerated(EnumType.STRING)
     @NonNull
