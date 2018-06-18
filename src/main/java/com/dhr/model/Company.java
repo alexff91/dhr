@@ -37,12 +37,14 @@ import java.util.List;
 public class Company implements Serializable {
     private static final String SEQUENCE_NAME = "company_id_seq";
 
+    @JsonView({View.CompanyFull.class, View.CompanyLight.class})
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
     @Column(name = "id", nullable = false, unique = true)
     private Long id;
 
+    @JsonView({View.CompanyFull.class, View.CompanyLight.class})
     @Column(length = 4000)
     private String name;
 
@@ -50,9 +52,11 @@ public class Company implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String logo;
 
+    @JsonView({View.CompanyFull.class})
     @Column(length = 4000)
     private String description;
 
+    @JsonView({View.CompanyFull.class})
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
