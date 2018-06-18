@@ -42,7 +42,7 @@ public class Skill implements Serializable {
     String name;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "company_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonView(View.Base.class)
