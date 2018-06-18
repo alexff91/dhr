@@ -23,6 +23,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -30,7 +32,7 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(schema = "vihr")
-public class Question implements Serializable{
+public class Question implements Serializable {
     private static final String SEQUENCE_NAME = "question_id_seq";
 
     @Id

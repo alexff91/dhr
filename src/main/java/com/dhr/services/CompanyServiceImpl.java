@@ -1,8 +1,10 @@
 package com.dhr.services;
 
 import com.dhr.model.Company;
+import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
 import com.dhr.repositories.CompanyRepository;
+import com.dhr.repositories.SkillRepository;
 import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,9 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
     private VacancyRepository vacancyRepository;
+
+    @Autowired
+    private SkillRepository skillRepository;
 
     @Override
     public Long save(Company company) {
@@ -51,6 +56,11 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<Vacancy> getVacanciesByCompanyId(Long companyId) {
         return vacancyRepository.findAllByCompanyId(companyId);
+    }
+
+    @Override
+    public List<Skill> getSkillsByCompanyId(Long companyId) {
+        return skillRepository.findAllByCompanyId(companyId);
     }
 
     @Override

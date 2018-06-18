@@ -1,13 +1,13 @@
 package com.dhr.controllers.manager;
 
 import com.dhr.model.Company;
+import com.dhr.model.Skill;
 import com.dhr.model.User;
 import com.dhr.model.Vacancy;
-import com.dhr.services.CompanyServiceImpl;
-import com.dhr.services.UserServiceImpl;
-import com.dhr.services.VacanciesServiceImpl;
-import com.dhr.view.View;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.dhr.services.CompanyService;
+import com.dhr.services.SkillService;
+import com.dhr.services.UserService;
+import com.dhr.services.VacancyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -36,17 +36,25 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/api/v1/companies")
 public class CompanyRestController {
     @Autowired
-    CompanyServiceImpl companyService;
+    CompanyService companyService;
 
     @Autowired
-    VacanciesServiceImpl vacancyService;
+    VacancyService vacancyService;
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
+
+    @Autowired
+    SkillService skillService;
 
     @RequestMapping(value = "/{companyId}/vacancies", method = RequestMethod.GET)
     public List<Vacancy> getVacanciesByCompanyId(@PathVariable Long companyId) {
         return companyService.getVacanciesByCompanyId(companyId);
+    }
+
+    @RequestMapping(value = "/{companyId}/skills", method = RequestMethod.GET)
+    public List<Skill> getSkillByCompanyId(@PathVariable Long companyId) {
+        return companyService.getSkillsByCompanyId(companyId);
     }
 
     @RequestMapping(value = "/{companyId}/users", method = RequestMethod.GET)
@@ -74,6 +82,19 @@ public class CompanyRestController {
         return new ResponseEntity<>(vacancyId, HttpStatus.CREATED);
     }
 
+    @PostMapping("/{companyId}/skills")
+    public ResponseEntity<Long> createSkill(@PathVariable Long companyId, @RequestBody Skill skill) {
+        skill.setCompany(companyService.get(companyId).get());
+        Long skillId = skillService.save(skill);
+        return new ResponseEntity<>(skillId, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{companyId}/skills/{skillId}")
+    public ResponseEntity createSkill(@PathVariable Long companyId, @PathVariable Long skillId) {
+        Skill skill = skillService.get(skillId).get();
+        skillService.delete(skill);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PostMapping("/{companyId}/users")
     @ResponseStatus(HttpStatus.CREATED)

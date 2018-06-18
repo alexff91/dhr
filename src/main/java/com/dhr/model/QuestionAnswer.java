@@ -19,13 +19,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -70,4 +74,9 @@ public class QuestionAnswer implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Question question;
+
+    @JsonIgnore
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    @OneToMany(targetEntity = QuestionAnswerFeedback.class, fetch = FetchType.LAZY)
+    private List<QuestionAnswerFeedback> skillsFeedback = new LinkedList<>();
 }

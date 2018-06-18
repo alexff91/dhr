@@ -1,6 +1,7 @@
 package com.dhr.services;
 
 import com.dhr.model.Company;
+import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public interface CompanyService {
     Optional<Company> get(Long id);
 
     List<Vacancy> getVacanciesByCompanyId(Long companyId);
+
+    List<Skill> getSkillsByCompanyId(Long companyId);
 
     Iterable<Company> getAll();
 }

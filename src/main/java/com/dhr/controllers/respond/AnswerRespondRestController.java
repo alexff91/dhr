@@ -19,8 +19,8 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/vacancies/{vacancyId}/responds/{respondId}/review")
-public class RespondReviewRestController {
+@RequestMapping("/api/v1/vacancies/{vacancyId}/responds/{respondId}/answer/{questionId}/review/")
+public class AnswerRespondRestController {
     @Autowired
     RespondFeedbackService respondFeedbackService;
 
