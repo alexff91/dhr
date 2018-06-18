@@ -47,10 +47,9 @@ public class Skill implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonView(View.Base.class)
     private Company company;
-
-    @JsonIgnore
+    
     @Column(name = "skill_type", nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @NonNull
     private SkillStatus status = SkillStatus.ACTIVE;
 }
