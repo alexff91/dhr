@@ -1,7 +1,9 @@
 package com.dhr.model;
 
 import com.dhr.utils.Constants;
+import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -44,6 +46,7 @@ public class Company implements Serializable {
     @Column(length = 4000)
     private String name;
 
+    @JsonView(View.CompanyFull.class)
     @Column(columnDefinition = "TEXT")
     private String logo;
 

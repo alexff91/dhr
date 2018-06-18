@@ -8,6 +8,8 @@ import com.dhr.services.CompanyService;
 import com.dhr.services.SkillService;
 import com.dhr.services.UserService;
 import com.dhr.services.VacancyService;
+import com.dhr.view.View;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -64,6 +66,7 @@ public class CompanyRestController {
                 .orElseGet(() -> new ResponseEntity(NOT_FOUND));
     }
 
+    @JsonView(View.CompanyFull.class)
     @RequestMapping(value = "/{companyId}", method = RequestMethod.GET)
     public Company getByCompanyId(@PathVariable Long companyId) {
         return companyService.get(companyId).get();
@@ -118,6 +121,7 @@ public class CompanyRestController {
     }
 
     @GetMapping
+    @JsonView(View.CompanyFull.class)
     public Iterable<Company> getCompanies() {
         return companyService.getAll();
     }
