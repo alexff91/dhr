@@ -18,5 +18,5 @@ public interface RespondService {
 
     List<Respond> getAllByVacancyId(String vacancyId);
 
-    List<Respond> getByVacancyIdAndRespondId(String vacancyId, String respondId);
+    Respond getByVacancyIdAndRespondId(String vacancyId, String respondId);
 }

@@ -11,5 +11,5 @@ import java.util.List;
 public interface RespondRepository extends JpaRepository<Respond, String> {
     List<Respond> findAllByVacancyId(String vacancyId);
 
-    List<Respond> findAllByVacancyIdAndId(String vacancyId, String id);
+    Respond findOneByVacancyIdAndId(String vacancyId, String id);
 }

@@ -79,15 +79,15 @@ public class RespondsRestController {
     }
 
     @GetMapping("/{respondId}")
-    public List<Respond> getRespondById(@PathVariable String vacancyId,
-                                        @PathVariable String respondId) {
+    public Respond getRespondById(@PathVariable String vacancyId,
+                                  @PathVariable String respondId) {
         return respondService.getByVacancyIdAndRespondId(vacancyId, respondId);
     }
 
     @JsonView(View.Detail.class)
     @GetMapping("/{respondId}/detailed")
-    public List<Respond> getRespondByIdDetailed(@PathVariable String vacancyId,
-                                                @PathVariable String respondId) {
+    public Respond getRespondByIdDetailed(@PathVariable String vacancyId,
+                                          @PathVariable String respondId) {
         return respondService.getByVacancyIdAndRespondId(vacancyId, respondId);
     }
 }

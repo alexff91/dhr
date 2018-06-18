@@ -68,7 +68,7 @@ public class RespondServiceImpl implements RespondService {
     }
 
     @Override
-    public List<Respond> getByVacancyIdAndRespondId(String vacancyId, String respondId) {
-        return repository.findAllByVacancyIdAndId(vacancyId, respondId);
+    public Respond getByVacancyIdAndRespondId(String vacancyId, String respondId) {
+        return repository.findOneByVacancyIdAndId(vacancyId, respondId);
     }
 }
