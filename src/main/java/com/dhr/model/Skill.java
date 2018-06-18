@@ -37,6 +37,8 @@ public class Skill implements Serializable {
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
     @Column(name = "id", nullable = false)
     Long id;
+    
+    String name;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "company_id", nullable = false)
