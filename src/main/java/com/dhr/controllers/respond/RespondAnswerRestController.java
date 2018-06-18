@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/responds/{respondId}/answer/{answerId}/review")
+@RequestMapping("/api/v1/answers/{questionAnswerId}/review")
 public class RespondAnswerRestController {
     @Autowired
     QuestionAnswerFeedbackService feedbackService;
@@ -29,16 +29,16 @@ public class RespondAnswerRestController {
     UserService userService;
 
     @GetMapping
-    public Iterable<QuestionAnswerFeedback> getAllByAnswerId(@PathVariable Long answerId) {
-        return feedbackService.getAllByQuestionAnswerId(answerId);
+    public Iterable<QuestionAnswerFeedback> getAllByAnswerId(@PathVariable Long questionAnswerId) {
+        return feedbackService.getAllByQuestionAnswerId(questionAnswerId);
     }
 
     @PostMapping("/user/{userId}")
-    public ResponseEntity createAnswerFeedback(@PathVariable String respondId,
+    public ResponseEntity createAnswerFeedback(@PathVariable Long questionAnswerId,
                                                @PathVariable Long userId,
                                                @RequestBody QuestionAnswerFeedback answerFeedback
     ) {
-        return new ResponseEntity<>(feedbackService.save(respondId, userId, answerFeedback), HttpStatus.CREATED);
+        return new ResponseEntity<>(feedbackService.save(questionAnswerId, userId, answerFeedback), HttpStatus.CREATED);
     }
 
 }
