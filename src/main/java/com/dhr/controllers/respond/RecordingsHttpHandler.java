@@ -5,6 +5,7 @@ import com.dhr.model.Question;
 import com.dhr.model.QuestionAnswer;
 import com.dhr.model.Respond;
 import com.dhr.model.RespondQuestion;
+import com.dhr.model.RespondSkill;
 import com.dhr.model.enums.RespondStatus;
 import com.dhr.services.QuestionAnswerService;
 import com.dhr.services.QuestionService;
@@ -150,6 +151,10 @@ public class RecordingsHttpHandler {
         RespondQuestion respondQuestion = RespondQuestion.builder().question(question.getQuestion()).
                 respond(respond).durationMax(question.getDurationMax()).isCompulsory(question.getIsCompulsory())
                 .durationToRead(question.getDurationToRead()).orderNumber(question.getOrderNumber()).build();
+        question.getSkills().forEach(skill -> respondQuestion.getSkills().add(RespondSkill.builder()
+                .company(skill.getCompany())
+                .name(skill.getName())
+                .build()));
         return respondQuestionService.save(respondQuestion, respondId);
     }
 

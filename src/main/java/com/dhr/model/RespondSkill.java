@@ -2,6 +2,7 @@ package com.dhr.model;
 
 import com.dhr.utils.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,6 +28,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@Builder
 @Table(schema = "vihr")
 public class RespondSkill implements Serializable {
     private static final String SEQUENCE_NAME = "respond_skill_id_seq";
