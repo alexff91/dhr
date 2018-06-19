@@ -17,5 +17,4 @@ public interface RespondFeedbackService {
     Iterable<RespondFeedback> getAll();
 
     List<RespondFeedback> getAllByRespondId(String respondId);
-
 }

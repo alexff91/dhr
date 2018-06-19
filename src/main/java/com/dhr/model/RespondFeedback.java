@@ -48,7 +48,6 @@ public class RespondFeedback {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Respond respond;
 
