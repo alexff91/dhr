@@ -56,6 +56,8 @@ public class Respond {
 
     private String email;
 
+    private String phone;
+
     @JsonView(View.Detail.class)
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
