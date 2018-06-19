@@ -1,8 +1,10 @@
 package com.dhr.controllers.respond;
 
 import com.dhr.config.PropertiesConfig;
+import com.dhr.model.Question;
 import com.dhr.model.QuestionAnswer;
 import com.dhr.model.Respond;
+import com.dhr.model.RespondQuestion;
 import com.dhr.model.enums.RespondStatus;
 import com.dhr.services.QuestionAnswerService;
 import com.dhr.services.QuestionService;
@@ -57,6 +59,9 @@ public class RecordingsHttpHandler {
     RespondQuestionService respondQuestionService;
 
     @Autowired
+    QuestionService questionService;
+
+    @Autowired
     RespondService respondService;
 
     @RequestMapping(value = "/{questionId}/{filename:.+}", method = RequestMethod.GET)
@@ -67,7 +72,7 @@ public class RecordingsHttpHandler {
                                                          HttpServletResponse response) throws Exception {
 
         Long companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
-        File file = new File(config.getRecordingsPath() + "/company/"+ companyId + "/responds/" + respondId + "/questions/", questionId + ".webm");
+        File file = new File(config.getRecordingsPath() + "/company/" + companyId + "/responds/" + respondId + "/questions/", questionId + ".webm");
         if (file.isFile()) {
             MultipartFileSender.fromPath(file.toPath()).with(request).with(response).serveResource();
             return new ResponseEntity<>(HttpStatus.OK);
@@ -95,7 +100,7 @@ public class RecordingsHttpHandler {
 
     private String getRecordingPath(@PathVariable String respondId) {
         Long companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
-        return  "/company/"+ companyId + "/responds/" + respondId + "/questions/";
+        return "/company/" + companyId + "/responds/" + respondId + "/questions/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{questionId}")
@@ -108,9 +113,16 @@ public class RecordingsHttpHandler {
         if (saveVideoToDirectory(respondId, questionId, file))
             return new ResponseEntity<>("File is empty", HttpStatus.OK);
 
+
+        Question question = questionService.get(questionId).get();
+
+        Respond respond = respondService.get(respondId).get();
+        RespondQuestion respondQuestion = RespondQuestion.builder().question(question.getQuestion()).
+                respond(respond).durationMax(question.getDurationMax()).isCompulsory(question.getIsCompulsory())
+                .durationToRead(question.getDurationToRead()).orderNumber(question.getOrderNumber()).build();
         QuestionAnswer questionAnswer = QuestionAnswer.builder()
-                .question(respondQuestionService.get(questionId).get())
-                .respond(respondService.get(respondId).get())
+                .question(respondQuestion)
+                .respond(respond)
                 .videoPath("https://" + config.getBackendHost() +
                         ":" + config.getServerPort() +
                         "/api/v1/responds/" + respondId +
@@ -119,7 +131,6 @@ public class RecordingsHttpHandler {
                 .respondTime(new Date())
                 .build();
 
-        Respond respond = respondService.get(respondId).get();
         List<QuestionAnswer> respondQuestions = respond.getAnswers();
         Optional<QuestionAnswer> answeredRespond = respond.getAnswers().stream()
                 .filter(questionRespondAnswered -> Objects.equals(questionRespondAnswered.getQuestion().getId(), questionAnswer.getId())).findAny();
@@ -146,7 +157,6 @@ public class RecordingsHttpHandler {
         String folder = getRecordingPath(respondId);
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
-        boolean mkdirsResult = new File(path.toString()).mkdirs();
         String fName = questionId + ".webm";
 
         File uploadedFile = new File(path.toFile(), fName);
