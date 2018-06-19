@@ -50,7 +50,7 @@ public class Skill implements Serializable {
 
     @JoinTable(schema = Constants.VI_SCHEMA)
     @ManyToMany(targetEntity = Question.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonBackReference("questions")
+    @JsonIgnore
     private Set<Question> questions = new LinkedHashSet<>();
 
     @Column(name = "skill_type", nullable = false)

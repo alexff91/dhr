@@ -4,6 +4,7 @@ import com.dhr.model.Company;
 import com.dhr.model.Skill;
 import com.dhr.model.User;
 import com.dhr.model.Vacancy;
+import com.dhr.model.enums.SkillStatus;
 import com.dhr.services.CompanyService;
 import com.dhr.services.SkillService;
 import com.dhr.services.UserService;
@@ -91,6 +92,30 @@ public class CompanyRestController {
         Long skillId = skillService.save(skill);
         return new ResponseEntity<>(skillId, HttpStatus.CREATED);
     }
+
+    @PostMapping("/{companyId}/skills/batch")
+    public ResponseEntity<Long> createSkill(@PathVariable Long companyId, @RequestBody List<Skill> skills) {
+        skills.forEach(skill -> {
+            skill.setCompany(companyService.get(companyId).get());
+            skillService.save(skill);
+        });
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{companyId}/skills/{skillId}")
+    public ResponseEntity<Skill> updateSkill(@PathVariable Long skillId, @RequestBody Skill skill) {
+        Skill oldSkill = skillService.get(skillId).get();
+        oldSkill.setName(skill.getName());
+        return new ResponseEntity<>(skillService.update(oldSkill), HttpStatus.OK);
+    }
+
+    @PostMapping("/{companyId}/skills/{skillId}/archive")
+    public ResponseEntity<Skill> archiveSkill(@PathVariable Long skillId) {
+        Skill oldSkill = skillService.get(skillId).get();
+        oldSkill.setStatus(SkillStatus.ARCHIVED);
+        return new ResponseEntity<>(skillService.update(oldSkill), HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/{companyId}/skills/{skillId}")
     public ResponseEntity deleteSkill(@PathVariable Long companyId, @PathVariable Long skillId) {
