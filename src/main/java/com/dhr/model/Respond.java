@@ -14,6 +14,7 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -71,13 +72,13 @@ public class Respond {
     private ReviewStatus reviewStatus = ReviewStatus.NOT_WATCHED;
 
     @JsonIgnore
-    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "respond_id")
     @JoinTable(schema = Constants.VI_SCHEMA)
     private List<QuestionAnswer> answers = new LinkedList<>();
 
     @JsonIgnore
-    @OneToMany(targetEntity = RespondFeedback.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = RespondFeedback.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "respond_id")
     @JoinTable(schema = Constants.VI_SCHEMA)
     private List<RespondFeedback> reviewResponds = new LinkedList<>();
