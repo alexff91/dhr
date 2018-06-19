@@ -62,12 +62,6 @@ public class Question implements Serializable {
     @Column(name = "is_compulsory")
     private Boolean isCompulsory;
 
-    @JsonIgnore
-    @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JsonBackReference("questionAnswers")
-    private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
-
     @JoinTable(schema = Constants.VI_SCHEMA)
     @ManyToMany(targetEntity = Skill.class, fetch = FetchType.EAGER)
     private Set<Skill> skills = new LinkedHashSet<>();

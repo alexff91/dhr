@@ -4,6 +4,7 @@ import com.dhr.model.enums.RespondStatus;
 import com.dhr.model.enums.ReviewStatus;
 import com.dhr.utils.Constants;
 import com.dhr.view.View;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.EqualsAndHashCode;
@@ -29,8 +30,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -78,6 +81,11 @@ public class Respond {
     @JoinColumn(name = "respond_id")
     @JoinTable(schema = Constants.VI_SCHEMA)
     private List<QuestionAnswer> answers = new LinkedList<>();
+
+    @JsonIgnore
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    @OneToMany(targetEntity = RespondQuestion.class, fetch = FetchType.LAZY)
+    private List<RespondQuestion> respondQuestions = new LinkedList<>();
 
     @JsonIgnore
     @OneToMany(targetEntity = RespondFeedback.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
