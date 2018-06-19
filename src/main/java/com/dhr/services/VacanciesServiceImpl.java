@@ -1,6 +1,8 @@
 package com.dhr.services;
 
+import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
+import com.dhr.repositories.SkillRepository;
 import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,27 @@ public class VacanciesServiceImpl implements VacancyService {
     @Autowired
     private VacancyRepository repository;
 
+    @Autowired
+    private SkillRepository skillRepository;
+
     @Override
     public String save(Vacancy vacancy) {
         vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));
-        vacancy.getQuestions().forEach(question -> question.setVacancy(vacancy));
+        vacancy.getQuestions().forEach(question -> {
+            question.getSkills().forEach(skill -> {
+                Skill existSkill = skillRepository.findOneByName(skill.getName());
+                if(existSkill != null){
+                    question.getSkills().remove(skill);
+                    question.getSkills().add(existSkill);
+                }
+                else {
+                    Skill savedSkill = skillRepository.save(skill);
+                    question.getSkills().remove(skill);
+                    question.getSkills().add(savedSkill);
+                }
+            });
+            question.setVacancy(vacancy);
+        });
         repository.save(vacancy);
         return vacancy.getId();
     }
