@@ -45,7 +45,7 @@ public class QuestionAnswerFeedback {
     @MapKeyColumn(name = "skill")
     @Column(name = "grade")
     @CollectionTable(name = "skills_feedback", joinColumns = @JoinColumn(name = "question_answer_feedback_id"))
-    private Map<RespondSkill, Integer> skillsFeedback;
+    private Map<String, Integer> skillsFeedback;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id", nullable = false)
