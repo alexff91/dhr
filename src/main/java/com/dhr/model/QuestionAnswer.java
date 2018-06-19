@@ -64,6 +64,11 @@ public class QuestionAnswer implements Serializable {
     @Column(name = "respond_time")
     private Date respondTime;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "respond_id", nullable = false)
+    @JsonIgnore
+    private Respond respond;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

@@ -48,7 +48,6 @@ public class Respond {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "vacancy_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Vacancy vacancy;
 
@@ -75,6 +74,12 @@ public class Respond {
     @Enumerated(EnumType.STRING)
     @NonNull
     private ReviewStatus reviewStatus = ReviewStatus.NOT_WATCHED;
+
+    @JsonIgnore
+    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "respond_id")
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    private List<QuestionAnswer> answers = new LinkedList<>();
 
     @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)
