@@ -21,6 +21,7 @@ public class VacanciesServiceImpl implements VacancyService {
     @Override
     public String save(Vacancy vacancy) {
         vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));
+        vacancy.getQuestions().forEach(question -> question.setVacancy(vacancy));
         repository.save(vacancy);
         return vacancy.getId();
     }
