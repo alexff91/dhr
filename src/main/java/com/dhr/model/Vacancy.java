@@ -5,7 +5,6 @@ import com.dhr.utils.Constants;
 import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,8 +31,6 @@ import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -90,7 +87,8 @@ public class Vacancy implements Serializable {
     private VacancyStatus status = VacancyStatus.IN_WORK;
 
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity = Question.class, mappedBy = "vacancy",
+            fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference("questions")
     private Set<Question> questions = new LinkedHashSet<>();
 }
