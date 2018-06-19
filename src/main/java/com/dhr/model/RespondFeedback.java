@@ -1,6 +1,6 @@
 package com.dhr.model;
 
-import com.dhr.model.enums.RespondFeedbackStatus;
+import com.dhr.model.enums.RespondReviewStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NonNull;
@@ -39,10 +39,10 @@ public class RespondFeedback {
 
     private String comment;
 
-    @Column(name = "respond_feedback_status", nullable = false)
+    @Column(name = "respond_review_status", nullable = false)
     @Enumerated(EnumType.STRING)
     @NonNull
-    private RespondFeedbackStatus respondFeedbackStatus;
+    private RespondReviewStatus respondReviewStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id", nullable = false)
