@@ -6,6 +6,7 @@ import com.dhr.model.Respond;
 import com.dhr.model.enums.RespondStatus;
 import com.dhr.services.QuestionAnswerService;
 import com.dhr.services.QuestionService;
+import com.dhr.services.RespondQuestionService;
 import com.dhr.services.RespondService;
 import com.dhr.utils.MultipartFileSender;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -53,7 +54,7 @@ public class RecordingsHttpHandler {
     QuestionAnswerService questionAnswerService;
 
     @Autowired
-    QuestionService questionService;
+    RespondQuestionService respondQuestionService;
 
     @Autowired
     RespondService respondService;
@@ -108,7 +109,7 @@ public class RecordingsHttpHandler {
             return new ResponseEntity<>("File is empty", HttpStatus.OK);
 
         QuestionAnswer questionAnswer = QuestionAnswer.builder()
-                .question(questionService.get(questionId).get())
+                .question(respondQuestionService.get(questionId).get())
                 .respond(respondService.get(respondId).get())
                 .videoPath("https://" + config.getBackendHost() +
                         ":" + config.getServerPort() +
