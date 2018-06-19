@@ -72,12 +72,6 @@ public class Respond {
     private ReviewStatus reviewStatus = ReviewStatus.NOT_WATCHED;
 
     @JsonIgnore
-    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "respond_id")
-    @JoinTable(schema = Constants.VI_SCHEMA)
-    private List<QuestionAnswer> answers = new LinkedList<>();
-
-    @JsonIgnore
     @OneToMany(targetEntity = RespondFeedback.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "respond_id")
     @JoinTable(schema = Constants.VI_SCHEMA)
