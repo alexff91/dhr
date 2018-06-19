@@ -49,19 +49,16 @@ public class CompanyRestController {
     @Autowired
     SkillService skillService;
 
-    @JsonView({View.CompanyLight.class})
     @RequestMapping(value = "/{companyId}/vacancies", method = RequestMethod.GET)
     public List<Vacancy> getVacanciesByCompanyId(@PathVariable Long companyId) {
         return companyService.getVacanciesByCompanyId(companyId);
     }
 
-    @JsonView({View.CompanyLight.class})
     @RequestMapping(value = "/{companyId}/skills", method = RequestMethod.GET)
     public List<Skill> getSkillByCompanyId(@PathVariable Long companyId) {
         return companyService.getSkillsByCompanyId(companyId);
     }
 
-    @JsonView({View.CompanyLight.class})
     @RequestMapping(value = "/{companyId}/users", method = RequestMethod.GET)
     public ResponseEntity getUsersByCompanyId(@PathVariable Long companyId) {
         Optional<Company> company = companyService.get(companyId);
