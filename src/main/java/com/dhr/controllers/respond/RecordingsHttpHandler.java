@@ -148,9 +148,14 @@ public class RecordingsHttpHandler {
     }
 
     private RespondQuestion copyAndSAveQuestionToRespondQuestion(@PathVariable String respondId, Question question, Respond respond) {
-        RespondQuestion respondQuestion = RespondQuestion.builder().question(question.getQuestion()).
-                respond(respond).durationMax(question.getDurationMax()).isCompulsory(question.getIsCompulsory())
-                .durationToRead(question.getDurationToRead()).orderNumber(question.getOrderNumber()).build();
+        RespondQuestion respondQuestion = RespondQuestion.builder()
+                .question(question.getQuestion())
+                .respond(respond)
+                .durationMax(question.getDurationMax())
+                .isCompulsory(question.getIsCompulsory())
+                .durationToRead(question.getDurationToRead())
+                .orderNumber(question.getOrderNumber())
+                .build();
         question.getSkills().forEach(skill -> respondQuestion.getSkills().add(RespondSkill.builder()
                 .company(skill.getCompany())
                 .name(skill.getName())
