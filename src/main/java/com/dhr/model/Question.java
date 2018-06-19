@@ -64,7 +64,7 @@ public class Question implements Serializable {
 
     @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = QuestionAnswer.class, fetch = FetchType.EAGER)
     @JsonBackReference("questionAnswers")
     private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 
