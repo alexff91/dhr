@@ -73,7 +73,7 @@ public class QuestionAnswer implements Serializable {
     @JoinColumn(name = "question_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Question question;
+    private RespondQuestion question;
 
     @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(targetEntity = QuestionAnswerFeedback.class, fetch = FetchType.LAZY)

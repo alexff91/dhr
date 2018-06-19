@@ -40,12 +40,12 @@ public class QuestionAnswerFeedback {
     private Long id;
 
     private String comment;
-//
-//    @ElementCollection
-//    @MapKeyColumn(name = "skill")
-//    @Column(name = "grade")
-//    @CollectionTable(name = "skills_feedback", joinColumns = @JoinColumn(name = "question_answer_feedback_id"))
-//    private Map<Skill, Integer> skillsFeedback;
+
+    @ElementCollection
+    @MapKeyColumn(name = "skill")
+    @Column(name = "grade")
+    @CollectionTable(name = "skills_feedback", joinColumns = @JoinColumn(name = "question_answer_feedback_id"))
+    private Map<Skill, Integer> skillsFeedback;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id", nullable = false)
