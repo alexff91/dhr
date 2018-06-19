@@ -1,6 +1,5 @@
 package com.dhr.services;
 
-import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
 import com.dhr.repositories.SkillRepository;
 import com.dhr.repositories.VacancyRepository;
@@ -25,16 +24,8 @@ public class VacanciesServiceImpl implements VacancyService {
         vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));
         vacancy.getQuestions().forEach(question -> {
             question.getSkills().forEach(skill -> {
-                Skill existSkill = skillRepository.findOneByName(skill.getName());
-                if(existSkill != null){
-                    question.getSkills().remove(skill);
-                    question.getSkills().add(existSkill);
-                }
-                else {
-                    Skill savedSkill = skillRepository.save(skill);
-                    question.getSkills().remove(skill);
-                    question.getSkills().add(savedSkill);
-                }
+                skill.setCompany(vacancy.getCompany());
+                skillRepository.save(skill);
             });
             question.setVacancy(vacancy);
         });
