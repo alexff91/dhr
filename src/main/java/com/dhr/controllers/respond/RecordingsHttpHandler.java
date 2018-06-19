@@ -37,7 +37,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -65,12 +64,12 @@ public class RecordingsHttpHandler {
     @Autowired
     RespondService respondService;
 
-    @RequestMapping(value = "/{questionId}/{filename:.+}", method = RequestMethod.GET)
+    @GetMapping("/{questionId}/{filename:.+}")
     @Transactional
-    public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable String respondId,
-                                                         @PathVariable Long questionId,
-                                                         HttpServletRequest request,
-                                                         HttpServletResponse response) throws Exception {
+    public ResponseEntity<HttpStatus> serveFile(@PathVariable String respondId,
+                                                @PathVariable Long questionId,
+                                                HttpServletRequest request,
+                                                HttpServletResponse response) throws Exception {
 
         Long companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
         File file = new File(config.getRecordingsPath() + "/company/" + companyId + "/responds/" + respondId + "/questions/", questionId + ".webm");
@@ -80,23 +79,6 @@ public class RecordingsHttpHandler {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    }
-
-    @GetMapping
-    public ResponseEntity<List<String>> handleGetRecordings(HttpServletRequest request,
-                                                            @PathVariable String respondId,
-                                                            HttpServletResponse response)
-            throws Exception {
-        List<String> results = new ArrayList<>();
-
-        File[] filesUser = new File(config.getRecordingsPath() + getRecordingPath(respondId)).listFiles();
-        assert filesUser != null;
-        for (File file : filesUser) {
-            if (file.isFile()) {
-                results.add(file.getName());
-            }
-        }
-        return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
     private String getRecordingPath(@PathVariable String respondId) {

@@ -52,18 +52,6 @@
 //    protected void configure(HttpSecurity http) throws Exception {
 //
 //        final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
-//
-//        Path path = Paths.get(config.getRecordingsPath());
-//
-//        if (!Files.exists(path)) {
-//            log.info("Folder '{}' does not exist. Creating folder", path);
-//            path = Files.createDirectories(path);
-//            log.info("Created folder '{}'", path.toAbsolutePath().toString());
-//        }
-//
-//        Files.createDirectories(Paths.get(path + "/user"));
-//        Files.createDirectories(Paths.get(path + "/admin"));
-//
 //        http.csrf().disable().cors().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and().httpBasic().and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/v1/recording").authenticated()
 //                .antMatchers(HttpMethod.GET, "/api/v1/recording/**").authenticated();
