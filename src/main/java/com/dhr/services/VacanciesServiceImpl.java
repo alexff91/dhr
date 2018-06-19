@@ -15,9 +15,6 @@ public class VacanciesServiceImpl implements VacancyService {
     @Autowired
     private VacancyRepository repository;
 
-    @Autowired
-    private QuestionService questionService;
-
     @Override
     public String save(Vacancy vacancy) {
         vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));

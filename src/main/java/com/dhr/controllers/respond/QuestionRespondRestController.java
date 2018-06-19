@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/respond/{respondId}/questionResponds")
+@RequestMapping("/api/v1/respond/{respondId}/answers")
 public class QuestionRespondRestController {
     @Autowired
     QuestionAnswerServiceImpl questionService;
