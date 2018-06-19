@@ -117,11 +117,9 @@ public class RecordingsHttpHandler {
         Question question = questionService.get(questionId).get();
 
         Respond respond = respondService.get(respondId).get();
-        RespondQuestion respondQuestion = RespondQuestion.builder().question(question.getQuestion()).
-                respond(respond).durationMax(question.getDurationMax()).isCompulsory(question.getIsCompulsory())
-                .durationToRead(question.getDurationToRead()).orderNumber(question.getOrderNumber()).build();
+        RespondQuestion savedRespondQuestion = copyAndSAveQuestionToRespondQuestion(respondId, question, respond);
         QuestionAnswer questionAnswer = QuestionAnswer.builder()
-                .question(respondQuestion)
+                .question(savedRespondQuestion)
                 .respond(respond)
                 .videoPath("https://" + config.getBackendHost() +
                         ":" + config.getServerPort() +
@@ -146,6 +144,13 @@ public class RecordingsHttpHandler {
             respondService.update(respond);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private RespondQuestion copyAndSAveQuestionToRespondQuestion(@PathVariable String respondId, Question question, Respond respond) {
+        RespondQuestion respondQuestion = RespondQuestion.builder().question(question.getQuestion()).
+                respond(respond).durationMax(question.getDurationMax()).isCompulsory(question.getIsCompulsory())
+                .durationToRead(question.getDurationToRead()).orderNumber(question.getOrderNumber()).build();
+        return respondQuestionService.save(respondQuestion, respondId);
     }
 
     private boolean saveVideoToDirectory(@PathVariable String respondId, @PathVariable Long questionId, @RequestParam("file") MultipartFile file) throws IOException {

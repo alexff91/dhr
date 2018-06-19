@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RespondQuestionService {
-    Long save(RespondQuestion question, String respondId);
+    RespondQuestion save(RespondQuestion question, String respondId);
 
     void delete(RespondQuestion question);
 

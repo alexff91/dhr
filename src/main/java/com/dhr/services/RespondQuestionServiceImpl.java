@@ -21,10 +21,10 @@ public class RespondQuestionServiceImpl implements RespondQuestionService {
     private RespondRepository respondRepository;
 
     @Override
-    public Long save(RespondQuestion question, String respondId) {
+    public RespondQuestion save(RespondQuestion question, String respondId) {
         Respond respond = respondRepository.findById(respondId).get();
         question.setRespond(respond);
-        return question.getId();
+        return repository.save(question);
     }
 
     @Override
