@@ -76,5 +76,5 @@ public class RespondQuestion implements Serializable {
 
     @JoinTable(schema = Constants.VI_SCHEMA)
     @ManyToMany(targetEntity = RespondSkill.class, fetch = FetchType.EAGER)
-    private Set<RespondSkill> respondSkillsSkills = new LinkedHashSet<>();
+    private Set<RespondSkill> respondSkills = new LinkedHashSet<>();
 }
