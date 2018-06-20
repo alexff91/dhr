@@ -54,10 +54,10 @@ public class Vacancy implements Serializable {
     @ManyToOne
     private User user;
 
-    @Column(length = 4000)
+    @Column(columnDefinition = "TEXT")
     private String position;
 
-    @Column(length = 4000)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
