@@ -75,7 +75,6 @@ public class RespondQuestion implements Serializable {
     private Set<QuestionAnswer> questionAnswers = new LinkedHashSet<>();
 
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @ManyToMany(targetEntity = Skill.class, fetch = FetchType.LAZY)
-    @JsonBackReference("skills")
+    @ManyToMany(targetEntity = Skill.class, fetch = FetchType.EAGER)
     private Set<RespondSkill> skills = new LinkedHashSet<>();
 }

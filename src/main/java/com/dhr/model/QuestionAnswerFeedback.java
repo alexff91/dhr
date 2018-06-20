@@ -47,10 +47,10 @@ public class QuestionAnswerFeedback {
     @CollectionTable(name = "skills_feedback", joinColumns = @JoinColumn(name = "question_answer_feedback_id"))
     private Map<String, Integer> skillsFeedback;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "respond_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private QuestionAnswer questionAnswer;
 
     @JsonIgnore
