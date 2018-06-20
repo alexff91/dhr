@@ -138,13 +138,15 @@ public class RecordingsHttpHandler {
                 .isCompulsory(question.getIsCompulsory())
                 .durationToRead(question.getDurationToRead())
                 .orderNumber(question.getOrderNumber())
-                .skills(question.getSkills()
-                        .stream()
-                        .map(skill -> RespondSkill.builder()
-                        .company(skill.getCompany())
-                        .name(skill.getName())
-                        .build()).collect(Collectors.toSet()))
                 .build();
+        if (question.getSkills() != null) {
+            respondQuestion.setSkills(question.getSkills()
+                    .stream()
+                    .map(skill -> RespondSkill.builder()
+                            .company(skill.getCompany())
+                            .name(skill.getName())
+                            .build()).collect(Collectors.toSet()));
+        }
         return respondQuestionService.save(respondQuestion, respondId);
     }
 
