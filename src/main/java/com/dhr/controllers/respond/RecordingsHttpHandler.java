@@ -94,14 +94,12 @@ public class RecordingsHttpHandler {
                                               @PathVariable Long questionId,
                                               @RequestParam("file") MultipartFile file) throws IOException {
 
-        if (saveVideoToDirectory(respondId, questionId, file))
+        Question question = questionService.get(questionId).get();
+        Respond respond = respondService.get(respondId).get();
+        RespondQuestion savedRespondQuestion = copyAndSaveQuestionToRespondQuestion(respondId, question, respond);
+        if (saveVideoToDirectory(respondId, savedRespondQuestion.getId(), file))
             return new ResponseEntity<>("File is empty", HttpStatus.OK);
 
-
-        Question question = questionService.get(questionId).get();
-
-        Respond respond = respondService.get(respondId).get();
-        RespondQuestion savedRespondQuestion = copyAndSAveQuestionToRespondQuestion(respondId, question, respond);
         QuestionAnswer questionAnswer = QuestionAnswer.builder()
                 .question(savedRespondQuestion)
                 .respond(respond)
@@ -113,24 +111,28 @@ public class RecordingsHttpHandler {
                 .respondTime(new Date())
                 .build();
 
-        List<QuestionAnswer> respondQuestions = respond.getAnswers();
+        checkAnswers(respond, questionAnswer);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private void checkAnswers(Respond respond, QuestionAnswer questionAnswer) {
+        List<QuestionAnswer> questionAnswers = respond.getAnswers();
         Optional<QuestionAnswer> answeredRespond = respond.getAnswers().stream()
                 .filter(questionRespondAnswered -> Objects.equals(questionRespondAnswered.getQuestion().getId(), questionAnswer.getId())).findAny();
         if (answeredRespond.isPresent()) {
             respond.getAnswers().set(respond.getAnswers().indexOf(answeredRespond.get()), questionAnswer);
-        } else if (respondQuestions != null) {
-            respondQuestions.add(questionAnswer);
-            respond.setAnswers(respondQuestions);
+        } else if (questionAnswers != null) {
+            questionAnswers.add(questionAnswer);
+            respond.setAnswers(questionAnswers);
         }
         questionAnswerService.save(questionAnswer);
         if (respond.getVacancy().getQuestions().size() == respond.getAnswers().size()) {
             respond.setStatus(RespondStatus.COMPLETE);
             respondService.update(respond);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private RespondQuestion copyAndSAveQuestionToRespondQuestion(@PathVariable String respondId, Question question, Respond respond) {
+    private RespondQuestion copyAndSaveQuestionToRespondQuestion(String respondId, Question question, Respond respond) {
         RespondQuestion respondQuestion = RespondQuestion.builder()
                 .question(question.getQuestion())
                 .respond(respond)
@@ -150,7 +152,7 @@ public class RecordingsHttpHandler {
         return respondQuestionService.save(respondQuestion, respondId);
     }
 
-    private boolean saveVideoToDirectory(@PathVariable String respondId, @PathVariable Long questionId, @RequestParam("file") MultipartFile file) throws IOException {
+    private boolean saveVideoToDirectory(String respondId, Long questionId, MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             log.error("File is empty");
             return true;
@@ -159,7 +161,7 @@ public class RecordingsHttpHandler {
         String folder = getRecordingPath(respondId);
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
-        boolean mkdirsResult = new File(path.toString()).mkdirs();
+        new File(path.toString()).mkdirs();
         String fName = questionId + ".webm";
 
         File uploadedFile = new File(path.toFile(), fName);
