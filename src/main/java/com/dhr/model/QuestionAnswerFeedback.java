@@ -41,7 +41,7 @@ public class QuestionAnswerFeedback {
 
     private String comment;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "skill")
     @Column(name = "grade")
     @CollectionTable(name = "skills_feedback", joinColumns = @JoinColumn(name = "question_answer_feedback_id"))
