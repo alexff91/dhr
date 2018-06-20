@@ -1,7 +1,6 @@
 package com.dhr.repositories;
 
 import com.dhr.model.RespondSkill;
-import com.dhr.model.Skill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
