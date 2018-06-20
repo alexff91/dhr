@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -137,11 +138,13 @@ public class RecordingsHttpHandler {
                 .isCompulsory(question.getIsCompulsory())
                 .durationToRead(question.getDurationToRead())
                 .orderNumber(question.getOrderNumber())
+                .skills(question.getSkills()
+                        .stream()
+                        .map(skill -> RespondSkill.builder()
+                        .company(skill.getCompany())
+                        .name(skill.getName())
+                        .build()).collect(Collectors.toSet()))
                 .build();
-        question.getSkills().forEach(skill -> respondQuestion.getSkills().add(RespondSkill.builder()
-                .company(skill.getCompany())
-                .name(skill.getName())
-                .build()));
         return respondQuestionService.save(respondQuestion, respondId);
     }
 
