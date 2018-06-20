@@ -5,7 +5,7 @@ import com.dhr.model.RespondSkill;
 import java.util.Optional;
 
 public interface RespondSkillService {
-    Long save(RespondSkill skill);
+    RespondSkill save(RespondSkill skill);
 
     void delete(RespondSkill skill);
 

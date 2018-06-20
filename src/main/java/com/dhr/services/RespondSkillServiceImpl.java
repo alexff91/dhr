@@ -1,9 +1,7 @@
 package com.dhr.services;
 
 import com.dhr.model.RespondSkill;
-import com.dhr.model.Skill;
 import com.dhr.repositories.RespondSkillRepository;
-import com.dhr.repositories.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +15,8 @@ public class RespondSkillServiceImpl implements RespondSkillService {
     private RespondSkillRepository repository;
 
     @Override
-    public Long save(RespondSkill skill) {
-        repository.save(skill);
-        return skill.getId();
+    public RespondSkill save(RespondSkill skill) {
+        return repository.save(skill);
     }
 
     @Override

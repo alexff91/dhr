@@ -11,6 +11,7 @@ import com.dhr.services.QuestionAnswerService;
 import com.dhr.services.QuestionService;
 import com.dhr.services.RespondQuestionService;
 import com.dhr.services.RespondService;
+import com.dhr.services.RespondSkillService;
 import com.dhr.utils.MultipartFileSender;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -58,6 +59,9 @@ public class RecordingsHttpHandler {
 
     @Autowired
     RespondQuestionService respondQuestionService;
+
+    @Autowired
+    RespondSkillService respondSkillService;
 
     @Autowired
     QuestionService questionService;
@@ -144,10 +148,13 @@ public class RecordingsHttpHandler {
         if (question.getSkills() != null) {
             respondQuestion.setSkills(question.getSkills()
                     .stream()
-                    .map(skill -> RespondSkill.builder()
-                            .company(skill.getCompany())
-                            .name(skill.getName())
-                            .build()).collect(Collectors.toSet()));
+                    .map(skill -> {
+                        RespondSkill build = RespondSkill.builder()
+                                .company(skill.getCompany())
+                                .name(skill.getName())
+                                .build();
+                        return respondSkillService.save(build);
+                    }).collect(Collectors.toSet()));
         }
         return respondQuestionService.save(respondQuestion, respondId);
     }
