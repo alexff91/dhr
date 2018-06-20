@@ -69,10 +69,9 @@ public class QuestionAnswer implements Serializable {
     @JsonIgnore
     private Respond respond;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "question_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private RespondQuestion question;
 
     @JsonIgnore
