@@ -19,7 +19,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/responds/{respondId}/review")
+@RequestMapping("/api/v1/responds/{respondId}/")
 public class RespondReviewRestController {
     @Autowired
     RespondFeedbackService respondFeedbackService;
@@ -30,12 +30,12 @@ public class RespondReviewRestController {
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @GetMapping("/review")
     public List<RespondFeedback> getAllByRespondId(@PathVariable String respondId) {
         return respondFeedbackService.getAllByRespondId(respondId);
     }
 
-    @PostMapping("/{userId}")
+    @PostMapping("/users/{userId}/review")
     public ResponseEntity createRespondFeedback(@PathVariable String respondId,
                                                 @PathVariable Long userId,
                                                 @RequestBody RespondFeedback respondFeedback) {

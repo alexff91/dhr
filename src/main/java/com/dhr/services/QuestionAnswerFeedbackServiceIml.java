@@ -53,4 +53,9 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
     public Iterable<QuestionAnswerFeedback> getAllByQuestionAnswerId(Long id) {
         return repository.findAllByQuestionAnswerId(id);
     }
+
+    @Override
+    public Iterable<QuestionAnswerFeedback> findAllByQuestionAnswerIdAndUserId(Long userId, Long questionAnswerId) {
+        return repository.findAllByQuestionAnswerIdAndUserId(userId, questionAnswerId);
+    }
 }

@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface QuestionAnswerFeedbackRepository extends JpaRepository<QuestionAnswerFeedback, Long> {
     List<QuestionAnswerFeedback> findAllByQuestionAnswerId(Long questionAnswerId);
+
+    Iterable<QuestionAnswerFeedback> findAllByQuestionAnswerIdAndUserId(Long userId, Long questionAnswerId);
 }
