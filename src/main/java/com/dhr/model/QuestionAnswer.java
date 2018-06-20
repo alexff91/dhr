@@ -76,6 +76,6 @@ public class QuestionAnswer implements Serializable {
 
     @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @OneToMany(targetEntity = QuestionAnswerFeedback.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = QuestionAnswerFeedback.class, fetch = FetchType.EAGER)
     private List<QuestionAnswerFeedback> skillsFeedback = new LinkedList<>();
 }
