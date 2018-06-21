@@ -95,5 +95,6 @@ public class Vacancy implements Serializable {
     @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(targetEntity = Respond.class,
             fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Respond> responds = new LinkedHashSet<>();
 }
