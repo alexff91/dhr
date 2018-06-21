@@ -1,5 +1,6 @@
 package com.dhr.services;
 
+import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
 import com.dhr.repositories.SkillRepository;
 import com.dhr.repositories.VacancyRepository;
@@ -8,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -52,7 +55,15 @@ public class VacanciesServiceImpl implements VacancyService {
         oldVacancy.setPosition(vacancy.getPosition());
         vacancy.getQuestions().forEach(question -> {
             question.setVacancy(oldVacancy);
-            question.getSkills().forEach(skill -> skill.setCompany(oldVacancy.getCompany()));
+            Set<Skill> skills = new HashSet<>();
+            question.getSkills().forEach(skill -> {
+                        skill.setCompany(oldVacancy.getCompany());
+                        Skill savedSkill = skillRepository.save(skill);
+                        skills.add(savedSkill);
+                    }
+            );
+            question.getSkills().clear();
+            question.getSkills().addAll(skills);
         });
         oldVacancy.getQuestions().clear();
         oldVacancy.getQuestions().addAll(vacancy.getQuestions());
