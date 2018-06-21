@@ -46,10 +46,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/responds/{respondId}/questions/")
+@RequestMapping("/api/v1/responds/{respondId}/")
 public class RecordingsHttpHandler {
 
     private static final Logger log = LoggerFactory.getLogger(RecordingsHttpHandler.class);
+    public static final String WEBM_VIDEO_FORMAT = ".webm";
 
     @Autowired
     PropertiesConfig config;
@@ -69,15 +70,15 @@ public class RecordingsHttpHandler {
     @Autowired
     RespondService respondService;
 
-    @GetMapping("/{questionId}/{filename:.+}")
+    @GetMapping("answers/{answerId}/{filename:.+}")
     @Transactional
     public ResponseEntity<HttpStatus> serveFile(@PathVariable String respondId,
-                                                @PathVariable Long questionId,
+                                                @PathVariable Long answerId,
                                                 HttpServletRequest request,
                                                 HttpServletResponse response) throws Exception {
 
         Long companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
-        File file = new File(config.getRecordingsPath() + "/company/" + companyId + "/responds/" + respondId + "/questions/", questionId + ".webm");
+        File file = new File(config.getRecordingsPath() + "/company/" + companyId + "/responds/" + respondId + "/answers/", answerId + ".webm");
         if (file.isFile()) {
             MultipartFileSender.fromPath(file.toPath()).with(request).with(response).serveResource();
             return new ResponseEntity<>(HttpStatus.OK);
@@ -88,10 +89,10 @@ public class RecordingsHttpHandler {
 
     private String getRecordingPath(@PathVariable String respondId) {
         Long companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
-        return "/company/" + companyId + "/responds/" + respondId + "/questions/";
+        return "/company/" + companyId + "/responds/" + respondId + "/answers/";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{questionId}")
+    @RequestMapping(method = RequestMethod.POST, value = "questions/{questionId}")
     @Transactional
     public ResponseEntity handlePostRecording(HttpServletRequest request,
                                               @PathVariable String respondId,
@@ -107,19 +108,20 @@ public class RecordingsHttpHandler {
         QuestionAnswer questionAnswer = QuestionAnswer.builder()
                 .question(savedRespondQuestion)
                 .respond(respond)
-                .videoPath("https://" + config.getBackendHost() +
-                        ":" + config.getServerPort() +
-                        "/api/v1/responds/" + respondId +
-                        "/questions/" + questionId + "/" + questionId + ".webm")
                 .answered(true)
                 .respondTime(new Date())
                 .build();
 
-        checkAnswers(respond, questionAnswer);
+        QuestionAnswer checkedAnswer = checkAnswers(respond, questionAnswer);
+        checkedAnswer.setVideoPath("https://" + config.getBackendHost() +
+                ":" + config.getServerPort() +
+                "/api/v1/responds/" + respondId +
+                "/answers/" + checkedAnswer.getId() + "/" + checkedAnswer.getId() + ".webm");
+        questionAnswerService.update(checkedAnswer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    private void checkAnswers(Respond respond, QuestionAnswer questionAnswer) {
+    private QuestionAnswer checkAnswers(Respond respond, QuestionAnswer questionAnswer) {
         List<QuestionAnswer> questionAnswers = respond.getAnswers();
         Optional<QuestionAnswer> answeredRespond = respond.getAnswers().stream()
                 .filter(questionRespondAnswered -> Objects.equals(questionRespondAnswered.getQuestion().getId(), questionAnswer.getId())).findAny();
@@ -129,11 +131,12 @@ public class RecordingsHttpHandler {
             questionAnswers.add(questionAnswer);
             respond.setAnswers(questionAnswers);
         }
-        questionAnswerService.save(questionAnswer);
+        QuestionAnswer save = questionAnswerService.save(questionAnswer);
         if (respond.getVacancy().getQuestions().size() == respond.getAnswers().size()) {
             respond.setStatus(RespondStatus.COMPLETE);
             respondService.update(respond);
         }
+        return save;
     }
 
     private RespondQuestion copyAndSaveQuestionToRespondQuestion(String respondId, Question question, Respond respond) {
@@ -159,7 +162,7 @@ public class RecordingsHttpHandler {
         return respondQuestionService.save(respondQuestion, respondId);
     }
 
-    private boolean saveVideoToDirectory(String respondId, Long questionId, MultipartFile file) throws IOException {
+    private boolean saveVideoToDirectory(String respondId, Long answerId, MultipartFile file) throws IOException {
         if (file.isEmpty()) {
             log.error("File is empty");
             return true;
@@ -169,7 +172,7 @@ public class RecordingsHttpHandler {
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
         new File(path.toString()).mkdirs();
-        String fName = questionId + ".webm";
+        String fName = answerId + WEBM_VIDEO_FORMAT;
 
         File uploadedFile = new File(path.toFile(), fName);
         InputStream initialStream = file.getInputStream();

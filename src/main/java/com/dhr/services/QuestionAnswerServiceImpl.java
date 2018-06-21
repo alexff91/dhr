@@ -16,9 +16,8 @@ public class QuestionAnswerServiceImpl implements QuestionAnswerService {
     private QuestionRespondRepository repository;
 
     @Override
-    public Long save(QuestionAnswer question) {
-        repository.save(question);
-        return question.getId();
+    public QuestionAnswer save(QuestionAnswer question) {
+        return repository.save(question);
     }
 
     @Override
