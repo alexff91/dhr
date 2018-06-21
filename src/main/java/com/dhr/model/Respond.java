@@ -46,7 +46,7 @@ public class Respond {
     @Column(name = "id", nullable = false, unique = true)
     private String id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "vacancy_id", nullable = false)
     @JsonIgnore
     private Vacancy vacancy;
