@@ -50,7 +50,10 @@ public class VacanciesServiceImpl implements VacancyService {
         Vacancy oldVacancy = repository.findById(vacancyId).get();
         oldVacancy.setDescription(vacancy.getDescription());
         oldVacancy.setPosition(vacancy.getPosition());
-        vacancy.getQuestions().forEach(question -> question.setVacancy(oldVacancy));
+        vacancy.getQuestions().forEach(question -> {
+            question.setVacancy(oldVacancy);
+            question.getSkills().forEach(skill -> skill.setCompany(oldVacancy.getCompany()));
+        });
         oldVacancy.getQuestions().clear();
         oldVacancy.getQuestions().addAll(vacancy.getQuestions());
         oldVacancy.setUpdateDate(new Date());
