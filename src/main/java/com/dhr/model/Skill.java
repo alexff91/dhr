@@ -4,6 +4,7 @@ import com.dhr.model.enums.SkillStatus;
 import com.dhr.utils.Constants;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -32,6 +33,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
+@EqualsAndHashCode
 @Table(schema = "vihr")
 public class Skill implements Serializable {
     private static final String SEQUENCE_NAME = "skill_id_seq";
