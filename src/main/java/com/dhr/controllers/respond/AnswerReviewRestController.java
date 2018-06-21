@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/answers/{questionAnswerId}/")
+@RequestMapping("/api/v1/secured/answers/{questionAnswerId}/")
 public class AnswerReviewRestController {
     @Autowired
     QuestionAnswerFeedbackService feedbackService;

@@ -12,20 +12,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//@RestController
-//@CrossOrigin(origins = "*")
-//@RequestMapping("/api/v1/statistic")
+@RestController
+@CrossOrigin(origins = "*")
+@RequestMapping("/api/v1/secured/statistic")
 public class StatisticRestController {
-//    @Autowired
-//    StatisticService statisticService;
-//
-//    @PostMapping
-//    public ResponseEntity<Statistic> saveStat(@RequestBody Statistic stat) {
-//        return new ResponseEntity<>(statisticService.save(stat), HttpStatus.CREATED);
-//    }
-//
-//    @GetMapping
-//    public ResponseEntity<Iterable<Statistic>> getStats() {
-//        return new ResponseEntity<>(statisticService.getAll(), HttpStatus.OK);
-//    }
+    @Autowired
+    StatisticService statisticService;
+
+    @PostMapping
+    public ResponseEntity<Statistic> saveStat(@RequestBody Statistic stat) {
+        return new ResponseEntity<>(statisticService.save(stat), HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<Iterable<Statistic>> getStats() {
+        return new ResponseEntity<>(statisticService.getAll(), HttpStatus.OK);
+    }
 }

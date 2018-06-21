@@ -46,7 +46,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/responds/{respondId}/")
 public class RecordingsHttpHandler {
 
     private static final Logger log = LoggerFactory.getLogger(RecordingsHttpHandler.class);
@@ -70,7 +69,7 @@ public class RecordingsHttpHandler {
     @Autowired
     RespondService respondService;
 
-    @GetMapping("answers/{answerId}/{filename:.+}")
+    @GetMapping("/api/v1/secured/responds/{respondId}/answers/{answerId}/{filename:.+}")
     @Transactional
     public ResponseEntity<HttpStatus> serveFile(@PathVariable String respondId,
                                                 @PathVariable Long answerId,
@@ -92,7 +91,7 @@ public class RecordingsHttpHandler {
         return "/company/" + companyId + "/responds/" + respondId + "/answers/";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "questions/{questionId}")
+    @RequestMapping(method = RequestMethod.POST, value = "/api/v1/responds/{respondId}/questions/{questionId}")
     @Transactional
     public ResponseEntity handlePostRecording(HttpServletRequest request,
                                               @PathVariable String respondId,
@@ -180,5 +179,4 @@ public class RecordingsHttpHandler {
         IOUtils.closeQuietly(initialStream);
         return false;
     }
-
 }

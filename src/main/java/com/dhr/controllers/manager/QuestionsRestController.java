@@ -19,7 +19,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/vacancies/{vacancyId}/questions")
+@RequestMapping("/api/v1/secured/vacancies/{vacancyId}/questions")
 public class QuestionsRestController {
     @Autowired
     QuestionServiceImpl questionService;

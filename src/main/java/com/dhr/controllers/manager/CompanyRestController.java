@@ -36,7 +36,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/companies")
+@RequestMapping("/api/v1/secured/companies")
 public class CompanyRestController {
     @Autowired
     CompanyService companyService;

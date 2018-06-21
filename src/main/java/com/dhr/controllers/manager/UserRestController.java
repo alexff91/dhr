@@ -26,7 +26,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/secured/users")
 public class UserRestController {
     @Autowired
     UserService userService;

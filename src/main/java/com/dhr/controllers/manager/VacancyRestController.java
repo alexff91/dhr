@@ -25,7 +25,6 @@ import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/v1/vacancies")
 public class VacancyRestController {
     @Autowired
     VacanciesServiceImpl vacanciesService;
@@ -33,46 +32,46 @@ public class VacancyRestController {
     @Autowired
     QuestionServiceImpl questionService;
 
-    @RequestMapping(value = "{vacancyId}/questions", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/v1/vacancies/{vacancyId}/questions", method = RequestMethod.GET)
     public Set<Question> getQuestionsByVacancyId(@PathVariable String vacancyId) {
         return Sets.newHashSet(questionService.getAllByVacancy(vacancyId));
     }
 
-    @PutMapping("{vacancyId}")
+    @PutMapping("/api/v1/secured/vacancies/{vacancyId}")
     public ResponseEntity updateVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
         vacanciesService.update(vacancyId, vacancy);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/{vacancyId}/stat")
+    @PostMapping("/api/v1/vacancies/{vacancyId}/stat")
     public ResponseEntity increaseViewCounter(@PathVariable String vacancyId) {
         vacanciesService.increaseViewCounter(vacancyId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "{vacancyId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/v1/vacancies/{vacancyId}", method = RequestMethod.GET)
     public Vacancy getByVacancyId(@PathVariable String vacancyId) {
         return vacanciesService.get(vacancyId).get();
     }
 
     @JsonView(View.Detail.class)
-    @RequestMapping(value = "{vacancyId}/detailed", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/v1/secured/vacancies/{vacancyId}/detailed", method = RequestMethod.GET)
     public Vacancy getByVacancyIdDetailed(@PathVariable String vacancyId) {
         return vacanciesService.get(vacancyId).get();
     }
 
-    @GetMapping
+    @GetMapping("/api/v1/secured/vacancies/")
     public Iterable<Vacancy> getVacancies() {
         return vacanciesService.getAll();
     }
 
     @JsonView(View.Detail.class)
-    @GetMapping("/detailed")
+    @GetMapping("/api/v1/secured/vacancies/detailed")
     public Iterable<Vacancy> getVacanciesDetailed() {
         return vacanciesService.getAll();
     }
 
-    @DeleteMapping("/{vacancyId}")
+    @DeleteMapping("/api/v1/secured/vacancies/{vacancyId}")
     public ResponseEntity deleteVacancy(@PathVariable String vacancyId) {
         vacanciesService.delete(vacanciesService.get(vacancyId).get());
         return new ResponseEntity(HttpStatus.OK);

@@ -1,0 +1,57 @@
+backendHost: localhost
+dbHost: localhost
+
+logging:
+    level: error
+    level.org.springframework.data: debug
+recordings:
+    path: /interviews
+server:
+    port: 8080
+    ssl:
+        enabled: false
+        key-store: /etc/letsencrypt/live/app.vi-hr.com/keystore.p12
+        key-store-password: vihr
+        keyAlias: tomcat
+        keyStoreType: PKCS12
+spring:
+    datasource:
+        hikari:
+            minimumIdle: 5
+            maximumPoolSize: 20
+            idleTimeout: 30000
+            pool-name: SpringBootJPAHikariCP
+            auto-commit: false
+            maxLifetime: 58000
+            connection-timeout: 30000
+        password: postgres
+        test-while-idle: true
+        time-between-eviction-runs-millis: 60000
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:postgresql://${dbHost}:5555/vihr
+        username: postgres
+        driver-class-name: org.postgresql.Driver
+        platform: postgresql
+    jpa:
+        generate-ddl: false
+        hibernate:
+            ddl-auto: none
+            dialect: org.hibernate.dialect.PostgreSQL94Dialect
+            default_schema: vihr
+            connection:
+              provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
+        properties:
+            hibernate:
+                default_batch_fetch_size: 100
+                dialect: org.hibernate.dialect.PostgreSQL9Dialect
+                jdbc:
+                    batch_size: 1000
+                order_inserts: true
+                order_updates: true
+        show-sql: true
+        validation-query: select 1
+        test-on-borrow: true
+    servlet:
+        multipart:
+            max-file-size: 2048MB
+            max-request-size: 2048MB
