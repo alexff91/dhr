@@ -21,7 +21,6 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/v1/secured/vacancies/{vacancyId}/responds")
 public class RespondsRestController {
     @Autowired
     RespondServiceImpl respondService;
@@ -29,24 +28,24 @@ public class RespondsRestController {
     @Autowired
     VacancyService vacancyService;
 
-    @GetMapping
+    @GetMapping("/api/v1/secured/vacancies/{vacancyId}/responds") 
     public List<Respond> getRespondsByVacancy(@PathVariable String vacancyId) {
         return respondService.getAllByVacancyId(vacancyId);
     }
 
     @JsonView(View.Detail.class)
-    @GetMapping("/detailed")
+    @GetMapping("/api/v1/secured/vacancies/{vacancyId}/responds/detailed")
     public List<Respond> getRespondsByVacancyDetailed(@PathVariable String vacancyId) {
         return respondService.getAllByVacancyId(vacancyId);
     }
 
-    @PostMapping
+    @PostMapping("/api/v1/vacancies/{vacancyId}/responds") 
     public ResponseEntity<Respond> createRespond(@RequestBody Respond respond,
                                                  @PathVariable String vacancyId) {
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.CREATED);
     }
 
-    @PostMapping("/{respondId}/decline")
+    @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/decline")
     public ResponseEntity<Respond> declineRespond(@PathVariable String respondId,
                                                   @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
@@ -54,7 +53,7 @@ public class RespondsRestController {
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
-    @PostMapping("/{respondId}/accept")
+    @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/accept")
     public ResponseEntity<Respond> acceptRespond(@PathVariable String respondId,
                                                  @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
@@ -62,7 +61,7 @@ public class RespondsRestController {
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
-    @PostMapping("/{respondId}/review")
+    @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/review")
     public ResponseEntity<Respond> onReviewRespond(@PathVariable String respondId,
                                                    @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
@@ -70,7 +69,7 @@ public class RespondsRestController {
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
-    @PostMapping("/{respondId}/block")
+    @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/block")
     public ResponseEntity<Respond> blockRespond(@PathVariable String respondId,
                                                 @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
@@ -78,14 +77,14 @@ public class RespondsRestController {
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
-    @GetMapping("/{respondId}")
+    @GetMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}")
     public Respond getRespondById(@PathVariable String vacancyId,
                                   @PathVariable String respondId) {
         return respondService.getByVacancyIdAndRespondId(vacancyId, respondId);
     }
 
     @JsonView(View.Detail.class)
-    @GetMapping("/{respondId}/detailed")
+    @GetMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/detailed")
     public Respond getRespondByIdDetailed(@PathVariable String vacancyId,
                                           @PathVariable String respondId) {
         return respondService.getByVacancyIdAndRespondId(vacancyId, respondId);
