@@ -7,6 +7,8 @@ import com.dhr.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +37,7 @@ public class UserRestController {
     RoleService roleService;
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<List<Role>> getRolesByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<Role>> getRolesByUserId(@PathVariable String userId) {
         Optional<User> user = userService.get(userId);
         return user.map(u -> new ResponseEntity<>(roleService.getByUserId(userId), OK))
                 .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
@@ -43,13 +45,14 @@ public class UserRestController {
 
     @RequestMapping(value = "/me", method = RequestMethod.GET)
     public ResponseEntity<User> getUserFromSession() {
-        Optional<User> user = userService.get(1L);
-        return user.map(u -> new ResponseEntity<>(u, OK))
-                .orElseGet(() -> new ResponseEntity<>(NOT_FOUND));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        User user = userService.getByLogin(currentPrincipalName);
+        return  new ResponseEntity<>(user, OK);
     }
 
     @DeleteMapping("{userId}")
-    public ResponseEntity deleteUser(@PathVariable Long userId) {
+    public ResponseEntity deleteUser(@PathVariable String userId) {
         Optional<User> user = userService.get(userId);
         if (user.isPresent()) {
             userService.delete(user.get());

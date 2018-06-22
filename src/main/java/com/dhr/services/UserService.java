@@ -6,15 +6,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    Long save(Long companyId, User user);
+    String save(String companyId, User user);
 
     void delete(User user);
 
     User update(User user);
 
-    Optional<User> get(Long id);
+    Optional<User> get(String id);
 
     Iterable<User> getAll();
 
-    List<User> getByCompanyId(Long companyId);
+    List<User> getByCompanyId(String companyId);
+
+    User getByLogin(String name);
 }

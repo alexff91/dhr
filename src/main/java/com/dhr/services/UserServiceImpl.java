@@ -25,8 +25,9 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
-    public Long save(Long companyId, User user) {
+    public String save(String companyId, User user) {
         user.setCompany(companyRepository.findById(companyId).get());
+        user.setId(Integer.toHexString(user.hashCode()));
         User savedUser = repository.save(user);
         user.getRoles().forEach(role -> {
             roleRepository.save(Role.builder().name(role.getName()).user(savedUser).build());
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> get(Long id) {
+    public Optional<User> get(String id) {
         return repository.findById(id);
     }
 
@@ -56,7 +57,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getByCompanyId(Long companyId) {
+    public List<User> getByCompanyId(String companyId) {
         return repository.findAllByCompanyId(companyId);
+    }
+
+    @Override
+    public User getByLogin(String name) {
+        return repository.findByLogin(name);
     }
 }

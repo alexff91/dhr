@@ -30,7 +30,7 @@ public class RespondFeedbackServiceImpl implements RespondFeedbackService {
     private VacancyService vacancyService;
 
     @Override
-    public RespondFeedback save(String respondId, Long userId, RespondFeedback respondFeedback) {
+    public RespondFeedback save(String respondId, String userId, RespondFeedback respondFeedback) {
         Respond respond = respondService.get(respondId).get();
         User user = userService.get(userId).get();
         respondFeedback.setUser(user);

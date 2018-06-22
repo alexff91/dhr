@@ -51,17 +51,17 @@ public class CompanyRestController {
     SkillService skillService;
 
     @RequestMapping(value = "/{companyId}/vacancies", method = RequestMethod.GET)
-    public List<Vacancy> getVacanciesByCompanyId(@PathVariable Long companyId) {
+    public List<Vacancy> getVacanciesByCompanyId(@PathVariable String companyId) {
         return companyService.getVacanciesByCompanyId(companyId);
     }
 
     @RequestMapping(value = "/{companyId}/skills", method = RequestMethod.GET)
-    public List<Skill> getSkillByCompanyId(@PathVariable Long companyId) {
+    public List<Skill> getSkillByCompanyId(@PathVariable String companyId) {
         return companyService.getSkillsByCompanyId(companyId);
     }
 
     @RequestMapping(value = "/{companyId}/users", method = RequestMethod.GET)
-    public ResponseEntity getUsersByCompanyId(@PathVariable Long companyId) {
+    public ResponseEntity getUsersByCompanyId(@PathVariable String companyId) {
         Optional<Company> company = companyService.get(companyId);
         return company.map(c -> new ResponseEntity(userService.getByCompanyId(companyId), OK))
                 .orElseGet(() -> new ResponseEntity(NOT_FOUND));
@@ -69,32 +69,32 @@ public class CompanyRestController {
 
     @JsonView(View.CompanyFull.class)
     @RequestMapping(value = "/{companyId}", method = RequestMethod.GET)
-    public Company getByCompanyId(@PathVariable Long companyId) {
+    public Company getByCompanyId(@PathVariable String companyId) {
         return companyService.get(companyId).get();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(CREATED)
-    public ResponseEntity<Long> createCompany(@RequestBody Company company) {
+    public ResponseEntity<String> createCompany(@RequestBody Company company) {
         return new ResponseEntity<>(companyService.save(company), CREATED);
     }
 
     @PostMapping(value = "/{companyId}/vacancies", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<String> createVacancy(@PathVariable Long companyId, @RequestBody Vacancy vacancy) {
+    public ResponseEntity<String> createVacancy(@PathVariable String companyId, @RequestBody Vacancy vacancy) {
         vacancy.setCompany(companyService.get(companyId).get());
         String vacancyId = vacancyService.save(vacancy);
         return new ResponseEntity<>(vacancyId, HttpStatus.CREATED);
     }
 
     @PostMapping("/{companyId}/skills")
-    public ResponseEntity<Long> createSkill(@PathVariable Long companyId, @RequestBody Skill skill) {
+    public ResponseEntity<Long> createSkill(@PathVariable String companyId, @RequestBody Skill skill) {
         skill.setCompany(companyService.get(companyId).get());
         Long skillId = skillService.save(skill);
         return new ResponseEntity<>(skillId, HttpStatus.CREATED);
     }
 
     @PostMapping("/{companyId}/skills/batch")
-    public ResponseEntity<Long> createSkill(@PathVariable Long companyId, @RequestBody List<Skill> skills) {
+    public ResponseEntity<Long> createSkill(@PathVariable String companyId, @RequestBody List<Skill> skills) {
         skills.forEach(skill -> {
             skill.setCompany(companyService.get(companyId).get());
             skillService.save(skill);
@@ -126,7 +126,7 @@ public class CompanyRestController {
 
     @PostMapping("/{companyId}/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity createUser(@PathVariable Long companyId, @RequestBody User user) {
+    public ResponseEntity createUser(@PathVariable String companyId, @RequestBody User user) {
         userService.save(companyId, user);
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -136,12 +136,6 @@ public class CompanyRestController {
     @ResponseStatus(OK)
     public ResponseEntity updateCompany(@RequestBody Company company) {
         companyService.update(company);
-        return new ResponseEntity(OK);
-    }
-
-    @DeleteMapping("{companyId}")
-    public ResponseEntity deleteCompany(@PathVariable Long companyId) {
-        companyService.delete(companyService.get(companyId).get());
         return new ResponseEntity(OK);
     }
 

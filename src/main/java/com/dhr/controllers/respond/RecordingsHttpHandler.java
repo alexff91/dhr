@@ -76,7 +76,7 @@ public class RecordingsHttpHandler {
                                                 HttpServletRequest request,
                                                 HttpServletResponse response) throws Exception {
 
-        Long companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
+        String companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
         File file = new File(config.getRecordingsPath() + "/company/" + companyId + "/responds/" + respondId + "/answers/", answerId + ".webm");
         if (file.isFile()) {
             MultipartFileSender.fromPath(file.toPath()).with(request).with(response).serveResource();
@@ -87,7 +87,7 @@ public class RecordingsHttpHandler {
     }
 
     private String getRecordingPath(@PathVariable String respondId) {
-        Long companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
+        String companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
         return "/company/" + companyId + "/responds/" + respondId + "/answers/";
     }
 

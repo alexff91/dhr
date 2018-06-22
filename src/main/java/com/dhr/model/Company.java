@@ -5,6 +5,7 @@ import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -33,17 +34,14 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 @Entity
 @Table(schema = Constants.VI_SCHEMA)
 public class Company implements Serializable {
-    private static final String SEQUENCE_NAME = "company_id_seq";
-
     @JsonView({View.CompanyFull.class, View.CompanyLight.class})
     @Id
-    @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
     @Column(name = "id", nullable = false, unique = true)
-    private Long id;
+    private String id;
 
     @JsonView({View.CompanyFull.class, View.CompanyLight.class})
     @Column(length = 4000)

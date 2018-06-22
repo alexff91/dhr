@@ -21,7 +21,7 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
     private QuestionAnswerService questionAnswerService;
 
     @Override
-    public Long save(Long questionAnswerId, Long userId, QuestionAnswerFeedback feedback) {
+    public Long save(Long questionAnswerId, String userId, QuestionAnswerFeedback feedback) {
         feedback.setUser(userService.get(userId).get());
         feedback.setQuestionAnswer(questionAnswerService.get(questionAnswerId).get());
         repository.save(feedback);
@@ -55,7 +55,7 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
     }
 
     @Override
-    public Iterable<QuestionAnswerFeedback> findAllByQuestionAnswerIdAndUserId(Long userId, Long questionAnswerId) {
+    public Iterable<QuestionAnswerFeedback> findAllByQuestionAnswerIdAndUserId(String userId, Long questionAnswerId) {
         return repository.findAllByQuestionAnswerIdAndUserId(userId, questionAnswerId);
     }
 }

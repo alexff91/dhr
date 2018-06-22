@@ -11,5 +11,5 @@ import java.util.List;
 public interface QuestionAnswerFeedbackRepository extends JpaRepository<QuestionAnswerFeedback, Long> {
     List<QuestionAnswerFeedback> findAllByQuestionAnswerId(Long questionAnswerId);
 
-    Iterable<QuestionAnswerFeedback> findAllByQuestionAnswerIdAndUserId(Long userId, Long questionAnswerId);
+    Iterable<QuestionAnswerFeedback> findAllByQuestionAnswerIdAndUserId(String userId, Long questionAnswerId);
 }

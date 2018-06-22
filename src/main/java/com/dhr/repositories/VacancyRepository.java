@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface VacancyRepository extends JpaRepository<Vacancy, String> {
-    List<Vacancy> findAllByCompanyId(Long companyId);
+    List<Vacancy> findAllByCompanyId(String companyId);
 }

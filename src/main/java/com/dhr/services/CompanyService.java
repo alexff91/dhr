@@ -8,17 +8,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CompanyService {
-    Long save(Company company);
+    String save(Company company);
 
     void delete(Company company);
 
     Company update(Company company);
 
-    Optional<Company> get(Long id);
+    Optional<Company> get(String id);
 
-    List<Vacancy> getVacanciesByCompanyId(Long companyId);
+    List<Vacancy> getVacanciesByCompanyId(String companyId);
 
-    List<Skill> getSkillsByCompanyId(Long companyId);
+    List<Skill> getSkillsByCompanyId(String companyId);
 
     Iterable<Company> getAll();
 }

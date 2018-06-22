@@ -37,7 +37,7 @@ public class RespondReviewRestController {
 
     @PostMapping("/users/{userId}/review")
     public ResponseEntity createRespondFeedback(@PathVariable String respondId,
-                                                @PathVariable Long userId,
+                                                @PathVariable String userId,
                                                 @RequestBody RespondFeedback respondFeedback) {
         return new ResponseEntity<>(respondFeedbackService.save(respondId, userId, respondFeedback), HttpStatus.CREATED);
     }

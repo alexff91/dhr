@@ -38,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> getByUserId(Long userId) {
+    public List<Role> getByUserId(String userId) {
         return repository.findAllByUserId(userId);
     }
 

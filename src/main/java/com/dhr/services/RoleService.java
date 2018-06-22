@@ -14,7 +14,7 @@ public interface RoleService {
 
     Optional<Role> get(Long id);
 
-    List<Role> getByUserId(Long userId);
+    List<Role> getByUserId(String userId);
 
     Iterable<Role> getAll();
 }

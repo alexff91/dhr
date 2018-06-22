@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RespondFeedbackService {
-    RespondFeedback save(String respondId, Long userId, RespondFeedback vacancy);
+    RespondFeedback save(String respondId, String userId, RespondFeedback vacancy);
 
     void delete(RespondFeedback vacancy);
 

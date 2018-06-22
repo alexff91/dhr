@@ -27,8 +27,9 @@ public class CompanyServiceImpl implements CompanyService {
     private SkillRepository skillRepository;
 
     @Override
-    public Long save(Company company) {
+    public String save(Company company) {
         company.setCreationDate(new Date());
+        company.setId(Integer.toHexString(company.hashCode()));
         companyRepository.save(company);
         return company.getId();
     }
@@ -49,17 +50,17 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Optional<Company> get(Long id) {
+    public Optional<Company> get(String id) {
         return companyRepository.findById(id);
     }
 
     @Override
-    public List<Vacancy> getVacanciesByCompanyId(Long companyId) {
+    public List<Vacancy> getVacanciesByCompanyId(String companyId) {
         return vacancyRepository.findAllByCompanyId(companyId);
     }
 
     @Override
-    public List<Skill> getSkillsByCompanyId(Long companyId) {
+    public List<Skill> getSkillsByCompanyId(String companyId) {
         return skillRepository.findAllByCompanyId(companyId);
     }
 

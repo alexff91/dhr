@@ -35,13 +35,13 @@ public class AnswerReviewRestController {
 
     @GetMapping("/review/user/{userId}")
     public Iterable<QuestionAnswerFeedback> getAllReviewByUserId(@PathVariable Long questionAnswerId,
-                                                                 @PathVariable Long userId) {
+                                                                 @PathVariable String userId) {
         return feedbackService.findAllByQuestionAnswerIdAndUserId(userId, questionAnswerId);
     }
 
     @PostMapping("/user/{userId}/review")
     public ResponseEntity createAnswerFeedback(@PathVariable Long questionAnswerId,
-                                               @PathVariable Long userId,
+                                               @PathVariable String userId,
                                                @RequestBody QuestionAnswerFeedback answerFeedback
     ) {
         return new ResponseEntity<>(feedbackService.save(questionAnswerId, userId, answerFeedback), HttpStatus.CREATED);

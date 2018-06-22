@@ -28,7 +28,7 @@ public class SubscriptionRestController {
     CompanyService companyService;
 
     @PostMapping("/company/{companyId}")
-    public ResponseEntity createSubscription(@RequestBody Subscription subscription, @PathVariable Long companyId) {
+    public ResponseEntity createSubscription(@RequestBody Subscription subscription, @PathVariable String companyId) {
         subscriptionsService.save(subscription);
         Company company = companyService.get(companyId).get();
         company.setSubscription(subscription);
@@ -37,7 +37,7 @@ public class SubscriptionRestController {
     }
 
     @GetMapping("/company/{companyId}")
-    public ResponseEntity<Subscription> getSubscription(@PathVariable Long companyId) {
+    public ResponseEntity<Subscription> getSubscription(@PathVariable String companyId) {
         Company company = companyService.get(companyId).get();
         return new ResponseEntity<>(company.getSubscription(),HttpStatus.CREATED);
     }

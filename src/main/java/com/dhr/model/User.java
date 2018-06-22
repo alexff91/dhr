@@ -13,14 +13,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
@@ -31,20 +28,19 @@ import java.util.List;
 @Entity
 @Table(schema = "vihr")
 public class User implements Serializable {
-    private static final String SEQUENCE_NAME = "user_id_seq";
     @Id
-    @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @Column(name = "id", nullable = false, unique = true)
+    private String id;
 
     private String name;
 
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
     private String login;
 
     private String password;
