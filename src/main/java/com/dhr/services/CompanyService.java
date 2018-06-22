@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CompanyService {
-    String save(Company company);
+    Company save(Company company);
 
     void delete(Company company);
 

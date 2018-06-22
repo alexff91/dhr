@@ -75,7 +75,7 @@ public class CompanyRestController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(CREATED)
-    public ResponseEntity<String> createCompany(@RequestBody Company company) {
+    public ResponseEntity<Company> createCompany(@RequestBody Company company) {
         return new ResponseEntity<>(companyService.save(company), CREATED);
     }
 

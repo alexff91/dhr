@@ -27,11 +27,10 @@ public class CompanyServiceImpl implements CompanyService {
     private SkillRepository skillRepository;
 
     @Override
-    public String save(Company company) {
+    public Company save(Company company) {
         company.setCreationDate(new Date());
         company.setId(Integer.toHexString(company.hashCode()));
-        companyRepository.save(company);
-        return company.getId();
+        return companyRepository.save(company);
     }
 
     @Override
