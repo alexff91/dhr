@@ -60,7 +60,7 @@ public class VacancyRestController {
         return vacanciesService.get(vacancyId).get();
     }
 
-    @GetMapping("/api/v1/secured/vacancies/")
+    @GetMapping("/api/v1/vacancies/")
     public Iterable<Vacancy> getVacancies() {
         return vacanciesService.getAll();
     }
