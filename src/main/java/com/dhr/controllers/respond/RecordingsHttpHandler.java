@@ -69,7 +69,7 @@ public class RecordingsHttpHandler {
     @Autowired
     RespondService respondService;
 
-    @GetMapping("/api/v1/secured/responds/{respondId}/answers/{answerId}/{filename:.+}")
+    @GetMapping("/api/v1/responds/{respondId}/answers/{answerId}/{filename:.+}")
     @Transactional
     public ResponseEntity<HttpStatus> serveFile(@PathVariable String respondId,
                                                 @PathVariable Long answerId,
@@ -114,7 +114,7 @@ public class RecordingsHttpHandler {
         QuestionAnswer checkedAnswer = checkAnswers(respond, questionAnswer);
         checkedAnswer.setVideoPath("https://" + config.getBackendHost() +
                 ":" + config.getServerPort() +
-                "/api/v1/secured/responds/" + respondId +
+                "/api/v1/responds/" + respondId +
                 "/answers/" + checkedAnswer.getId() + "/" + checkedAnswer.getId() + ".webm");
         questionAnswerService.update(checkedAnswer);
         return new ResponseEntity<>(HttpStatus.OK);
