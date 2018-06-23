@@ -5,7 +5,7 @@ import com.dhr.model.Skill;
 import java.util.Optional;
 
 public interface SkillService {
-    Long save(Skill skill);
+    Skill save(Skill skill);
 
     void delete(Skill skill);
 

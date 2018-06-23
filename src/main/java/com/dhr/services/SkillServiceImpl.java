@@ -15,12 +15,13 @@ public class SkillServiceImpl implements SkillService {
     private SkillRepository repository;
 
     @Override
-    public Long save(Skill skill) {
+    public Skill save(Skill skill) {
         Skill foundSkill = repository.findOneByName(skill.getName());
         if (foundSkill == null) {
-            repository.save(skill);
-        }
-        return skill.getId();
+            Skill save = repository.save(skill);
+            return save;
+        } else return foundSkill;
+
     }
 
     @Override

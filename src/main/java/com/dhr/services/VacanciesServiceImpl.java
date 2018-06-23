@@ -20,7 +20,7 @@ public class VacanciesServiceImpl implements VacancyService {
     private VacancyRepository repository;
 
     @Autowired
-    private SkillRepository skillRepository;
+    private SkillService skillService;
 
     @Override
     public String save(Vacancy vacancy) {
@@ -28,7 +28,7 @@ public class VacanciesServiceImpl implements VacancyService {
         vacancy.getQuestions().forEach(question -> {
             question.getSkills().forEach(skill -> {
                 skill.setCompany(vacancy.getCompany());
-                skillRepository.save(skill);
+                skillService.save(skill);
             });
             question.setVacancy(vacancy);
         });
@@ -58,7 +58,7 @@ public class VacanciesServiceImpl implements VacancyService {
             Set<Skill> skills = new HashSet<>();
             question.getSkills().forEach(skill -> {
                         skill.setCompany(oldVacancy.getCompany());
-                        Skill savedSkill = skillRepository.save(skill);
+                        Skill savedSkill = skillService.save(skill);
                         skills.add(savedSkill);
                     }
             );

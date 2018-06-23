@@ -43,6 +43,7 @@ public class Skill implements Serializable {
     @Column(name = "id", nullable = false)
     Long id;
 
+    @Column(unique = true)
     String name;
 
     @JsonIgnore
