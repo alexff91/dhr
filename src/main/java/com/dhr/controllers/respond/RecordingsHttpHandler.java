@@ -86,9 +86,9 @@ public class RecordingsHttpHandler {
         }
     }
 
-    private String getRecordingPath(@PathVariable String respondId) {
+    private String getRecordingPath(@PathVariable String respondId, Long answerId) {
         String companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
-        return "/company/" + companyId + "/responds/" + respondId + "/answers/";
+        return "/company/" + companyId + "/responds/" + respondId + "/answers/" + answerId + "/";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/v1/responds/{respondId}/questions/{questionId}")
@@ -167,7 +167,7 @@ public class RecordingsHttpHandler {
             return true;
         }
 
-        String folder = getRecordingPath(respondId);
+        String folder = getRecordingPath(respondId, answerId);
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
         new File(path.toString()).mkdirs();
