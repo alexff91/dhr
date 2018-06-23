@@ -86,6 +86,8 @@ public class Vacancy implements Serializable {
     @JsonView(View.Detail.class)
     private Long minReviewCount = 1L;
 
+    private Boolean deleted;
+
     @JsonView(View.Detail.class)
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
