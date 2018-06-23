@@ -55,6 +55,12 @@ public class Vacancy implements Serializable {
     private User user;
 
     @Column(columnDefinition = "TEXT")
+    private String video;
+
+    @Column(columnDefinition = "TEXT")
+    private String img;
+
+    @Column(columnDefinition = "TEXT")
     private String position;
 
     @Column(columnDefinition = "TEXT")
