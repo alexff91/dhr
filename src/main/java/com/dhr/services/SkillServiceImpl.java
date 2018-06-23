@@ -18,10 +18,8 @@ public class SkillServiceImpl implements SkillService {
     public Skill save(Skill skill) {
         Skill foundSkill = repository.findOneByName(skill.getName());
         if (foundSkill == null) {
-            Skill save = repository.save(skill);
-            return save;
+            return repository.save(skill);
         } else return foundSkill;
-
     }
 
     @Override

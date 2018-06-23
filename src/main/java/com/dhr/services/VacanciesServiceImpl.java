@@ -2,7 +2,6 @@ package com.dhr.services;
 
 import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
-import com.dhr.repositories.SkillRepository;
 import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,10 +25,13 @@ public class VacanciesServiceImpl implements VacancyService {
     public String save(Vacancy vacancy) {
         vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));
         vacancy.getQuestions().forEach(question -> {
+            Set<Skill> questionSkills = new HashSet<>();
             question.getSkills().forEach(skill -> {
                 skill.setCompany(vacancy.getCompany());
-                skillService.save(skill);
+                questionSkills.add(skillService.save(skill));
             });
+            question.getSkills().clear();
+            question.getSkills().addAll(questionSkills);
             question.setVacancy(vacancy);
         });
         repository.save(vacancy);
