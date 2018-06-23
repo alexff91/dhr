@@ -132,9 +132,9 @@ public class CompanyRestController {
     }
 
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, value = "/{companyId}")
     @ResponseStatus(OK)
-    public ResponseEntity updateCompany(@RequestBody Company company) {
+    public ResponseEntity updateCompany(@PathVariable String companyId, @RequestBody Company company) {
         companyService.update(company);
         return new ResponseEntity(OK);
     }
