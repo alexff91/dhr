@@ -55,6 +55,8 @@ public class User implements Serializable {
 
     private String phone;
 
+    private Boolean deleted;
+
     @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)

@@ -60,6 +60,8 @@ public class Respond {
 
     private String phone;
 
+    private Boolean deleted;
+
     @JsonView(View.Detail.class)
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)

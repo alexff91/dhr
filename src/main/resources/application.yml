@@ -1,5 +1,5 @@
-backendHost: app.vi-hr.com
-dbHost: 168.63.13.234
+backendHost: nexign.vi-hr.com
+dbHost: localhost
 
 logging:
     level: error
@@ -7,10 +7,10 @@ logging:
 recordings:
     path: /interviews
 server:
-    port: 8082
+    port: 8080
     ssl:
         enabled: true
-        key-store: /etc/letsencrypt/live/app.vi-hr.com/keystore.p12
+        key-store: /etc/letsencrypt/live/nexign.vi-hr.com/keystore.p12
         key-store-password: vihr
         keyAlias: tomcat
         keyStoreType: PKCS12
@@ -35,7 +35,7 @@ spring:
     jpa:
         generate-ddl: false
         hibernate:
-            ddl-auto: none
+            ddl-auto: create
             dialect: org.hibernate.dialect.PostgreSQL94Dialect
             default_schema: vihr
             connection:
