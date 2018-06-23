@@ -45,10 +45,10 @@ public class VacanciesServiceImpl implements VacancyService {
         vacancy.setVideo(
                 video.contains("/embed/") ?
                         video :
-                        video.substring(0, video.lastIndexOf("/"))
+                        (video.substring(0, video.lastIndexOf("/"))
                                 + "/embed"
                                 + video.substring(video.lastIndexOf("/"), video.length())
-                                .replace("youtu.be","www.youtube.com"));
+                        ).replace("youtu.be", "www.youtube.com"));
     }
 
     @Override
