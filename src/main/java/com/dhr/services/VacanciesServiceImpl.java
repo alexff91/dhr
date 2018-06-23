@@ -24,6 +24,14 @@ public class VacanciesServiceImpl implements VacancyService {
     @Override
     public String save(Vacancy vacancy) {
         vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));
+        String video = vacancy.getVideo();
+        if (video != null)
+            vacancy.setVideo(
+                    video.contains("/embed/") ?
+                            video :
+                            video.substring(0, video.lastIndexOf("/"))
+                                    + "/embed/"
+                                    + video.substring(video.lastIndexOf("/"), video.length()));
         vacancy.getQuestions().forEach(question -> {
             Set<Skill> questionSkills = new HashSet<>();
             question.getSkills().forEach(skill -> {
@@ -47,7 +55,8 @@ public class VacanciesServiceImpl implements VacancyService {
 
     @Override
     public void delete(Vacancy vacancy) {
-        repository.delete(vacancy);
+        vacancy.setDeleted(true);
+        repository.save(vacancy);
     }
 
     @Override
@@ -55,7 +64,14 @@ public class VacanciesServiceImpl implements VacancyService {
         Vacancy oldVacancy = repository.findById(vacancyId).get();
         oldVacancy.setDescription(vacancy.getDescription());
         oldVacancy.setPosition(vacancy.getPosition());
-        oldVacancy.setVideo(vacancy.getVideo());
+        String video = vacancy.getVideo();
+        if (video != null)
+            oldVacancy.setVideo(
+                    video.contains("/embed/") ?
+                            video :
+                            video.substring(0, video.lastIndexOf("/"))
+                                    + "/embed/"
+                                    + video.substring(video.lastIndexOf("/"), video.length()));
         oldVacancy.setImg(vacancy.getImg());
         vacancy.getQuestions().forEach(question -> {
             question.setVacancy(oldVacancy);
