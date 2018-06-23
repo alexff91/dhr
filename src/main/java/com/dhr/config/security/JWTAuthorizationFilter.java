@@ -23,8 +23,9 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     public void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
         String header = req.getHeader(TokenAuthenticationService.HEADER_STRING);
-
-        if (header == null || !header.startsWith(TokenAuthenticationService.TOKEN_SCHEME_PREFIX)) {
+        String authorization = req.getParameter("Authorization");
+        if (header == null || !header.startsWith(TokenAuthenticationService.TOKEN_SCHEME_PREFIX) ||
+                authorization == null) {
             res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access denied, token is not provided!");
             return;
         }

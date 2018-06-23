@@ -37,14 +37,23 @@ public class TokenAuthenticationService {
 
     UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
         String token = request.getHeader(HEADER_STRING);
+        String authorization = request.getParameter("Authorization");
         String user;
-        if (token != null) {
+        if (token != null || authorization != null) {
             try {
-                user = Jwts.parser()
-                        .setSigningKey(SECRET.getBytes())
-                        .parseClaimsJws(token.replace(TOKEN_SCHEME_PREFIX, ""))
-                        .getBody()
-                        .getSubject();
+                if (token != null) {
+                    user = Jwts.parser()
+                            .setSigningKey(SECRET.getBytes())
+                            .parseClaimsJws(token.replace(TOKEN_SCHEME_PREFIX, ""))
+                            .getBody()
+                            .getSubject();
+                } else {
+                    user = Jwts.parser()
+                            .setSigningKey(SECRET.getBytes())
+                            .parseClaimsJws(authorization)
+                            .getBody()
+                            .getSubject();
+                }
                 userService.loadUserByUsername(user);
             } catch (JwtException | ClassCastException | UsernameNotFoundException e) {
                 return null;
