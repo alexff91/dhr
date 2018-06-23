@@ -87,9 +87,9 @@ public class CompanyRestController {
     }
 
     @PostMapping("/{companyId}/skills")
-    public ResponseEntity<Long> createSkill(@PathVariable String companyId, @RequestBody Skill skill) {
+    public ResponseEntity<Skill> createSkill(@PathVariable String companyId, @RequestBody Skill skill) {
         skill.setCompany(companyService.get(companyId).get());
-        Long skillId = skillService.save(skill);
+        Skill skillId = skillService.save(skill);
         return new ResponseEntity<>(skillId, HttpStatus.CREATED);
     }
 
