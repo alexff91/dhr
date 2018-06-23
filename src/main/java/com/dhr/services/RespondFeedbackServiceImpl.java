@@ -44,8 +44,7 @@ public class RespondFeedbackServiceImpl implements RespondFeedbackService {
             respond.setReviewStatus(ReviewStatus.REVIEWED);
             respondService.update(respond);
         }
-        respondVacancy.setUnansweredRespondsCount(respondVacancy.getUnansweredRespondsCount() - 1);
-        vacancyService.update(respond.getVacancy().getId(), respondVacancy);
+        vacancyService.updateRespondCount(respondVacancy);
         return feedback;
     }
 

@@ -16,7 +16,10 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public Long save(Skill skill) {
-        repository.save(skill);
+        Skill foundSkill = repository.findOneByName(skill.getName());
+        if (foundSkill == null) {
+            repository.save(skill);
+        }
         return skill.getId();
     }
 

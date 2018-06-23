@@ -80,4 +80,10 @@ public class VacanciesServiceImpl implements VacancyService {
     public Iterable<Vacancy> getAll() {
         return repository.findAll();
     }
+
+    @Override
+    public void updateRespondCount(Vacancy respondVacancy) {
+        respondVacancy.setUnansweredRespondsCount(respondVacancy.getUnansweredRespondsCount() - 1);
+        repository.save(respondVacancy);
+    }
 }

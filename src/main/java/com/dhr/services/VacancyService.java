@@ -16,4 +16,6 @@ public interface VacancyService {
     Optional<Vacancy> get(String id);
 
     Iterable<Vacancy> getAll();
+
+    void updateRespondCount(Vacancy respondVacancy);
 }
