@@ -53,6 +53,8 @@ public class VacanciesServiceImpl implements VacancyService {
         Vacancy oldVacancy = repository.findById(vacancyId).get();
         oldVacancy.setDescription(vacancy.getDescription());
         oldVacancy.setPosition(vacancy.getPosition());
+        oldVacancy.setVideo(vacancy.getVideo());
+        oldVacancy.setImg(vacancy.getImg());
         vacancy.getQuestions().forEach(question -> {
             question.setVacancy(oldVacancy);
             Set<Skill> skills = new HashSet<>();
