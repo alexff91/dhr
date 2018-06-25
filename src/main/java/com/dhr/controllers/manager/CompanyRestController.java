@@ -103,7 +103,7 @@ public class CompanyRestController {
     }
 
     @PutMapping("/{companyId}/skills/{skillId}")
-    public ResponseEntity<Skill> updateSkill(@PathVariable Long skillId, @RequestBody Skill skill) {
+    public ResponseEntity<Skill> updateSkill(@PathVariable String companyId, @PathVariable Long skillId, @RequestBody Skill skill) {
         Skill oldSkill = skillService.get(skillId).get();
         oldSkill.setName(skill.getName());
         return new ResponseEntity<>(skillService.update(oldSkill), HttpStatus.OK);
@@ -118,7 +118,7 @@ public class CompanyRestController {
 
 
     @DeleteMapping("/{companyId}/skills/{skillId}")
-    public ResponseEntity deleteSkill(@PathVariable Long companyId, @PathVariable Long skillId) {
+    public ResponseEntity deleteSkill(@PathVariable String companyId, @PathVariable Long skillId) {
         Skill skill = skillService.get(skillId).get();
         skillService.delete(skill);
         return new ResponseEntity<>(HttpStatus.OK);
