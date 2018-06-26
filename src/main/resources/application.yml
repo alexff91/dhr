@@ -7,7 +7,7 @@ logging:
 recordings:
     path: /interviews
 server:
-    port: 8082
+    port: 8080
     ssl:
         enabled: true
         key-store: /etc/letsencrypt/live/nexign.vi-hr.com/keystore.p12
