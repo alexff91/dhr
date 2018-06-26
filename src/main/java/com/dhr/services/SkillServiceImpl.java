@@ -19,12 +19,16 @@ public class SkillServiceImpl implements SkillService {
         Skill foundSkill = repository.findOneByName(skill.getName());
         if (foundSkill == null) {
             return repository.save(skill);
-        } else return foundSkill;
+        } else {
+            foundSkill.setDeleted(false);
+            repository.save(foundSkill);
+            return foundSkill;}
     }
 
     @Override
     public void delete(Skill skill) {
-        repository.delete(skill);
+        skill.setDeleted(true);
+        repository.save(skill);
     }
 
     @Override
@@ -40,6 +44,6 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public Iterable<Skill> getAll() {
-        return repository.findAll();
+        return repository.findAllByDeleted(false);
     }
 }
