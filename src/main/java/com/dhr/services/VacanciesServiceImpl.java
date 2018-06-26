@@ -25,7 +25,7 @@ public class VacanciesServiceImpl implements VacancyService {
     public String save(Vacancy vacancy) {
         vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));
         String video = vacancy.getVideo();
-        if (video != null)
+        if (video != null && !video.isEmpty())
             replaceYoutubeVideoPath(vacancy, video);
         vacancy.getQuestions().forEach(question -> {
             Set<Skill> questionSkills = new HashSet<>();
@@ -71,7 +71,7 @@ public class VacanciesServiceImpl implements VacancyService {
         oldVacancy.setDescription(vacancy.getDescription());
         oldVacancy.setPosition(vacancy.getPosition());
         String video = vacancy.getVideo();
-        if (video != null)
+        if (video != null  && !video.isEmpty())
             replaceYoutubeVideoPath(oldVacancy, video);
         oldVacancy.setImg(vacancy.getImg());
         vacancy.getQuestions().forEach(question -> {
