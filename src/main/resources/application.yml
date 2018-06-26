@@ -35,7 +35,7 @@ spring:
     jpa:
         generate-ddl: false
         hibernate:
-            ddl-auto: create
+            ddl-auto: none
             dialect: org.hibernate.dialect.PostgreSQL94Dialect
             default_schema: vihr
             connection:
