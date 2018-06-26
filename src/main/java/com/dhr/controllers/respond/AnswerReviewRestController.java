@@ -34,9 +34,9 @@ public class AnswerReviewRestController {
     }
 
     @GetMapping("/review/user/{userId}")
-    public Iterable<QuestionAnswerFeedback> getAllReviewByUserId(@PathVariable Long questionAnswerId,
+    public QuestionAnswerFeedback getAllReviewByUserId(@PathVariable Long questionAnswerId,
                                                                  @PathVariable String userId) {
-        return feedbackService.findAllByQuestionAnswerIdAndUserId(questionAnswerId, userId);
+        return feedbackService.findOneByQuestionAnswerId(questionAnswerId, userId);
     }
 
     @PostMapping("/user/{userId}/review")

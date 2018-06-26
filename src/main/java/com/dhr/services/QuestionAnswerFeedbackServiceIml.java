@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -22,10 +23,20 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
 
     @Override
     public Long save(Long questionAnswerId, String userId, QuestionAnswerFeedback feedback) {
-        feedback.setUser(userService.get(userId).get());
-        feedback.setQuestionAnswer(questionAnswerService.get(questionAnswerId).get());
-        repository.save(feedback);
-        return feedback.getId();
+        QuestionAnswerFeedback questionAnswerIdAndUserId = repository.findOneByQuestionAnswerIdAndUserId(questionAnswerId, userId);
+        if (questionAnswerIdAndUserId == null) {
+            feedback.setUser(userService.get(userId).get());
+            feedback.setQuestionAnswer(questionAnswerService.get(questionAnswerId).get());
+            QuestionAnswerFeedback save = repository.save(feedback);
+            return save.getId();
+        } else {
+            questionAnswerIdAndUserId.setComment(feedback.getComment());
+            questionAnswerIdAndUserId.setDate(new Date());
+            questionAnswerIdAndUserId.setSkillsFeedback(feedback.getSkillsFeedback());
+            QuestionAnswerFeedback save = repository.save(questionAnswerIdAndUserId);
+            return save.getId();
+        }
+
     }
 
     @Override
@@ -55,7 +66,7 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
     }
 
     @Override
-    public Iterable<QuestionAnswerFeedback> findAllByQuestionAnswerIdAndUserId( Long questionAnswerId, String userId) {
-        return repository.findAllByQuestionAnswerIdAndUserId(questionAnswerId, userId);
+    public QuestionAnswerFeedback findOneByQuestionAnswerId(Long questionAnswerId, String userId) {
+        return repository.findOneByQuestionAnswerIdAndUserId(questionAnswerId, userId);
     }
 }
