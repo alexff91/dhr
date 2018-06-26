@@ -35,10 +35,12 @@ public class RespondServiceImpl implements RespondService {
         if (respond.getId() == null) {
             respond.setId(Integer.toHexString(respond.hashCode()) + Long.toHexString(new Date().getTime()));
         }
+        vacancyRepository.save(vacancy);
+        Respond savedRespond = repository.save(respond);
         vacancy.setRespondsCount(vacancy.getRespondsCount() + 1);
         vacancy.setUnansweredRespondsCount(vacancy.getUnansweredRespondsCount() + 1);
         vacancyRepository.save(vacancy);
-        return repository.save(respond);
+        return savedRespond;
     }
 
     @Override
