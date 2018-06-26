@@ -60,7 +60,7 @@ public class Respond {
 
     private String phone;
 
-    private Boolean deleted;
+    private Boolean deleted = false;
 
     @JsonView(View.Detail.class)
     @Column(nullable = false)

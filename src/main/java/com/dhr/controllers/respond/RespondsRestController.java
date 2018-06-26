@@ -61,6 +61,14 @@ public class RespondsRestController {
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
+//    @GetMapping("/api/v1/secured/responds/{respondId}/skillsSummary")
+//    public ResponseEntity<Respond> acceptRespond(@PathVariable String respondId) {
+//        Respond respond = respondService.get(respondId).get();
+//        feedbackService.getAllByQuestionAnswerId(questionAnswerId);
+//        respond.setReviewStatus(ReviewStatus.ACCEPTED);
+//        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
+//    }
+
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/review")
     public ResponseEntity<Respond> onReviewRespond(@PathVariable String respondId,
                                                    @PathVariable String vacancyId) {

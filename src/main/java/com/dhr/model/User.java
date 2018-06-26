@@ -55,7 +55,7 @@ public class User implements Serializable {
 
     private String phone;
 
-    private Boolean deleted;
+    private Boolean deleted = false;
 
     @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)

@@ -51,7 +51,7 @@ public class Skill implements Serializable {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
-    private Boolean deleted;
+    private Boolean deleted = false;
 
     @JoinTable(schema = Constants.VI_SCHEMA)
     @ManyToMany(targetEntity = Question.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
