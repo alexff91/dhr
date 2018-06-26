@@ -45,10 +45,10 @@ public class RespondsRestController {
     }
 
     @PostMapping("/api/v1/vacancies/{vacancyId}/responds")
-    public ResponseEntity createRespond(@RequestBody Respond respond,
-                                        @PathVariable String vacancyId) {
-        respondService.save(respond, vacancyId);
-        return new ResponseEntity( HttpStatus.OK);
+    public ResponseEntity<Respond> createRespond(@RequestBody Respond respond,
+                                                 @PathVariable String vacancyId) {
+
+        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/decline")
@@ -76,7 +76,7 @@ public class RespondsRestController {
     @GetMapping("/api/v1/secured/responds/{respondId}/skillsSummary")
     public ResponseEntity<Map<String, Double>> skillsSummary(@PathVariable String respondId) {
         Map<String, Double> skillsSummary = feedbackService.getSkillResponds(respondId);
-        return new ResponseEntity(skillsSummary, HttpStatus.OK);
+        return new ResponseEntity<>(skillsSummary, HttpStatus.OK);
     }
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/review")
