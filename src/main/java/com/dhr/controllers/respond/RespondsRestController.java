@@ -1,7 +1,7 @@
 package com.dhr.controllers.respond;
 
-import com.dhr.model.QuestionAnswerFeedback;
 import com.dhr.model.Respond;
+import com.dhr.model.dto.RespondCommentDto;
 import com.dhr.model.enums.ReviewStatus;
 import com.dhr.services.QuestionAnswerFeedbackService;
 import com.dhr.services.RespondServiceImpl;
@@ -11,18 +11,13 @@ import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -52,51 +47,56 @@ public class RespondsRestController {
     @PostMapping("/api/v1/vacancies/{vacancyId}/responds")
     public ResponseEntity<Respond> createRespond(@RequestBody Respond respond,
                                                  @PathVariable String vacancyId) {
-        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.CREATED);
+
+        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/decline")
-    public ResponseEntity<Respond> declineRespond(@PathVariable String respondId,
-                                                  @PathVariable String vacancyId,
-                                                  @RequestBody String comment) {
+    public ResponseEntity declineRespond(@PathVariable String respondId,
+                                         @PathVariable String vacancyId,
+                                         @RequestBody RespondCommentDto comment) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.DECLINED);
-        respond.setComment(comment);
-        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
+        respond.setComment(comment.getComment());
+        respondService.update(respond);
+        return new ResponseEntity( HttpStatus.OK);
     }
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/accept")
-    public ResponseEntity<Respond> acceptRespond(@PathVariable String respondId,
-                                                 @PathVariable String vacancyId,
-                                                 @RequestBody String comment) {
+    public ResponseEntity acceptRespond(@PathVariable String respondId,
+                                        @PathVariable String vacancyId,
+                                        @RequestBody RespondCommentDto comment) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.ACCEPTED);
-        respond.setComment(comment);
-        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
+        respond.setComment(comment.getComment());
+        respondService.update(respond);
+        return new ResponseEntity( HttpStatus.OK);
     }
 
     @GetMapping("/api/v1/secured/responds/{respondId}/skillsSummary")
     public ResponseEntity<Map<String, Double>> skillsSummary(@PathVariable String respondId) {
         Map<String, Double> skillsSummary = feedbackService.getSkillResponds(respondId);
-        return new ResponseEntity(skillsSummary, HttpStatus.OK);
+        return new ResponseEntity<>(skillsSummary, HttpStatus.OK);
     }
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/review")
-    public ResponseEntity<Respond> onReviewRespond(@PathVariable String respondId,
-                                                   @PathVariable String vacancyId) {
+    public ResponseEntity onReviewRespond(@PathVariable String respondId,
+                                          @PathVariable String vacancyId) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.ON_REVIEW);
-        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
+        respondService.update(respond);
+        return new ResponseEntity( HttpStatus.OK);
     }
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/block")
-    public ResponseEntity<Respond> blockRespond(@PathVariable String respondId,
-                                                @PathVariable String vacancyId,
-                                                @RequestBody String comment) {
+    public ResponseEntity blockRespond(@PathVariable String respondId,
+                                       @PathVariable String vacancyId,
+                                       @RequestBody RespondCommentDto comment) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.BLOCKED);
-        respond.setComment(comment);
-        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
+        respond.setComment(comment.getComment());
+        respondService.update(respond);
+        return new ResponseEntity( HttpStatus.OK);
     }
 
     @GetMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}")
