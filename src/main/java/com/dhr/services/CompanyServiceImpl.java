@@ -60,7 +60,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Skill> getSkillsByCompanyId(String companyId) {
-        return skillRepository.findAllByCompanyId(companyId);
+        return skillRepository.findAllByCompanyIdAndDeleted(companyId, false);
     }
 
     @Override
