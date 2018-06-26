@@ -35,6 +35,12 @@ public class RespondReviewRestController {
         return respondFeedbackService.getAllByRespondId(respondId);
     }
 
+    @GetMapping("/users/{userId}/review")
+    public ResponseEntity createRespondFeedback(@PathVariable String respondId,
+                                                @PathVariable String userId) {
+        return new ResponseEntity<>(respondFeedbackService.getAllByRespondIdAndUserId(respondId, userId), HttpStatus.OK);
+    }
+
     @PostMapping("/users/{userId}/review")
     public ResponseEntity createRespondFeedback(@PathVariable String respondId,
                                                 @PathVariable String userId,

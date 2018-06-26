@@ -53,7 +53,6 @@ public class QuestionAnswerFeedback {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private QuestionAnswer questionAnswer;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

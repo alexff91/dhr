@@ -72,4 +72,9 @@ public class RespondFeedbackServiceImpl implements RespondFeedbackService {
     public List<RespondFeedback> getAllByRespondId(String respondId) {
         return repository.findAllByRespondId(respondId);
     }
+
+    @Override
+    public List<RespondFeedback> getAllByRespondIdAndUserId(String respondId, String userId) {
+        return repository.findAllByRespondIdAndUserId(respondId, userId);
+    }
 }

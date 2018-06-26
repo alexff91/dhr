@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface RespondFeedbackRepository extends JpaRepository<RespondFeedback, Long> {
     List<RespondFeedback> findAllByRespondId(String respondId);
+
+    List<RespondFeedback> findAllByRespondIdAndUserId(String respondId, String userId);
 }
