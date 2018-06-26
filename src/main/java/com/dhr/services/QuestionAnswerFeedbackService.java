@@ -17,5 +17,5 @@ public interface QuestionAnswerFeedbackService {
 
     Iterable<QuestionAnswerFeedback> getAllByQuestionAnswerId(Long id);
 
-    Iterable<QuestionAnswerFeedback> findAllByQuestionAnswerIdAndUserId(String userId, Long questionAnswerId);
+    Iterable<QuestionAnswerFeedback> findAllByQuestionAnswerIdAndUserId(Long questionAnswerId, String userId);
 }
