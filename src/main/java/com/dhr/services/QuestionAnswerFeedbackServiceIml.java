@@ -4,6 +4,7 @@ import com.dhr.model.QuestionAnswerFeedback;
 import com.dhr.model.Respond;
 import com.dhr.repositories.QuestionAnswerFeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,7 +85,7 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
 
     public Map<String, Double> getSkillResponds(@PathVariable String respondId) {
         Respond respond = respondService.get(respondId).get();
-        Map<String, Double> skillsSummary = new HashMap<>();
+        Map<String, Pair<Integer, Double>> skillsSummary = new HashMap<>();
         respond.getAnswers().forEach(questionAnswer -> {
             Iterable<QuestionAnswerFeedback> answerFeedbacksIterable = getAllByQuestionAnswerId(questionAnswer.getId());
             List<QuestionAnswerFeedback> answerFeedbacks = new LinkedList<>();
@@ -92,16 +93,18 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
             answerFeedbacks.forEach(feedback -> feedback.getSkillsFeedback().forEach((skillName, skillLevel) ->
             {
                 if (skillsSummary.containsKey(skillName)) {
-                    Double count = skillsSummary.get(skillName);
-                    skillsSummary.put(skillName, count + skillLevel);
+                    Pair<Integer, Double> count = skillsSummary.get(skillName);
+                    skillsSummary.put(skillName,Pair.of(count.getFirst() + 1, count.getSecond() + skillLevel));
 
                 } else {
-                    skillsSummary.put(skillName, skillLevel + 0.0);
+                    skillsSummary.put(skillName,Pair.of(1, skillLevel + 0.0));
                 }
             }));
-            skillsSummary.forEach((s, aDouble) -> skillsSummary.put(s, aDouble / answerFeedbacks.size()));
+
         });
-        return skillsSummary;
+        Map<String, Double> skillsSummaryMap = new HashMap<>();
+        skillsSummary.forEach((s, pair) -> skillsSummaryMap.put(s, pair.getSecond() / pair.getFirst()));
+        return skillsSummaryMap;
     }
 
 
