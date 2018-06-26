@@ -47,7 +47,7 @@ public class RespondsRestController {
     @PostMapping("/api/v1/vacancies/{vacancyId}/responds")
     public ResponseEntity createRespond(@RequestBody Respond respond,
                                         @PathVariable String vacancyId) {
-        respondService.update(respond);
+        respondService.save(respond, vacancyId);
         return new ResponseEntity( HttpStatus.OK);
     }
 
