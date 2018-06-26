@@ -23,7 +23,7 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
 
     @Override
     public Long save(Long questionAnswerId, String userId, QuestionAnswerFeedback feedback) {
-        QuestionAnswerFeedback questionAnswerIdAndUserId = repository.findOneByQuestionAnswerIdAndUserId(questionAnswerId, userId);
+        QuestionAnswerFeedback questionAnswerIdAndUserId = repository.findFirstByQuestionAnswerIdAndUserId(questionAnswerId, userId);
         if (questionAnswerIdAndUserId == null) {
             feedback.setUser(userService.get(userId).get());
             feedback.setQuestionAnswer(questionAnswerService.get(questionAnswerId).get());
@@ -67,6 +67,6 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
 
     @Override
     public QuestionAnswerFeedback findOneByQuestionAnswerId(Long questionAnswerId, String userId) {
-        return repository.findOneByQuestionAnswerIdAndUserId(questionAnswerId, userId);
+        return repository.findFirstByQuestionAnswerIdAndUserId(questionAnswerId, userId);
     }
 }
