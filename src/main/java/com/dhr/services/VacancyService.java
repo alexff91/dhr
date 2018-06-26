@@ -18,4 +18,8 @@ public interface VacancyService {
     Iterable<Vacancy> getAll();
 
     void updateRespondCount(Vacancy respondVacancy);
+
+    void restore(String vacancyId);
+
+    void copy(String vacancyId);
 }

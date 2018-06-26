@@ -2,6 +2,7 @@ package com.dhr.services;
 
 import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
+import com.dhr.model.enums.VacancyStatus;
 import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,5 +107,27 @@ public class VacanciesServiceImpl implements VacancyService {
     public void updateRespondCount(Vacancy respondVacancy) {
         respondVacancy.setUnansweredRespondsCount(respondVacancy.getUnansweredRespondsCount() - 1);
         repository.save(respondVacancy);
+    }
+
+    @Override
+    public void restore(String vacancyId) {
+        Vacancy oldVacancy = repository.findById(vacancyId).get();
+        oldVacancy.setDeleted(false);
+        repository.save(oldVacancy);
+    }
+
+    @Override
+    public void copy(String vacancyId) {
+        Vacancy oldVacancy = repository.findById(vacancyId).get();
+        oldVacancy.setId(null);
+        oldVacancy.getQuestions().forEach(question -> question.setId(null));
+        oldVacancy.setRespondsCount(0L);
+        oldVacancy.setStatus(VacancyStatus.IN_WORK);
+        oldVacancy.setUnansweredRespondsCount(0L);
+        oldVacancy.setUpdateDate(new Date());
+        oldVacancy.setCreationDate(new Date());
+        oldVacancy.setResponds(new HashSet<>());
+        oldVacancy.setViewsCount(0L);
+        save(oldVacancy);
     }
 }

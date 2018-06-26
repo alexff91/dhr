@@ -43,6 +43,18 @@ public class VacancyRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PutMapping("/api/v1/secured/vacancies/{vacancyId}/restore")
+    public ResponseEntity restoreVacancy(@PathVariable String vacancyId) {
+        vacanciesService.restore(vacancyId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/api/v1/secured/vacancies/{vacancyId}/copy")
+    public ResponseEntity copyVacancy(@PathVariable String vacancyId) {
+        vacanciesService.copy(vacancyId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("/api/v1/vacancies/{vacancyId}/stat")
     public ResponseEntity increaseViewCounter(@PathVariable String vacancyId) {
         vacanciesService.increaseViewCounter(vacancyId);
