@@ -1,6 +1,7 @@
 package com.dhr.controllers.respond;
 
 import com.dhr.model.Respond;
+import com.dhr.model.dto.RespondCommentDto;
 import com.dhr.model.enums.ReviewStatus;
 import com.dhr.services.QuestionAnswerFeedbackService;
 import com.dhr.services.RespondServiceImpl;
@@ -53,10 +54,10 @@ public class RespondsRestController {
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/decline")
     public ResponseEntity declineRespond(@PathVariable String respondId,
                                          @PathVariable String vacancyId,
-                                         @RequestBody String comment) {
+                                         @RequestBody RespondCommentDto comment) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.DECLINED);
-        respond.setComment(comment);
+        respond.setComment(comment.getComment());
         respondService.update(respond);
         return new ResponseEntity( HttpStatus.OK);
     }
@@ -64,10 +65,10 @@ public class RespondsRestController {
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/accept")
     public ResponseEntity acceptRespond(@PathVariable String respondId,
                                         @PathVariable String vacancyId,
-                                        @RequestBody String comment) {
+                                        @RequestBody RespondCommentDto comment) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.ACCEPTED);
-        respond.setComment(comment);
+        respond.setComment(comment.getComment());
         respondService.update(respond);
         return new ResponseEntity( HttpStatus.OK);
     }
@@ -90,10 +91,10 @@ public class RespondsRestController {
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/block")
     public ResponseEntity blockRespond(@PathVariable String respondId,
                                        @PathVariable String vacancyId,
-                                       @RequestBody String comment) {
+                                       @RequestBody RespondCommentDto comment) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.BLOCKED);
-        respond.setComment(comment);
+        respond.setComment(comment.getComment());
         respondService.update(respond);
         return new ResponseEntity( HttpStatus.OK);
     }
