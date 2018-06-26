@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -56,43 +57,27 @@ public class RespondsRestController {
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/decline")
     public ResponseEntity<Respond> declineRespond(@PathVariable String respondId,
-                                                  @PathVariable String vacancyId) {
+                                                  @PathVariable String vacancyId,
+                                                  @RequestBody String comment) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.DECLINED);
+        respond.setComment(comment);
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/accept")
     public ResponseEntity<Respond> acceptRespond(@PathVariable String respondId,
-                                                 @PathVariable String vacancyId) {
+                                                 @PathVariable String vacancyId,
+                                                 @RequestBody String comment) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.ACCEPTED);
+        respond.setComment(comment);
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
     @GetMapping("/api/v1/secured/responds/{respondId}/skillsSummary")
-    @Transactional
-    public ResponseEntity<Map<String, Long>> skillsSummary(@PathVariable String respondId) {
-        Respond respond = respondService.get(respondId).get();
-        Map<String, Double> skillsSummary = new HashMap<>();
-        respond.getRespondQuestions().forEach(respondQuestion -> respondQuestion.getQuestionAnswers().forEach(questionAnswer -> {
-            Iterable<QuestionAnswerFeedback> answerFeedbacksIterable = feedbackService.getAllByQuestionAnswerId(questionAnswer.getId());
-            List<QuestionAnswerFeedback> answerFeedbacks = new LinkedList<>();
-            answerFeedbacksIterable.forEach(answerFeedbacks::add);
-            answerFeedbacks.forEach(feedback -> feedback.getSkillsFeedback().forEach((skillName, skillLevel) ->
-            {
-                if (skillsSummary.containsKey(skillName)) {
-                    Double count = skillsSummary.get(skillName);
-                    skillsSummary.put(skillName, count + skillLevel);
-
-                } else {
-                    skillsSummary.put(skillName, skillLevel + 0.0);
-                }
-            }));
-            skillsSummary.forEach((s, aDouble) -> skillsSummary.put(s, aDouble / answerFeedbacks.size()));
-        }));
-
-        respond.setReviewStatus(ReviewStatus.ACCEPTED);
+    public ResponseEntity<Map<String, Double>> skillsSummary(@PathVariable String respondId) {
+        Map<String, Double> skillsSummary = feedbackService.getSkillResponds(respondId);
         return new ResponseEntity(skillsSummary, HttpStatus.OK);
     }
 
@@ -106,9 +91,11 @@ public class RespondsRestController {
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/block")
     public ResponseEntity<Respond> blockRespond(@PathVariable String respondId,
-                                                @PathVariable String vacancyId) {
+                                                @PathVariable String vacancyId,
+                                                @RequestBody String comment) {
         Respond respond = respondService.get(respondId).get();
         respond.setReviewStatus(ReviewStatus.BLOCKED);
+        respond.setComment(comment);
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 

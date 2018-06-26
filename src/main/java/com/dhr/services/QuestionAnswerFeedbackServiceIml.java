@@ -1,12 +1,21 @@
 package com.dhr.services;
 
 import com.dhr.model.QuestionAnswerFeedback;
+import com.dhr.model.Respond;
 import com.dhr.repositories.QuestionAnswerFeedbackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -14,6 +23,9 @@ import java.util.Optional;
 public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackService {
     @Autowired
     private QuestionAnswerFeedbackRepository repository;
+
+    @Autowired
+    RespondService respondService;
 
     @Autowired
     private UserService userService;
@@ -68,5 +80,45 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
     @Override
     public QuestionAnswerFeedback findOneByQuestionAnswerId(Long questionAnswerId, String userId) {
         return repository.findFirstByQuestionAnswerIdAndUserId(questionAnswerId, userId);
+    }
+
+    public Map<String, Double> getSkillResponds(@PathVariable String respondId) {
+        Respond respond = respondService.get(respondId).get();
+        Map<String, Double> skillsSummary = new HashMap<>();
+        respond.getAnswers().forEach(questionAnswer -> {
+            Iterable<QuestionAnswerFeedback> answerFeedbacksIterable = getAllByQuestionAnswerId(questionAnswer.getId());
+            List<QuestionAnswerFeedback> answerFeedbacks = new LinkedList<>();
+            answerFeedbacksIterable.forEach(answerFeedbacks::add);
+            answerFeedbacks.forEach(feedback -> feedback.getSkillsFeedback().forEach((skillName, skillLevel) ->
+            {
+                if (skillsSummary.containsKey(skillName)) {
+                    Double count = skillsSummary.get(skillName);
+                    skillsSummary.put(skillName, count + skillLevel);
+
+                } else {
+                    skillsSummary.put(skillName, skillLevel + 0.0);
+                }
+            }));
+            skillsSummary.forEach((s, aDouble) -> skillsSummary.put(s, aDouble / answerFeedbacks.size()));
+        });
+        return skillsSummary;
+    }
+
+
+    @Autowired
+    private EntityManager em;
+
+    public List getCotisation() {
+        Query query = em.createNativeQuery("select Annee,Mois,RetSonarwa from TCotisMIFOTRA2008 where matricule='10000493' order by Annee");
+        List<Object[]> cotisation = query.getResultList();
+        Object[] cotisationData;
+
+        for (int i = 0; i < cotisation.size(); i++) {
+            cotisationData = cotisation.get(i);
+
+            System.out.print("Annee: " + cotisationData[0] + " Mois :" + cotisationData[1] + " Amount       :" + cotisationData[2] + "\n");
+
+        }
+        return query.getResultList();
     }
 }

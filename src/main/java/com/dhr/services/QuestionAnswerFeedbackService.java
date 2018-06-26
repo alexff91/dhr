@@ -2,6 +2,7 @@ package com.dhr.services;
 
 import com.dhr.model.QuestionAnswerFeedback;
 
+import java.util.Map;
 import java.util.Optional;
 
 public interface QuestionAnswerFeedbackService {
@@ -18,4 +19,6 @@ public interface QuestionAnswerFeedbackService {
     Iterable<QuestionAnswerFeedback> getAllByQuestionAnswerId(Long id);
 
     QuestionAnswerFeedback findOneByQuestionAnswerId(Long questionAnswerId, String userId);
+
+    Map<String,Double> getSkillResponds(String respondId);
 }

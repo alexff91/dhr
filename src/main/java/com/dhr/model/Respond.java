@@ -60,6 +60,9 @@ public class Respond {
 
     private String phone;
 
+    @Column(columnDefinition = "TEXT")
+    private String comment;
+
     private Boolean deleted = false;
 
     @JsonView(View.Detail.class)

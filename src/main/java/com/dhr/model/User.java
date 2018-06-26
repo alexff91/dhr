@@ -51,6 +51,7 @@ public class User implements Serializable {
     @Column(unique = true)
     private String login;
 
+    @JsonIgnore
     private String password;
 
     private String phone;

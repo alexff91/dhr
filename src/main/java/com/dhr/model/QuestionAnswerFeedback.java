@@ -1,5 +1,6 @@
 package com.dhr.model;
 
+import com.dhr.utils.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,7 +45,7 @@ public class QuestionAnswerFeedback {
     @ElementCollection(fetch = FetchType.EAGER)
     @MapKeyColumn(name = "skill")
     @Column(name = "grade")
-    @CollectionTable(name = "skills_feedback", joinColumns = @JoinColumn(name = "question_answer_feedback_id"))
+    @CollectionTable(name = "skills_feedback", schema = Constants.VI_SCHEMA, joinColumns = @JoinColumn(name = "question_answer_feedback_id"))
     private Map<String, Integer> skillsFeedback;
 
     @JsonIgnore
