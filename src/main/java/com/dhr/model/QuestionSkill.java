@@ -2,13 +2,9 @@ package com.dhr.model;
 
 import com.dhr.model.enums.SkillStatus;
 import com.dhr.utils.Constants;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
@@ -36,13 +32,10 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @EqualsAndHashCode
 @Table(schema = "vihr")
-public class Skill implements Serializable {
-    private static final String SEQUENCE_NAME = "skill_id_seq";
+public class QuestionSkill implements Serializable {
+    private static final String SEQUENCE_NAME = "question_skill_id_seq";
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
@@ -52,12 +45,12 @@ public class Skill implements Serializable {
     @Column(unique = true)
     String name;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
-
     private Boolean deleted = false;
+
+    @JoinTable(schema = Constants.VI_SCHEMA)
+    @ManyToMany(targetEntity = Question.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Question> questions = new LinkedHashSet<>();
 
     @Column(name = "skill_type", nullable = false)
     @Enumerated(EnumType.STRING)

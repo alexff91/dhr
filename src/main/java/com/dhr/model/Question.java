@@ -63,6 +63,6 @@ public class Question implements Serializable {
     private Boolean isCompulsory;
 
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @ManyToMany(targetEntity = Skill.class, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<Skill> skills = new LinkedHashSet<>();
+    @ManyToMany(targetEntity = QuestionSkill.class, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<QuestionSkill> skills = new LinkedHashSet<>();
 }

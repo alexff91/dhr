@@ -152,7 +152,6 @@ public class RecordingsHttpHandler {
                     .stream()
                     .map(skill -> {
                         RespondSkill build = RespondSkill.builder()
-                                .company(skill.getCompany())
                                 .name(skill.getName())
                                 .build();
                         return respondSkillService.save(build);

@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface RespondSkillRepository extends JpaRepository<RespondSkill, Long> {
-    List<RespondSkill> findAllByCompanyId(Long companyId);
 }

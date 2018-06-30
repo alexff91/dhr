@@ -44,11 +44,6 @@ public class RespondSkill implements Serializable {
 
     String name;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id", nullable = false)
-    private Company company;
-
     @JoinTable(schema = Constants.VI_SCHEMA)
     @ManyToMany(targetEntity = RespondQuestion.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
