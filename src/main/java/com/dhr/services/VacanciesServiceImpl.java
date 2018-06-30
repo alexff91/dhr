@@ -3,6 +3,7 @@ package com.dhr.services;
 import com.dhr.model.QuestionSkill;
 import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
+import com.dhr.model.enums.SkillStatus;
 import com.dhr.model.enums.VacancyStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class VacanciesServiceImpl implements VacancyService {
         vacancy.getQuestions().forEach(question -> {
             Set<QuestionSkill> questionSkills = new HashSet<>();
             question.getSkills().forEach(skill -> {
-                Skill companySkill = Skill.builder().company(vacancy.getCompany()).name(skill.getName()).build();
+                Skill companySkill = Skill.builder().status(SkillStatus.ACTIVE).company(vacancy.getCompany()).name(skill.getName()).build();
                 skillService.save(companySkill);
                 questionSkills.add(questionSkillService.save(skill));
             });
@@ -83,7 +84,7 @@ public class VacanciesServiceImpl implements VacancyService {
             question.setVacancy(oldVacancy);
             Set<QuestionSkill> skills = new HashSet<>();
             question.getSkills().forEach(skill -> {
-                        Skill companySkill = Skill.builder().company(oldVacancy.getCompany()).name(skill.getName()).build();
+                        Skill companySkill = Skill.builder().status(SkillStatus.ACTIVE).company(oldVacancy.getCompany()).name(skill.getName()).build();
                         skillService.save(companySkill);
                         skills.add(questionSkillService.save(skill));
                     }
