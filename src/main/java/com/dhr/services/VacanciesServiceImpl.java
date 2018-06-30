@@ -35,13 +35,13 @@ public class VacanciesServiceImpl implements VacancyService {
             replaceYoutubeVideoPath(vacancy, video);
         vacancy.getQuestions().forEach(question -> {
             Set<QuestionSkill> questionSkills = new HashSet<>();
-            question.getQuestionSkills().forEach(skill -> {
+            question.getSkills().forEach(skill -> {
                 Skill companySkill = Skill.builder().status(SkillStatus.ACTIVE).company(vacancy.getCompany()).name(skill.getName()).build();
                 companySkillService.save(companySkill);
                 questionSkills.add(questionSkillService.save(skill));
             });
-            question.getQuestionSkills().clear();
-            question.getQuestionSkills().addAll(questionSkills);
+            question.getSkills().clear();
+            question.getSkills().addAll(questionSkills);
             question.setVacancy(vacancy);
         });
         repository.save(vacancy);
@@ -84,14 +84,14 @@ public class VacanciesServiceImpl implements VacancyService {
         vacancy.getQuestions().forEach(question -> {
             question.setVacancy(oldVacancy);
             Set<QuestionSkill> questionSkills = new HashSet<>();
-            question.getQuestionSkills().forEach(skill -> {
+            question.getSkills().forEach(skill -> {
                         Skill companySkill = Skill.builder().status(SkillStatus.ACTIVE).company(oldVacancy.getCompany()).name(skill.getName()).build();
                         companySkillService.save(companySkill);
                         questionSkills.add(questionSkillService.save(skill));
                     }
             );
-            question.getQuestionSkills().clear();
-            question.getQuestionSkills().addAll(questionSkills);
+            question.getSkills().clear();
+            question.getSkills().addAll(questionSkills);
         });
         oldVacancy.getQuestions().clear();
         oldVacancy.getQuestions().addAll(vacancy.getQuestions());
