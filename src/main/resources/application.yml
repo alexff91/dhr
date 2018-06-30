@@ -1,4 +1,4 @@
-backendHost: nexign.vi-hr.com
+backendHost: app.vi-hr.com
 dbHost: localhost
 
 logging:
@@ -7,10 +7,10 @@ logging:
 recordings:
     path: /interviews
 server:
-    port: 8080
+    port: 8082
     ssl:
         enabled: true
-        key-store: /etc/letsencrypt/live/nexign.vi-hr.com/keystore.p12
+        key-store: /etc/letsencrypt/live/app.vi-hr.com/keystore.p12
         key-store-password: vihr
         keyAlias: tomcat
         keyStoreType: PKCS12
