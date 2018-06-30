@@ -47,9 +47,9 @@ public class QuestionSkill implements Serializable {
     private Boolean deleted = false;
 
     @JoinTable(schema = Constants.VI_SCHEMA)
-    @ManyToMany(targetEntity = Question.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Question.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Question> questions = new LinkedHashSet<>();
+    private Question question;
 
     @Column(name = "skill_type", nullable = false)
     @Enumerated(EnumType.STRING)
