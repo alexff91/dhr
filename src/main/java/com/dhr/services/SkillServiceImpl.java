@@ -22,7 +22,8 @@ public class SkillServiceImpl implements SkillService {
         } else {
             foundSkill.setDeleted(false);
             repository.save(foundSkill);
-            return foundSkill;}
+            return foundSkill;
+        }
     }
 
     @Override

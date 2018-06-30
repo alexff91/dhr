@@ -21,7 +21,7 @@ public class VacanciesServiceImpl implements VacancyService {
     private VacancyService repository;
 
     @Autowired
-    private SkillService skillService;
+    private SkillService companySkillService;
 
     @Autowired
     private QuestionSkillService questionSkillService;
@@ -34,13 +34,13 @@ public class VacanciesServiceImpl implements VacancyService {
             replaceYoutubeVideoPath(vacancy, video);
         vacancy.getQuestions().forEach(question -> {
             Set<QuestionSkill> questionSkills = new HashSet<>();
-            question.getSkills().forEach(skill -> {
+            question.getQuestionSkills().forEach(skill -> {
                 Skill companySkill = Skill.builder().status(SkillStatus.ACTIVE).company(vacancy.getCompany()).name(skill.getName()).build();
-                skillService.save(companySkill);
+                companySkillService.save(companySkill);
                 questionSkills.add(questionSkillService.save(skill));
             });
-            question.getSkills().clear();
-            question.getSkills().addAll(questionSkills);
+            question.getQuestionSkills().clear();
+            question.getQuestionSkills().addAll(questionSkills);
             question.setVacancy(vacancy);
         });
         repository.save(vacancy);
@@ -82,15 +82,15 @@ public class VacanciesServiceImpl implements VacancyService {
         oldVacancy.setImg(vacancy.getImg());
         vacancy.getQuestions().forEach(question -> {
             question.setVacancy(oldVacancy);
-            Set<QuestionSkill> skills = new HashSet<>();
-            question.getSkills().forEach(skill -> {
+            Set<QuestionSkill> questionSkills = new HashSet<>();
+            question.getQuestionSkills().forEach(skill -> {
                         Skill companySkill = Skill.builder().status(SkillStatus.ACTIVE).company(oldVacancy.getCompany()).name(skill.getName()).build();
-                        skillService.save(companySkill);
-                        skills.add(questionSkillService.save(skill));
+                        companySkillService.save(companySkill);
+                        questionSkills.add(questionSkillService.save(skill));
                     }
             );
-            question.getSkills().clear();
-            question.getSkills().addAll(skills);
+            question.getQuestionSkills().clear();
+            question.getQuestionSkills().addAll(questionSkills);
         });
         oldVacancy.getQuestions().clear();
         oldVacancy.getQuestions().addAll(vacancy.getQuestions());

@@ -64,5 +64,5 @@ public class Question implements Serializable {
 
     @JoinTable(schema = Constants.VI_SCHEMA)
     @ManyToMany(targetEntity = QuestionSkill.class, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<QuestionSkill> skills = new LinkedHashSet<>();
+    private Set<QuestionSkill> questionSkills = new LinkedHashSet<>();
 }

@@ -42,7 +42,6 @@ public class QuestionSkill implements Serializable {
     @Column(name = "id", nullable = false)
     Long id;
 
-    @Column(unique = true)
     String name;
 
     private Boolean deleted = false;

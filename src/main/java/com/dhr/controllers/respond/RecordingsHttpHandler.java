@@ -147,8 +147,8 @@ public class RecordingsHttpHandler {
                 .durationToRead(question.getDurationToRead())
                 .orderNumber(question.getOrderNumber())
                 .build();
-        if (question.getSkills() != null) {
-            respondQuestion.setRespondSkills(question.getSkills()
+        if (question.getQuestionSkills() != null) {
+            respondQuestion.setRespondSkills(question.getQuestionSkills()
                     .stream()
                     .map(skill -> {
                         RespondSkill build = RespondSkill.builder()
