@@ -5,6 +5,7 @@ import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
 import com.dhr.model.enums.SkillStatus;
 import com.dhr.model.enums.VacancyStatus;
+import com.dhr.repositories.VacancyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ import java.util.Set;
 @Transactional
 public class VacanciesServiceImpl implements VacancyService {
     @Autowired
-    private VacancyService repository;
+    private VacancyRepository repository;
 
     @Autowired
     private SkillService companySkillService;
@@ -60,7 +61,7 @@ public class VacanciesServiceImpl implements VacancyService {
 
     @Override
     public void increaseViewCounter(String vacancyId) {
-        Vacancy vacancy = repository.get(vacancyId).get();
+        Vacancy vacancy = repository.findById(vacancyId).get();
         vacancy.setViewsCount(vacancy.getViewsCount() + 1);
         repository.save(vacancy);
     }
@@ -73,7 +74,7 @@ public class VacanciesServiceImpl implements VacancyService {
 
     @Override
     public void update(String vacancyId, Vacancy vacancy) {
-        Vacancy oldVacancy = repository.get(vacancyId).get();
+        Vacancy oldVacancy = repository.findById(vacancyId).get();
         oldVacancy.setDescription(vacancy.getDescription());
         oldVacancy.setPosition(vacancy.getPosition());
         String video = vacancy.getVideo();
@@ -100,12 +101,12 @@ public class VacanciesServiceImpl implements VacancyService {
 
     @Override
     public Optional<Vacancy> get(String id) {
-        return repository.get(id);
+        return repository.findById(id);
     }
 
     @Override
     public Iterable<Vacancy> getAll() {
-        return repository.getAll();
+        return repository.findAll();
     }
 
     @Override
@@ -116,14 +117,14 @@ public class VacanciesServiceImpl implements VacancyService {
 
     @Override
     public void restore(String vacancyId) {
-        Vacancy oldVacancy = repository.get(vacancyId).get();
+        Vacancy oldVacancy = repository.findById(vacancyId).get();
         oldVacancy.setDeleted(false);
         repository.save(oldVacancy);
     }
 
     @Override
     public void copy(String vacancyId) {
-        Vacancy oldVacancy = repository.get(vacancyId).get();
+        Vacancy oldVacancy = repository.findById(vacancyId).get();
         oldVacancy.setId(null);
         oldVacancy.getQuestions().forEach(question -> question.setId(null));
         oldVacancy.setRespondsCount(0L);
