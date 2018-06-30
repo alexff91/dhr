@@ -77,7 +77,7 @@ public class Company implements Serializable {
     private List<Vacancy> vacancies = new LinkedList<>();
 
     @JsonIgnore
-    @JoinTable(schema = Constants.VI_SCHEMA)
+    @JoinTable(schema = Constants.VI_SCHEMA, name = "company_skills")
     @OneToMany(targetEntity = Skill.class, fetch = FetchType.LAZY)
     private List<Skill> skills = new LinkedList<>();
 

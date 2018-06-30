@@ -62,7 +62,7 @@ public class Question implements Serializable {
     @Column(name = "is_compulsory")
     private Boolean isCompulsory;
 
-    @JoinTable(schema = Constants.VI_SCHEMA)
+    @JoinTable(schema = Constants.VI_SCHEMA, name = "question_skills")
     @ManyToMany(targetEntity = QuestionSkill.class, fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<QuestionSkill> questionSkills = new LinkedHashSet<>();
+    private Set<QuestionSkill> skills = new LinkedHashSet<>();
 }
