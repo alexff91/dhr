@@ -1,7 +1,5 @@
 package com.dhr.model;
 
-import com.dhr.utils.Constants;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,8 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -29,7 +25,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"vacancy", "skills"})
 @Entity
 @Table(schema = "vihr")
 public class Question implements Serializable {
@@ -41,9 +37,8 @@ public class Question implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vacancy_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Vacancy vacancy;
 
@@ -63,6 +58,6 @@ public class Question implements Serializable {
     private Boolean isCompulsory;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL, orphanRemoval = true)
+            cascade = CascadeType.ALL)
     private Set<QuestionSkill> skills = new LinkedHashSet<>();
 }

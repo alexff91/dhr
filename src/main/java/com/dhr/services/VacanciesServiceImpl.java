@@ -84,6 +84,7 @@ public class VacanciesServiceImpl implements VacancyService {
             question.setVacancy(oldVacancy);
             question.getSkills().forEach(skill -> {
                         skill.setDeleted(false);
+                        skill.setId(null);
                         skill.setQuestion(question);
                     }
             );
