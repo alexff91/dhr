@@ -58,7 +58,6 @@ public class User implements Serializable {
 
     private Boolean deleted = false;
 
-    @JsonIgnore
     @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference("roles")
