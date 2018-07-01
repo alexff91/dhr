@@ -1,6 +1,5 @@
 package com.dhr.services;
 
-import com.dhr.model.QuestionSkill;
 import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
 import com.dhr.model.enums.SkillStatus;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -34,14 +32,15 @@ public class VacanciesServiceImpl implements VacancyService {
         if (video != null && !video.isEmpty())
             replaceYoutubeVideoPath(vacancy, video);
         vacancy.getQuestions().forEach(question -> {
-            Set<QuestionSkill> questionSkills = new HashSet<>();
             question.getSkills().forEach(skill -> {
-                Skill companySkill = Skill.builder().status(SkillStatus.ACTIVE).company(vacancy.getCompany()).name(skill.getName()).build();
+                Skill companySkill = Skill.builder().deleted(false)
+                        .status(SkillStatus.ACTIVE)
+                        .company(vacancy.getCompany())
+                        .name(skill.getName()).build();
                 companySkillService.save(companySkill);
-                questionSkills.add(questionSkillService.save(skill));
+                skill.setQuestion(question);
+                skill.setDeleted(false);
             });
-            question.getSkills().clear();
-            question.getSkills().addAll(questionSkills);
             question.setVacancy(vacancy);
         });
         repository.save(vacancy);
@@ -83,15 +82,13 @@ public class VacanciesServiceImpl implements VacancyService {
         oldVacancy.setImg(vacancy.getImg());
         vacancy.getQuestions().forEach(question -> {
             question.setVacancy(oldVacancy);
-            Set<QuestionSkill> questionSkills = new HashSet<>();
             question.getSkills().forEach(skill -> {
-                        Skill companySkill = Skill.builder().status(SkillStatus.ACTIVE).company(oldVacancy.getCompany()).name(skill.getName()).build();
+                        Skill companySkill = Skill.builder().deleted(false).status(SkillStatus.ACTIVE).company(oldVacancy.getCompany()).name(skill.getName()).build();
                         companySkillService.save(companySkill);
-                        questionSkills.add(questionSkillService.save(skill));
+                        skill.setDeleted(false);
+                        skill.setQuestion(question);
                     }
             );
-            question.getSkills().clear();
-            question.getSkills().addAll(questionSkills);
         });
         oldVacancy.getQuestions().clear();
         oldVacancy.getQuestions().addAll(vacancy.getQuestions());

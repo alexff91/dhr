@@ -46,9 +46,8 @@ public class QuestionSkill implements Serializable {
 
     private Boolean deleted = false;
 
-    @JoinColumn(name = "question_id", nullable = false)
-    @ManyToOne(targetEntity = Question.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Question question;
 
     @Column(name = "skill_type", nullable = false)
