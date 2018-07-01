@@ -36,7 +36,7 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"id"})
 @Table(schema = "vihr")
 public class QuestionSkill implements Serializable {
     private static final String SEQUENCE_NAME = "question_skill_id_seq";

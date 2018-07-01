@@ -80,8 +80,12 @@ public class VacanciesServiceImpl implements VacancyService {
         if (video != null && !video.isEmpty())
             replaceYoutubeVideoPath(oldVacancy, video);
         oldVacancy.setImg(vacancy.getImg());
+        oldVacancy.getQuestions().forEach(oldQuestion ->
+                oldQuestion.getSkills().forEach(oldSkill ->
+                        questionSkillService.delete(oldSkill)));
         vacancy.getQuestions().forEach(question -> {
             question.setVacancy(oldVacancy);
+            question.setId(null);
             question.getSkills().forEach(skill -> {
                         skill.setDeleted(false);
                         skill.setId(null);

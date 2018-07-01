@@ -21,8 +21,7 @@ public class QuestionSkillServiceImpl implements QuestionSkillService {
 
     @Override
     public void delete(QuestionSkill skill) {
-        skill.setDeleted(true);
-        repository.save(skill);
+        repository.delete(skill);
     }
 
     @Override
