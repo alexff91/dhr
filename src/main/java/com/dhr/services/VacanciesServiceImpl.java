@@ -83,8 +83,6 @@ public class VacanciesServiceImpl implements VacancyService {
         vacancy.getQuestions().forEach(question -> {
             question.setVacancy(oldVacancy);
             question.getSkills().forEach(skill -> {
-                        Skill companySkill = Skill.builder().deleted(false).status(SkillStatus.ACTIVE).company(oldVacancy.getCompany()).name(skill.getName()).build();
-                        companySkillService.save(companySkill);
                         skill.setDeleted(false);
                         skill.setQuestion(question);
                     }
