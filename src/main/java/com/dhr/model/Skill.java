@@ -43,6 +43,7 @@ import java.util.Set;
 @Table(schema = "vihr")
 public class Skill implements Serializable {
     private static final String SEQUENCE_NAME = "skill_id_seq";
+    @JsonIgnore
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
@@ -57,8 +58,10 @@ public class Skill implements Serializable {
     @JoinColumn(name = "company_id", nullable = false)
     private Company company;
 
+    @JsonIgnore
     private Boolean deleted = false;
 
+    @JsonIgnore
     @Column(name = "skill_type", nullable = false)
     @Enumerated(EnumType.STRING)
     @NonNull
