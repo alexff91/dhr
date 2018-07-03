@@ -115,7 +115,7 @@ public class RecordingsHttpHandler {
         checkedAnswer.setVideoPath("https://" + config.getBackendHost() +
                 ":" + config.getServerPort() +
                 "/api/v1/responds/" + respondId +
-                "/answers/" + checkedAnswer.getId() + "/" + checkedAnswer.getId() + ".webm");
+                "/answers/" + savedRespondQuestion.getId() + "/" + savedRespondQuestion.getId() + ".webm");
         questionAnswerService.update(checkedAnswer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
