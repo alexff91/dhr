@@ -43,7 +43,6 @@ import java.util.Set;
 @Table(schema = "vihr")
 public class Skill implements Serializable {
     private static final String SEQUENCE_NAME = "skill_id_seq";
-    @JsonIgnore
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)

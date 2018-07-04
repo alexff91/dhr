@@ -49,7 +49,7 @@ import java.util.stream.Collectors;
 public class RecordingsHttpHandler {
 
     private static final Logger log = LoggerFactory.getLogger(RecordingsHttpHandler.class);
-    public static final String WEBM_VIDEO_FORMAT = ".webm";
+    private static final String WEBM_VIDEO_FORMAT = ".webm";
 
     @Autowired
     PropertiesConfig config;

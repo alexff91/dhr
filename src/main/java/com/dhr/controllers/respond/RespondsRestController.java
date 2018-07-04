@@ -4,10 +4,13 @@ import com.dhr.model.Respond;
 import com.dhr.model.dto.RespondCommentDto;
 import com.dhr.model.enums.ReviewStatus;
 import com.dhr.services.QuestionAnswerFeedbackService;
+import com.dhr.services.RespondAnsweredException;
 import com.dhr.services.RespondServiceImpl;
 import com.dhr.services.VacancyService;
 import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +51,11 @@ public class RespondsRestController {
     public ResponseEntity<Respond> createRespond(@RequestBody Respond respond,
                                                  @PathVariable String vacancyId) {
 
-        return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
+        } catch (RespondAnsweredException e) {
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/decline")
