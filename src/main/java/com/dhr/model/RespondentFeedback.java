@@ -39,5 +39,5 @@ public class RespondentFeedback {
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-    private String emodji;
+    private String emoji;
 }
