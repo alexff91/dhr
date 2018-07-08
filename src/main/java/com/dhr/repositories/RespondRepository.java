@@ -13,5 +13,5 @@ public interface RespondRepository extends JpaRepository<Respond, String> {
 
     Respond findOneByVacancyIdAndId(String vacancyId, String id);
 
-    Respond findOneByEmail(String email);
+    Respond findOneByEmailAndVacancyId(String email, String vacancyId);
 }

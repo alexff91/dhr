@@ -2,7 +2,6 @@ package com.dhr.services;
 
 import com.dhr.model.Respond;
 import com.dhr.model.Vacancy;
-import com.dhr.model.enums.RespondStatus;
 import com.dhr.repositories.QuestionRespondRepository;
 import com.dhr.repositories.RespondRepository;
 import com.dhr.repositories.VacancyRepository;
@@ -28,7 +27,7 @@ public class RespondServiceImpl implements RespondService {
 
     @Override
     public Respond save(Respond respond, String vacancyId) {
-        Respond respondByEmail = repository.findOneByEmail(respond.getEmail());
+        Respond respondByEmail = repository.findOneByEmailAndVacancyId(respond.getEmail(), vacancyId);
         if (respondByEmail != null) {
             return respondByEmail;
         }
