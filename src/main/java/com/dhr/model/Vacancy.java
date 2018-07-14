@@ -25,6 +25,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -93,6 +94,10 @@ public class Vacancy implements Serializable {
     @Enumerated(EnumType.STRING)
     @NonNull
     private VacancyStatus status = VacancyStatus.IN_WORK;
+
+    @JsonView(View.Detail.class)
+    @OneToOne
+    private VacancyFunnel funnel;
 
     @JoinTable(schema = Constants.VI_SCHEMA)
     @OneToMany(targetEntity = Question.class,

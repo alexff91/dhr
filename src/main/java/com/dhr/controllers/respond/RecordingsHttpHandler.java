@@ -12,6 +12,7 @@ import com.dhr.services.QuestionService;
 import com.dhr.services.RespondQuestionService;
 import com.dhr.services.RespondService;
 import com.dhr.services.RespondSkillService;
+import com.dhr.services.VacancyService;
 import com.dhr.utils.MultipartFileSender;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -69,6 +70,9 @@ public class RecordingsHttpHandler {
     @Autowired
     RespondService respondService;
 
+    @Autowired
+    VacancyService vacancyService;
+
     @GetMapping("/api/v1/responds/{respondId}/answers/{answerId}/{filename:.+}")
     @Transactional
     public ResponseEntity<HttpStatus> serveFile(@PathVariable String respondId,
@@ -86,9 +90,50 @@ public class RecordingsHttpHandler {
         }
     }
 
+    @GetMapping("/api/v1/vacancy/{vacancyId}/questions/{questionId}/{filename:.+}")
+    @Transactional
+    public ResponseEntity<HttpStatus> serveQuestionFile(@PathVariable String vacancyId,
+                                                        @PathVariable Long questionId,
+                                                        HttpServletRequest request,
+                                                        HttpServletResponse response) throws Exception {
+
+        String companyId = vacancyService.get(vacancyId).get().getCompany().getId();
+        File file = new File(config.getQuestionsPath() + "/company/" + companyId + "/vacancy/" + vacancyId + "/questions/" + questionId + "/", questionId + ".webm");
+        if (file.isFile()) {
+            MultipartFileSender.fromPath(file.toPath()).with(request).with(response).serveResource();
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     private String getRecordingPath(@PathVariable String respondId, Long answerId) {
         String companyId = respondService.get(respondId).get().getVacancy().getCompany().getId();
         return "/company/" + companyId + "/responds/" + respondId + "/answers/" + answerId + "/";
+    }
+
+    private String getQuestionRecordingPath(@PathVariable String vacancyId, Long questionId) {
+        String companyId = vacancyService.get(vacancyId).get().getCompany().getId();
+        return "/company/" + companyId + "/vacancies/" + vacancyId + "/questions/" + questionId + "/";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/api/v1/vacancies/{vacancyId}/questions/{questionId}")
+    @Transactional
+    public ResponseEntity handlePostQuestionRecording(HttpServletRequest request,
+                                                      @PathVariable String vacancyId,
+                                                      @PathVariable Long questionId,
+                                                      @RequestParam("file") MultipartFile file) throws IOException {
+
+        Question question = questionService.get(questionId).get();
+        if (saveQuestionToDirectory(vacancyId, questionId, file))
+            return new ResponseEntity<>("File is empty", HttpStatus.OK);
+
+        question.setVideoPath("https://" + config.getBackendHost() +
+                ":" + config.getServerPort() +
+                "/api/v1/vacancy/" + vacancyId +
+                "/questions/" + questionId + "/" + questionId + ".webm");
+        questionService.update(question, vacancyId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/api/v1/responds/{respondId}/questions/{questionId}")
@@ -169,8 +214,24 @@ public class RecordingsHttpHandler {
         String folder = getRecordingPath(respondId, answerId);
 
         Path path = Paths.get(config.getRecordingsPath() + folder);
+        return storeFileToDirectory(answerId, file, path);
+    }
+
+    private boolean saveQuestionToDirectory(String vacancyID, Long questionId, MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            log.error("File is empty");
+            return true;
+        }
+
+        String folder = getQuestionRecordingPath(vacancyID, questionId);
+
+        Path path = Paths.get(config.getQuestionsPath() + folder);
+        return storeFileToDirectory(questionId, file, path);
+    }
+
+    private boolean storeFileToDirectory(Long questionId, MultipartFile file, Path path) throws IOException {
         new File(path.toString()).mkdirs();
-        String fName = answerId + WEBM_VIDEO_FORMAT;
+        String fName = questionId + WEBM_VIDEO_FORMAT;
 
         File uploadedFile = new File(path.toFile(), fName);
         InputStream initialStream = file.getInputStream();

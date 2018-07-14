@@ -6,6 +6,8 @@ logging:
     level.org.springframework.data: debug
 recordings:
     path: /interviews
+questions:
+    path: /questions
 server:
     port: 8081
     ssl:

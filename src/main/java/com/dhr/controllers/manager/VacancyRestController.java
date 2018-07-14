@@ -2,8 +2,10 @@ package com.dhr.controllers.manager;
 
 import com.dhr.model.Question;
 import com.dhr.model.Vacancy;
-import com.dhr.services.QuestionServiceImpl;
-import com.dhr.services.VacanciesServiceImpl;
+import com.dhr.model.VacancyFunnel;
+import com.dhr.services.FunnelService;
+import com.dhr.services.QuestionService;
+import com.dhr.services.VacancyService;
 import com.dhr.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.google.common.collect.Sets;
@@ -27,10 +29,13 @@ import java.util.Set;
 @CrossOrigin(origins = "*")
 public class VacancyRestController {
     @Autowired
-    VacanciesServiceImpl vacanciesService;
+    VacancyService vacanciesService;
 
     @Autowired
-    QuestionServiceImpl questionService;
+    QuestionService questionService;
+
+    @Autowired
+    FunnelService funnelService;
 
     @RequestMapping(value = "/api/v1/vacancies/{vacancyId}/questions", method = RequestMethod.GET)
     public Set<Question> getQuestionsByVacancyId(@PathVariable String vacancyId) {
@@ -38,7 +43,7 @@ public class VacancyRestController {
     }
 
     @PutMapping("/api/v1/secured/vacancies/{vacancyId}")
-    public ResponseEntity updateVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
+    public ResponseEntity<Object> updateVacancy(@PathVariable String vacancyId, @RequestBody Vacancy vacancy) {
         vacanciesService.update(vacancyId, vacancy);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -75,6 +80,11 @@ public class VacancyRestController {
     @GetMapping("/api/v1/vacancies/")
     public Iterable<Vacancy> getVacancies() {
         return vacanciesService.getAll();
+    }
+
+    @GetMapping("/api/v1/vacancies/{vacancyId}/funnel")
+    public ResponseEntity<VacancyFunnel> getVacancies(@PathVariable String vacancyId) {
+        return new ResponseEntity<>(funnelService.getByVacancy(vacancyId), HttpStatus.ACCEPTED);
     }
 
     @JsonView(View.Detail.class)

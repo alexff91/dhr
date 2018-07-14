@@ -15,6 +15,9 @@ public class PropertiesConfig {
     @Value("${recordings.path}")
     private String recordingsPath;
 
+    @Value("${questions.path}")
+    private String questionsPath;
+
     public String getBackendHost() {
         return backendHost;
     }
@@ -27,4 +30,7 @@ public class PropertiesConfig {
         return recordingsPath;
     }
 
+    public String getQuestionsPath() {
+        return questionsPath;
+    }
 }

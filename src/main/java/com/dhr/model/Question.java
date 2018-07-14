@@ -45,6 +45,9 @@ public class Question implements Serializable {
     @Column(length = 4000)
     private String question;
 
+    @Column(columnDefinition = "TEXT")
+    private String videoPath;
+
     @Column(name = "duration_to_read")
     private Long durationToRead;
 
