@@ -98,7 +98,7 @@ public class RecordingsHttpHandler {
                                                         HttpServletResponse response) throws Exception {
 
         String companyId = vacancyService.get(vacancyId).get().getCompany().getId();
-        File file = new File(config.getQuestionsPath() + "/company/" + companyId + "/vacancy/" + vacancyId + "/questions/" + questionId + "/", questionId + ".webm");
+        File file = new File(config.getQuestionsPath() + "/company/" + companyId + "/vacancies/" + vacancyId + "/questions/" + questionId + "/", questionId + ".webm");
         if (file.isFile()) {
             MultipartFileSender.fromPath(file.toPath()).with(request).with(response).serveResource();
             return new ResponseEntity<>(HttpStatus.OK);
