@@ -2,6 +2,7 @@ package com.dhr.services;
 
 import com.dhr.model.Skill;
 import com.dhr.model.Vacancy;
+import com.dhr.model.VacancyFunnel;
 import com.dhr.model.enums.SkillStatus;
 import com.dhr.model.enums.VacancyStatus;
 import com.dhr.repositories.VacancyRepository;
@@ -28,6 +29,7 @@ public class VacanciesServiceImpl implements VacancyService {
     @Override
     public String save(Vacancy vacancy) {
         vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));
+        vacancy.setFunnel(new VacancyFunnel());
         String video = vacancy.getVideo();
         if (video != null && !video.isEmpty())
             replaceYoutubeVideoPath(vacancy, video);

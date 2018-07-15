@@ -33,9 +33,9 @@ public class VacancyFunnel {
     @JsonIgnore
     @OneToOne
     Vacancy vacancy;
-    Long pageVisits;
-    Long chatbot;
-    Long passedFilter;
-    Long startedVideoInterview;
-    Long endedVideoInterview;
+    Long pageVisits = 0L;
+    Long chatbot= 0L;
+    Long passedFilter= 0L;
+    Long startedVideoInterview= 0L;
+    Long endedVideoInterview= 0L;
 }

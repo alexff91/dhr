@@ -17,7 +17,6 @@ import static java.util.Collections.emptyList;
 
 @Service
 public class TokenAuthenticationService {
-    private static final long EXPIRATION_TIME_14_DAYS = 1_209_600_000;
     private static final String SECRET = "VIHR_SECR3T";
     static final String TOKEN_SCHEME_PREFIX = "Bearer ";
     static final String HEADER_STRING = "Authorization";
@@ -28,7 +27,7 @@ public class TokenAuthenticationService {
     static void addAuthentication(HttpServletResponse res, String username) throws IOException {
         String jwt = Jwts.builder()
                 .setSubject(username)
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_14_DAYS))
+                .setExpiration(new Date(Long.MAX_VALUE))
                 .signWith(SignatureAlgorithm.HS512, SECRET.getBytes())
                 .compact();
         res.addHeader(HEADER_STRING, TOKEN_SCHEME_PREFIX + jwt);

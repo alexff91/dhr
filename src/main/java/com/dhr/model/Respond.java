@@ -56,6 +56,9 @@ public class Respond {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "chat_bot")
+    private Boolean chatBot = false;
+
     private String email;
 
     private String phone;
