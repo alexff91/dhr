@@ -51,8 +51,7 @@ public class VacanciesServiceImpl implements VacancyService {
 
         VacancyFunnel funnel = new VacancyFunnel();
         funnel.setVacancy(save);
-        vacancy.setFunnel(funnelService.save(funnel));
-        repository.save(vacancy);
+        funnelService.save(funnel);
         return save.getId();
     }
 
