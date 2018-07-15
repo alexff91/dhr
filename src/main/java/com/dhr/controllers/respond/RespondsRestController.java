@@ -4,6 +4,7 @@ import com.dhr.model.Respond;
 import com.dhr.model.User;
 import com.dhr.model.dto.RespondCommentDto;
 import com.dhr.model.enums.ReviewStatus;
+import com.dhr.services.CompanyService;
 import com.dhr.services.QuestionAnswerFeedbackService;
 import com.dhr.services.RespondServiceImpl;
 import com.dhr.services.UserService;
@@ -40,6 +41,9 @@ public class RespondsRestController {
     VacancyService vacancyService;
 
     @Autowired
+    CompanyService companyService;
+
+    @Autowired
     QuestionAnswerFeedbackService feedbackService;
 
     @Autowired
@@ -51,15 +55,15 @@ public class RespondsRestController {
         String currentPrincipalName = authentication.getName();
         User user = userService.getByLogin(currentPrincipalName);
         StringBuilder response = new StringBuilder();
-        user.getCompany().getVacancies().forEach(vacancy -> vacancy.getResponds().forEach(respond -> {
-//            if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
-//                    !Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
+        companyService.getVacanciesByCompanyId(user.getCompany().getId()).forEach(vacancy -> vacancy.getResponds().forEach(respond -> {
+            if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
+                    !Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
                 response.append("https://dashboard.vi-hr.com/vacancies/")
                         .append(vacancy.getId())
                         .append("/responses/")
                         .append(respond.getId())
                         .append("/review \r\n");
-//            }
+            }
         }));
         return new ResponseEntity<>(response.toString(), OK);
     }
