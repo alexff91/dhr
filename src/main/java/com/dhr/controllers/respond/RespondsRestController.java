@@ -46,22 +46,22 @@ public class RespondsRestController {
     private UserService userService;
 
     @RequestMapping(value = "/api/v1/secured/myResponds", method = RequestMethod.GET)
-    public ResponseEntity getMyResponds() {
+    public ResponseEntity<String> getMyResponds() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         User user = userService.getByLogin(currentPrincipalName);
         StringBuilder response = new StringBuilder();
         user.getCompany().getVacancies().forEach(vacancy -> vacancy.getResponds().forEach(respond -> {
-            if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
-                    !Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
+//            if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
+//                    !Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
                 response.append("https://dashboard.vi-hr.com/vacancies/")
                         .append(vacancy.getId())
                         .append("/responses/")
                         .append(respond.getId())
                         .append("/review \r\n");
-            }
+//            }
         }));
-        return new ResponseEntity(response, OK);
+        return new ResponseEntity<>(response.toString(), OK);
     }
 
 
