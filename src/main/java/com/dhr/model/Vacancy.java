@@ -95,7 +95,7 @@ public class Vacancy implements Serializable {
     @NonNull
     private VacancyStatus status = VacancyStatus.IN_WORK;
 
-    @JsonView(View.Detail.class)
+    @JsonIgnore
     @OneToOne
     private VacancyFunnel funnel;
 
