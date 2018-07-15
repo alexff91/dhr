@@ -62,7 +62,7 @@ public class RespondsRestController {
                         response.append(vacancy.getPosition()).append(" / ")
                                 .append(respond.getName())
                                 .append(" ")
-                                .append(respond.getLastName().length() > 0 ? respond.getLastName().toCharArray()[0] : " :")
+                                .append(respond.getLastName().length() > 0 ? respond.getLastName().toCharArray()[0] : ".: ")
                                 .append("https://dashboard.vi-hr.com/vacancies/")
                                 .append(vacancy.getId())
                                 .append("/responses/")
