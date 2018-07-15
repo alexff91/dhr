@@ -99,6 +99,19 @@ public class RespondsRestController {
         return new ResponseEntity<>(respondService.save(respond, vacancyId), HttpStatus.OK);
     }
 
+    @PostMapping("/api/v1/vacancies/{vacancyId}/responds/passedFilter")
+    public ResponseEntity passFilter(@PathVariable String vacancyId) {
+        respondService.filterPass(vacancyId, true)
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/api/v1/vacancies/{vacancyId}/responds/notPassedFilter")
+    public ResponseEntity noPassFilter(@PathVariable String vacancyId) {
+        respondService.filterPass(vacancyId, false)
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
     @PostMapping("/api/v1/secured/vacancies/{vacancyId}/responds/{respondId}/decline")
     public ResponseEntity declineRespond(@PathVariable String respondId,
                                          @PathVariable String vacancyId,

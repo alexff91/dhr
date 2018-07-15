@@ -2,6 +2,7 @@ package com.dhr.services;
 
 import com.dhr.model.Respond;
 import com.dhr.model.Vacancy;
+import com.dhr.model.VacancyFunnel;
 import com.dhr.repositories.QuestionRespondRepository;
 import com.dhr.repositories.RespondRepository;
 import com.dhr.repositories.VacancyRepository;
@@ -27,6 +28,20 @@ public class RespondServiceImpl implements RespondService {
     @Autowired
     private FunnelService funnelService;
 
+    public void filterPass(String vacancyId, Boolean passed) {
+        Vacancy vacancy = vacancyRepository.findById(vacancyId).get();
+        VacancyFunnel funnel = vacancy.getFunnel();
+        if (funnel != null && vacancy.getRespondsCount() != 0) {
+            funnel.setChatbot((funnel.getChatbot() + 1) * 100 / vacancy.getRespondsCount());
+            if (passed) {
+                funnel.setPassedFilter((funnel.getPassedFilter()) * 100 / (funnel.getChatbot()));
+            } else {
+                funnel.setPageVisits((funnel.getPageVisits() + 1) * 100 / (funnel.getChatbot()));
+            }
+            funnelService.update(funnel);
+        }
+    }
+
     @Override
     public Respond save(Respond respond, String vacancyId) {
         Respond respondByEmail = repository.findOneByEmailAndVacancyId(respond.getEmail(), vacancyId);
@@ -46,13 +61,13 @@ public class RespondServiceImpl implements RespondService {
         vacancy.setRespondsCount(vacancy.getRespondsCount() + 1);
         vacancy.setUnansweredRespondsCount(vacancy.getUnansweredRespondsCount() + 1);
         vacancyRepository.save(vacancy);
-        if (vacancy.getFunnel() != null) {
+        if (vacancy.getFunnel() != null && vacancy.getRespondsCount() != 0) {
             if (respond.getChatBot()) {
-                vacancy.getFunnel().setChatbot((vacancy.getFunnel().getChatbot() + 1) / vacancy.getRespondsCount());
-                vacancy.getFunnel().setPageVisits((vacancy.getFunnel().getPageVisits()) / vacancy.getRespondsCount());
+                vacancy.getFunnel().setChatbot((vacancy.getFunnel().getChatbot() + 1) * 100 / vacancy.getRespondsCount());
+                vacancy.getFunnel().setPageVisits((vacancy.getFunnel().getPageVisits()) * 100 / vacancy.getRespondsCount());
             } else {
-                vacancy.getFunnel().setPageVisits((vacancy.getFunnel().getPageVisits() + 1) / vacancy.getRespondsCount());
-                vacancy.getFunnel().setChatbot((vacancy.getFunnel().getChatbot()) / vacancy.getRespondsCount());
+                vacancy.getFunnel().setPageVisits((vacancy.getFunnel().getPageVisits() + 1) * 100 / vacancy.getRespondsCount());
+                vacancy.getFunnel().setChatbot((vacancy.getFunnel().getChatbot()) * 100 / vacancy.getRespondsCount());
             }
             funnelService.update(vacancy.getFunnel());
         }
