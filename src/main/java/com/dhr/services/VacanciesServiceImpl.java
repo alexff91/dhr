@@ -47,13 +47,13 @@ public class VacanciesServiceImpl implements VacancyService {
             });
             question.setVacancy(vacancy);
         });
-        repository.save(vacancy);
+        Vacancy save = repository.save(vacancy);
 
         VacancyFunnel funnel = new VacancyFunnel();
-        funnel.setVacancy(vacancy);
+        funnel.setVacancy(save);
         vacancy.setFunnel(funnelService.save(funnel));
         repository.save(vacancy);
-        return vacancy.getId();
+        return save.getId();
     }
 
     private void replaceYoutubeVideoPath(Vacancy vacancy, String video) {
