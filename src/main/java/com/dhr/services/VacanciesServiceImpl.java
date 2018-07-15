@@ -26,10 +26,12 @@ public class VacanciesServiceImpl implements VacancyService {
     @Autowired
     private QuestionSkillService questionSkillService;
 
+    @Autowired
+    private FunnelService funnelService;
+
     @Override
     public String save(Vacancy vacancy) {
         vacancy.setId(Integer.toHexString(vacancy.hashCode()) + Long.toHexString(new Date().getTime()));
-        vacancy.setFunnel(new VacancyFunnel());
         String video = vacancy.getVideo();
         if (video != null && !video.isEmpty())
             replaceYoutubeVideoPath(vacancy, video);
@@ -45,6 +47,11 @@ public class VacanciesServiceImpl implements VacancyService {
             });
             question.setVacancy(vacancy);
         });
+        repository.save(vacancy);
+
+        VacancyFunnel funnel = new VacancyFunnel();
+        funnel.setVacancy(vacancy);
+        vacancy.setFunnel(funnelService.save(funnel));
         repository.save(vacancy);
         return vacancy.getId();
     }

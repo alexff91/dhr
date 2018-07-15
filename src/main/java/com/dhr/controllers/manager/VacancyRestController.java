@@ -84,7 +84,7 @@ public class VacancyRestController {
 
     @GetMapping("/api/v1/vacancies/{vacancyId}/statistics")
     public ResponseEntity<VacancyFunnel> getStatistic(@PathVariable String vacancyId) {
-        return new ResponseEntity<>(funnelService.getByVacancy(vacancyId), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(funnelService.getByVacancy(vacancyId), HttpStatus.OK);
     }
 
     @JsonView(View.Detail.class)
