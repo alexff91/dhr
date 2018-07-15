@@ -55,16 +55,17 @@ public class RespondsRestController {
         String currentPrincipalName = authentication.getName();
         User user = userService.getByLogin(currentPrincipalName);
         StringBuilder response = new StringBuilder();
-        companyService.getVacanciesByCompanyId(user.getCompany().getId()).forEach(vacancy -> vacancy.getResponds().forEach(respond -> {
-//            if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
-//                    Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
-                response.append("https://dashboard.vi-hr.com/vacancies/")
-                        .append(vacancy.getId())
-                        .append("/responses/")
-                        .append(respond.getId())
-                        .append("/review \r\n");
-//            }
-        }));
+        companyService.getVacanciesByCompanyId(user.getCompany().getId()).forEach(vacancy ->
+                respondService.getAllByVacancyId(vacancy.getId()).forEach(respond -> {
+                    if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
+                            Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
+                        response.append("https://dashboard.vi-hr.com/vacancies/")
+                                .append(vacancy.getId())
+                                .append("/responses/")
+                                .append(respond.getId())
+                                .append("/review \r\n");
+                    }
+                }));
         return new ResponseEntity<>(response.toString(), OK);
     }
 
