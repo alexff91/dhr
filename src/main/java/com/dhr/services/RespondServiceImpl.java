@@ -24,6 +24,8 @@ public class RespondServiceImpl implements RespondService {
 
     @Autowired
     private VacancyRepository vacancyRepository;
+    @Autowired
+    private FunnelService funnelService;
 
     @Override
     public Respond save(Respond respond, String vacancyId) {
@@ -44,12 +46,15 @@ public class RespondServiceImpl implements RespondService {
         vacancy.setRespondsCount(vacancy.getRespondsCount() + 1);
         vacancy.setUnansweredRespondsCount(vacancy.getUnansweredRespondsCount() + 1);
         vacancyRepository.save(vacancy);
-        if (respond.getChatBot()) {
-            vacancy.getFunnel().setChatbot((vacancy.getFunnel().getChatbot() + 1) / vacancy.getRespondsCount());
-            vacancy.getFunnel().setPageVisits((vacancy.getFunnel().getPageVisits()) / vacancy.getRespondsCount());
-        } else {
-            vacancy.getFunnel().setPageVisits((vacancy.getFunnel().getPageVisits() + 1) / vacancy.getRespondsCount());
-            vacancy.getFunnel().setChatbot((vacancy.getFunnel().getChatbot()) / vacancy.getRespondsCount());
+        if (vacancy.getFunnel() != null) {
+            if (respond.getChatBot()) {
+                vacancy.getFunnel().setChatbot((vacancy.getFunnel().getChatbot() + 1) / vacancy.getRespondsCount());
+                vacancy.getFunnel().setPageVisits((vacancy.getFunnel().getPageVisits()) / vacancy.getRespondsCount());
+            } else {
+                vacancy.getFunnel().setPageVisits((vacancy.getFunnel().getPageVisits() + 1) / vacancy.getRespondsCount());
+                vacancy.getFunnel().setChatbot((vacancy.getFunnel().getChatbot()) / vacancy.getRespondsCount());
+            }
+            funnelService.update(vacancy.getFunnel());
         }
         return savedRespond;
     }
