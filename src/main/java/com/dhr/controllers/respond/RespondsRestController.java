@@ -57,7 +57,7 @@ public class RespondsRestController {
         StringBuilder response = new StringBuilder();
         companyService.getVacanciesByCompanyId(user.getCompany().getId()).forEach(vacancy -> vacancy.getResponds().forEach(respond -> {
             if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
-                    !Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
+                    Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
                 response.append("https://dashboard.vi-hr.com/vacancies/")
                         .append(vacancy.getId())
                         .append("/responses/")
