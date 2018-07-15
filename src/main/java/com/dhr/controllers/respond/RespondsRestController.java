@@ -52,7 +52,7 @@ public class RespondsRestController {
         User user = userService.getByLogin(currentPrincipalName);
         StringBuilder response = new StringBuilder();
         user.getCompany().getVacancies().forEach(vacancy -> vacancy.getResponds().forEach(respond -> {
-            if (respond.getReviewResponds().stream().filter(respondFeedback ->
+            if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
                     !Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
                 response.append("https://dashboard.vi-hr.com/vacancies/")
                         .append(vacancy.getId())
