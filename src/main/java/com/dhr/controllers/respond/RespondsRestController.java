@@ -58,10 +58,11 @@ public class RespondsRestController {
         final int[] counter = {0};
         companyService.getVacanciesByCompanyId(user.getCompany().getId()).forEach(vacancy ->
         {
-            if (counter[0] <= 10) {
-                respondService.getAllByVacancyId(vacancy.getId()).forEach(respond -> {
-                    if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
-                            Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
+
+            respondService.getAllByVacancyId(vacancy.getId()).forEach(respond -> {
+                if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
+                        Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
+                    if (counter[0] <= 5) {
                         counter[0]++;
                         response.append(vacancy.getPosition()).append(" / ")
                                 .append(respond.getName())
@@ -73,8 +74,9 @@ public class RespondsRestController {
                                 .append(respond.getId())
                                 .append("/review  ;\r\n");
                     }
-                });
-            }
+                }
+            });
+
         });
         return new ResponseEntity<>(response.toString(), OK);
     }
