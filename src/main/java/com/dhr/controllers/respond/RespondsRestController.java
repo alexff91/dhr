@@ -59,11 +59,15 @@ public class RespondsRestController {
                 respondService.getAllByVacancyId(vacancy.getId()).forEach(respond -> {
                     if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
                             Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
-                        response.append("https://dashboard.vi-hr.com/vacancies/")
+                        response.append(vacancy.getPosition()).append(" / ")
+                                .append(respond.getName())
+                                .append(" ")
+                                .append(respond.getLastName().length() > 0 ? respond.getLastName().toCharArray()[0] : " :")
+                                .append("https://dashboard.vi-hr.com/vacancies/")
                                 .append(vacancy.getId())
                                 .append("/responses/")
                                 .append(respond.getId())
-                                .append("/review \r\n");
+                                .append("/review  ;\r\n");
                     }
                 }));
         return new ResponseEntity<>(response.toString(), OK);
