@@ -55,10 +55,14 @@ public class RespondsRestController {
         String currentPrincipalName = authentication.getName();
         User user = userService.getByLogin(currentPrincipalName);
         StringBuilder response = new StringBuilder();
+        final int[] counter = {0};
         companyService.getVacanciesByCompanyId(user.getCompany().getId()).forEach(vacancy ->
+        {
+            if (counter[0] <= 10) {
                 respondService.getAllByVacancyId(vacancy.getId()).forEach(respond -> {
                     if (respond.getReviewResponds().size() == 0 || respond.getReviewResponds().stream().filter(respondFeedback ->
                             Objects.equals(respondFeedback.getUser().getLogin(), user.getLogin())).count() == 0) {
+                        counter[0]++;
                         response.append(vacancy.getPosition()).append(" / ")
                                 .append(respond.getName())
                                 .append(" ")
@@ -69,7 +73,9 @@ public class RespondsRestController {
                                 .append(respond.getId())
                                 .append("/review  ;\r\n");
                     }
-                }));
+                });
+            }
+        });
         return new ResponseEntity<>(response.toString(), OK);
     }
 
