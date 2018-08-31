@@ -101,13 +101,13 @@ public class RespondsRestController {
 
     @PostMapping("/api/v1/vacancies/{vacancyId}/responds/passedFilter")
     public ResponseEntity passFilter(@PathVariable String vacancyId) {
-        respondService.filterPass(vacancyId, true)
+        respondService.filterPass(vacancyId, true);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping("/api/v1/vacancies/{vacancyId}/responds/notPassedFilter")
     public ResponseEntity noPassFilter(@PathVariable String vacancyId) {
-        respondService.filterPass(vacancyId, false)
+        respondService.filterPass(vacancyId, false);
         return new ResponseEntity(HttpStatus.OK);
     }
 
