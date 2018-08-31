@@ -57,3 +57,4 @@ spring:
         multipart:
             max-file-size: 2048MB
             max-request-size: 2048MB
+            location: /tmp/boot
