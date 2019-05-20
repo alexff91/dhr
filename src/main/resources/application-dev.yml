@@ -26,11 +26,11 @@ spring:
             auto-commit: false
             maxLifetime: 58000
             connection-timeout: 30000
-        password: postgres
+        password: 40PdyLX3pm
         test-while-idle: true
         time-between-eviction-runs-millis: 60000
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://${dbHost}:5432/vihr
+        url: jdbc:postgresql://${dbHost}:5432/DHR
         username: postgres
         driver-class-name: org.postgresql.Driver
         platform: postgresql

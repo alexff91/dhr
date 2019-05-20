@@ -1,5 +1,5 @@
 backendHost: dashboard.vi-hr.com
-dbHost: localhost
+dbHost: a814f3e8f77fa11e9b69c066f32b8b13-a7c25beba7f3825b.elb.eu-north-1.amazonaws.com
 
 logging:
     level: error
@@ -11,7 +11,7 @@ questions:
 server:
     port: 8080
     ssl:
-        enabled: true
+        enabled: false
         key-store: /etc/letsencrypt/live/dashboard.vi-hr.com/keystore.p12
         key-store-password: vihr
         keyAlias: tomcat
@@ -26,14 +26,15 @@ spring:
             auto-commit: false
             maxLifetime: 58000
             connection-timeout: 30000
-        password: Cucumber_666
+        password: 40PdyLX3pm
         test-while-idle: true
         time-between-eviction-runs-millis: 60000
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:postgresql://${dbHost}:5432/vihr
+        url: jdbc:postgresql://${dbHost}:5432/DHR
         username: postgres
         driver-class-name: org.postgresql.Driver
         platform: postgresql
+        schema-password: 40PdyLX3pm
     jpa:
         generate-ddl: false
         hibernate:
