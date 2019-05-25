@@ -1,0 +1,12 @@
+image: java:8-jdk
+
+stages:
+  - build
+  - package
+  
+build:
+  stage: build
+  script:
+    - mvn package
+    - ls
+    - pwd
