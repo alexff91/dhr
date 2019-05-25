@@ -17,10 +17,9 @@ import static java.util.Collections.emptyList;
 
 @Service
 public class TokenAuthenticationService {
-    private static final String SECRET = "VIHR_SECR3T";
     static final String TOKEN_SCHEME_PREFIX = "Bearer ";
     static final String HEADER_STRING = "Authorization";
-
+    private static final String SECRET = "DHR_SECR3T";
     @Inject
     private UserService userService;
 

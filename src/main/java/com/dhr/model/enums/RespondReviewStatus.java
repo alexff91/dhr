@@ -1,5 +1,5 @@
 package com.dhr.model.enums;
 
-public enum RespondReviewStatus{
+public enum RespondReviewStatus {
     APPROVE, DECLINE
 }

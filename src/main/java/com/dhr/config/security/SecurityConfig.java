@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
@@ -33,11 +32,6 @@ import static com.dhr.config.security.JWTAuthenticationFilter.LOGIN_URL;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String SECURED_URLS = "/api/v1/secured/**";
-
-    @Inject
-    private UserDetailsService userService;
-    @Inject
-    private TokenAuthenticationService tokenAuthService;
     private static final String[] AUTH_WHITELIST = {
             "/v2/api-docs",
             "/swagger-resources",
@@ -47,6 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html",
             "/webjars/**"
     };
+    @Inject
+    private UserDetailsService userService;
+    @Inject
+    private TokenAuthenticationService tokenAuthService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CorsConfigurationSource source = corsConfigurationSource();

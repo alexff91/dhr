@@ -1,18 +1,9 @@
 package com.dhr.controllers.respond;
 
 import com.dhr.config.PropertiesConfig;
-import com.dhr.model.Question;
-import com.dhr.model.QuestionAnswer;
-import com.dhr.model.Respond;
-import com.dhr.model.RespondQuestion;
-import com.dhr.model.RespondSkill;
+import com.dhr.model.*;
 import com.dhr.model.enums.RespondStatus;
-import com.dhr.services.QuestionAnswerService;
-import com.dhr.services.QuestionService;
-import com.dhr.services.RespondQuestionService;
-import com.dhr.services.RespondService;
-import com.dhr.services.RespondSkillService;
-import com.dhr.services.VacancyService;
+import com.dhr.services.*;
 import com.dhr.utils.MultipartFileSender;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -21,13 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -128,7 +113,7 @@ public class RecordingsHttpHandler {
         if (saveQuestionToDirectory(vacancyId, questionId, file))
             return new ResponseEntity<>("File is empty", HttpStatus.OK);
 
-        question.setVideoPath("https://" + config.getBackendHost() +
+        question.setVideoPath(config.getBackendHost() +
                 ":" + config.getServerPort() +
                 "/api/v1/vacancy/" + vacancyId +
                 "/questions/" + questionId + "/" + questionId + ".webm");
@@ -157,7 +142,7 @@ public class RecordingsHttpHandler {
                 .build();
 
         QuestionAnswer checkedAnswer = checkAnswers(respond, questionAnswer);
-        checkedAnswer.setVideoPath("https://" + config.getBackendHost() +
+        checkedAnswer.setVideoPath(config.getBackendHost() +
                 ":" + config.getServerPort() +
                 "/api/v1/responds/" + respondId +
                 "/answers/" + savedRespondQuestion.getId() + "/" + savedRespondQuestion.getId() + ".webm");
