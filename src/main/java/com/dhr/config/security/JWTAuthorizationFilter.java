@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+    private TokenAuthenticationService tokenAuthService;
+
     JWTAuthorizationFilter(AuthenticationManager authManager, TokenAuthenticationService tokenAuthService) {
         super(authManager);
         this.tokenAuthService = tokenAuthService;
     }
-
-    private TokenAuthenticationService tokenAuthService;
 
     @Override
     public void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)

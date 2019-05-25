@@ -10,7 +10,10 @@ import java.util.Optional;
 @Repository
 public interface SkillRepository extends JpaRepository<Skill, Long> {
     List<Skill> findAllByCompanyIdAndDeleted(String companyId, Boolean deleted);
+
     Skill findOneByName(String name);
+
     List<Skill> findAllByDeleted(Boolean deleted);
+
     Optional<Skill> findOneByIdAndDeleted(Long id, Boolean deleted);
 }

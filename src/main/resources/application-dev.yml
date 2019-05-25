@@ -12,7 +12,7 @@ server:
     port: 8081
     ssl:
         enabled: false
-        key-store: /etc/letsencrypt/live/app.vi-hr.com/keystore.p12
+        key-store: /etc/dhr/keystore.p12
         key-store-password: vihr
         keyAlias: tomcat
         keyStoreType: PKCS12
@@ -39,7 +39,7 @@ spring:
         hibernate:
             ddl-auto: none
             dialect: org.hibernate.dialect.PostgreSQL94Dialect
-            default_schema: vihr
+            default_schema: dhr
             connection:
               provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
         properties:

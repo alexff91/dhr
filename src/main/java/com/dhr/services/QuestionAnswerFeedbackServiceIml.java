@@ -10,29 +10,23 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
 public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackService {
     @Autowired
-    private QuestionAnswerFeedbackRepository repository;
-
-    @Autowired
     RespondService respondService;
-
+    @Autowired
+    private QuestionAnswerFeedbackRepository repository;
     @Autowired
     private UserService userService;
 
     @Autowired
     private QuestionAnswerService questionAnswerService;
+    @Autowired
+    private EntityManager em;
 
     @Override
     public Long save(Long questionAnswerId, String userId, QuestionAnswerFeedback feedback) {
@@ -94,10 +88,10 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
             {
                 if (skillsSummary.containsKey(skillName)) {
                     Pair<Integer, Double> count = skillsSummary.get(skillName);
-                    skillsSummary.put(skillName,Pair.of(count.getFirst() + 1, count.getSecond() + skillLevel));
+                    skillsSummary.put(skillName, Pair.of(count.getFirst() + 1, count.getSecond() + skillLevel));
 
                 } else {
-                    skillsSummary.put(skillName,Pair.of(1, skillLevel + 0.0));
+                    skillsSummary.put(skillName, Pair.of(1, skillLevel + 0.0));
                 }
             }));
 
@@ -106,10 +100,6 @@ public class QuestionAnswerFeedbackServiceIml implements QuestionAnswerFeedbackS
         skillsSummary.forEach((s, pair) -> skillsSummaryMap.put(s, pair.getSecond() / pair.getFirst()));
         return skillsSummaryMap;
     }
-
-
-    @Autowired
-    private EntityManager em;
 
     public List getCotisation() {
         Query query = em.createNativeQuery("select Annee,Mois,RetSonarwa from TCotisMIFOTRA2008 where matricule='10000493' order by Annee");

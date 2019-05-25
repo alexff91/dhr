@@ -1,18 +1,18 @@
-backendHost: dashboard.vi-hr.com
+backendHost: http://localhost
 dbHost: a814f3e8f77fa11e9b69c066f32b8b13-a7c25beba7f3825b.elb.eu-north-1.amazonaws.com
 
 logging:
     level: error
     level.org.springframework.data: debug
 recordings:
-    path: /interviews
+    path: C:\tmp\interviews
 questions:
-    path: /questions
+    path: C:\tmp\questions
 server:
     port: 8080
     ssl:
         enabled: false
-        key-store: /etc/letsencrypt/live/dashboard.vi-hr.com/keystore.p12
+        key-store: C:\Users\Александр\Downloads\keystorev2.pkcs12
         key-store-password: vihr
         keyAlias: tomcat
         keyStoreType: PKCS12
@@ -40,7 +40,7 @@ spring:
         hibernate:
             ddl-auto: none
             dialect: org.hibernate.dialect.PostgreSQL94Dialect
-            default_schema: vihr
+            default_schema: dhr
             connection:
               provider_class: org.hibernate.hikaricp.internal.HikariCPConnectionProvider
         properties:

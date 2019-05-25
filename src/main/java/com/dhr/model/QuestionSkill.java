@@ -2,23 +2,9 @@ package com.dhr.model;
 
 import com.dhr.model.enums.SkillStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
@@ -26,13 +12,13 @@ import java.io.Serializable;
 @ToString
 @Entity
 @EqualsAndHashCode(exclude = {"id"})
-@Table(schema = "vihr")
+@Table(schema = "dhr")
 public class QuestionSkill implements Serializable {
     private static final String SEQUENCE_NAME = "question_skill_id_seq";
     @JsonIgnore
     @Id
     @GeneratedValue(generator = SEQUENCE_NAME, strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "vihr." + SEQUENCE_NAME, allocationSize = 1)
+    @SequenceGenerator(name = SEQUENCE_NAME, sequenceName = "dhr." + SEQUENCE_NAME, allocationSize = 1)
     @Column(name = "id", nullable = false)
     Long id;
 

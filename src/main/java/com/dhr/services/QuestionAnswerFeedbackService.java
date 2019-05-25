@@ -20,5 +20,5 @@ public interface QuestionAnswerFeedbackService {
 
     QuestionAnswerFeedback findOneByQuestionAnswerId(Long questionAnswerId, String userId);
 
-    Map<String,Double> getSkillResponds(String respondId);
+    Map<String, Double> getSkillResponds(String respondId);
 }
