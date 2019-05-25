@@ -1,0 +1,13 @@
+image: maven:3.6.1-jdk-8-slim
+
+stages:
+  - build
+  - package
+  
+build:
+  stage: build
+  script:
+    - ls
+    - pwd
+    - mvn package
+    - ls
