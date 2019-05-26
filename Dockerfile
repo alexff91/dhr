@@ -4,6 +4,6 @@ MAINTAINER alexff91@gmail.com
 # Copy Spring Boot app
 COPY target/recorder-1.0.0.jar /
 
-EXPOSE 8082
+EXPOSE 8080
 
 CMD ["/usr/bin/java", "-jar", "recorder-1.0.0.jar"]
