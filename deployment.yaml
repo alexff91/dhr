@@ -1,0 +1,86 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: dhr-data
+  namespace: test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dhr
+  namespace: test
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: NodePort
+  selector:
+    app: dhr
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dhr
+  namespace: test
+  labels:
+    app: dhr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dhr
+  template:
+    metadata:
+      labels:
+        app: dhr
+    spec:
+      containers:
+      - image: registry.gitlab.com/kirill.belokon.1991/dhr:postgres-<VERSION>
+        name: dhr
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: dev
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /data
+          name: data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: dhr-data
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: gitlab
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dhr
+  namespace: test
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  tls:
+  - hosts:
+    - backend.dhr.cloud
+    secretName: example-com-tls-prod
+  rules:
+  - host: backend.dhr.cloud
+    http:
+       paths:
+       - path: /?(.*)
+         backend:
+           serviceName: dhr
+           servicePort: 80

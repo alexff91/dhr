@@ -8,14 +8,6 @@ recordings:
     path: /data/interviews
 questions:
     path: /data/questions
-server:
-    port: 443
-#     ssl:
-#         enabled: false
-#         key-store: /data/dhr/keystore.p12
-#         key-store-password: vihr
-#         keyAlias: tomcat
-#         keyStoreType: PKCS12
 spring:
     datasource:
         hikari:
