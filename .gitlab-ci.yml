@@ -30,8 +30,6 @@ deploy:
   image: registry.gitlab.com/kirill.belokon.1991/dhr/util/kubectl
   services:
     - docker:dind
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
 
     - pws
