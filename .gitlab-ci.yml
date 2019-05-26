@@ -32,6 +32,6 @@ deploy:
     - docker:dind
   script:
 
-    - pws
+    - pwd
     - ls 
     - kubectl get pods
