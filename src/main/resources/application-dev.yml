@@ -8,8 +8,8 @@ recordings:
     path: /data/interviews
 questions:
     path: /data/questions
-# server:
-#     port: 8080
+server:
+    port: 443
 #     ssl:
 #         enabled: false
 #         key-store: /data/dhr/keystore.p12
