@@ -37,6 +37,7 @@ public class RegistrationRestController {
             Company company = companyService.save(Company.builder().name(authData.getCompany())
                     .build());
             User adminUser = User.builder()
+                    .phone(authData.getPhone())
                     .roles(Collections.singletonList(
                             Role.builder()
                                     .name(RoleName.ADMIN)

@@ -9,4 +9,5 @@ public class RegistrationData implements Serializable {
     private String username;
     private String password;
     private String company;
+    private String phone;
 }
