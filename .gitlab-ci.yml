@@ -31,7 +31,5 @@ deploy:
   services:
     - docker:dind
   script:
-
-    - pwd
-    - ls 
-    - kubectl get pods
+    - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" deployment.yaml
+    - kubectl apply -f deployment.yaml
