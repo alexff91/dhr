@@ -3,6 +3,7 @@ image: maven:3.6.1-jdk-8-slim
 stages:
   - build
   - package
+  - deployment
   
 build:
   stage: build
@@ -23,3 +24,16 @@ docker:
     - docker version
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA" .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+
+deploy:
+  stage: deploy
+  image: registry.gitlab.com/kirill.belokon.1991/dhr/util/kubectl
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+
+    - pws
+    - ls 
+    - kubectl get pods
