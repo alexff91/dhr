@@ -114,7 +114,7 @@ public class RecordingsHttpHandler {
             return new ResponseEntity<>("File is empty", HttpStatus.OK);
 
         question.setVideoPath(config.getBackendHost() +
-                ":" + config.getServerPort() +
+                (config.getServerPort() != null ? ":" + config.getServerPort() : "") +
                 "/api/v1/vacancy/" + vacancyId +
                 "/questions/" + questionId + "/" + questionId + ".webm");
         questionService.update(question, vacancyId);
