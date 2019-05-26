@@ -1,4 +1,4 @@
-backendHost: dhr
+backendHost: https://backend.dhr.cloud
 dbHost: dhr-postgre-dev-postgresql
 
 logging:
