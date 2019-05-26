@@ -1,21 +1,21 @@
-backendHost: localhost
-dbHost: localhost
+backendHost: https://backend.dhr.cloud
+dbHost: dhr-postgre-dev-postgresql
 
 logging:
     level: error
     level.org.springframework.data: debug
 recordings:
-    path: /interviews
+    path: /data/interviews
 questions:
-    path: /questions
+    path: /data/questions
 server:
-    port: 8081
-    ssl:
-        enabled: false
-        key-store: /etc/dhr/keystore.p12
-        key-store-password: vihr
-        keyAlias: tomcat
-        keyStoreType: PKCS12
+    port: 443
+#     ssl:
+#         enabled: false
+#         key-store: /data/dhr/keystore.p12
+#         key-store-password: vihr
+#         keyAlias: tomcat
+#         keyStoreType: PKCS12
 spring:
     datasource:
         hikari:
@@ -34,6 +34,7 @@ spring:
         username: postgres
         driver-class-name: org.postgresql.Driver
         platform: postgresql
+        schema-password: 40PdyLX3pm
     jpa:
         generate-ddl: false
         hibernate:
