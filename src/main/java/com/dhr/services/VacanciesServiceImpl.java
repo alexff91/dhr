@@ -58,13 +58,13 @@ public class VacanciesServiceImpl implements VacancyService {
     }
 
     private void replaceYoutubeVideoPath(Vacancy vacancy, String video) {
-        String replaced = video.replace("youtu.be", "www.youtube.com");
+        String replaced = video.replace("youtu.be", "www.youtube.com").replace("watch?v=", "");
         vacancy.setVideo(
                 replaced.contains("/embed/") ?
                         replaced :
                         (replaced.substring(0, replaced.lastIndexOf("/"))
                                 + "/embed"
-                                + replaced.substring(replaced.lastIndexOf("/"), replaced.length())
+                                + replaced.substring(replaced.lastIndexOf("/"))
                         ));
     }
 
