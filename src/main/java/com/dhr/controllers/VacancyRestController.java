@@ -2,9 +2,7 @@ package com.dhr.controllers;
 
 import com.dhr.model.Question;
 import com.dhr.model.Vacancy;
-import com.dhr.services.QuestionServiceImpl;
 import com.dhr.services.VacanciesServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,36 +20,45 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/vacancies")
 public class VacancyRestController {
-    @Autowired
-    VacanciesServiceImpl vacanciesService;
 
-    @Autowired
-    QuestionServiceImpl questionService;
+    private final VacanciesServiceImpl vacanciesService;
 
-    @RequestMapping(value = "{vacancyId}/questions", method = RequestMethod.GET)
-    public List<Question> getQuestionsByVacancyId(@PathVariable Long vacancyId) {
-        return vacanciesService.get(vacancyId).get().getQuestions();
+    public VacancyRestController(VacanciesServiceImpl vacanciesService) {
+        this.vacanciesService = vacanciesService;
     }
 
-    @RequestMapping(value = "{vacancyId}", method = RequestMethod.GET)
-    public Vacancy getByVacancyId(@PathVariable Long vacancyId) {
-        return vacanciesService.get(vacancyId).get();
+    @GetMapping("/{vacancyId}/questions")
+    public ResponseEntity<List<Question>> getQuestionsByVacancyId(@PathVariable Long vacancyId) {
+        return vacanciesService.get(vacancyId)
+                .map(vacancy -> ResponseEntity.ok(vacancy.getQuestions()))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{vacancyId}")
+    public ResponseEntity<Vacancy> getByVacancyId(@PathVariable Long vacancyId) {
+        return vacanciesService.get(vacancyId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity createVacancy(@RequestBody Vacancy vacancy) {
-        vacanciesService.save(vacancy);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity<Vacancy> createVacancy(@RequestBody Vacancy vacancy) {
+        Vacancy savedVacancy = vacanciesService.save(vacancy);
+        return new ResponseEntity<>(savedVacancy, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Vacancy> getVacancies() {
-        return vacanciesService.getAll();
+    public ResponseEntity<List<Vacancy>> getVacancies() {
+        return ResponseEntity.ok(vacanciesService.getAll());
     }
 
     @DeleteMapping("/{vacancyId}")
-    public ResponseEntity deleteVacancy(@PathVariable Long vacancyId) {
-        vacanciesService.delete(vacanciesService.get(vacancyId).get());
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<Void> deleteVacancy(@PathVariable Long vacancyId) {
+        return vacanciesService.get(vacancyId)
+                .map(vacancy -> {
+                    vacanciesService.delete(vacancy);
+                    return new ResponseEntity<Void>(HttpStatus.OK);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }

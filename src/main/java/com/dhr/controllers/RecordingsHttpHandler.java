@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,14 +43,17 @@ public class RecordingsHttpHandler {
 
     private static final Logger log = LoggerFactory.getLogger(RecordingsHttpHandler.class);
 
-    @Autowired
-    PropertiesConfig config;
+    private final PropertiesConfig config;
+    private final QuestionRespondService questionRespondService;
+    private final RespondService respondService;
 
-    @Autowired
-    QuestionRespondService questionRespondService;
-
-    @Autowired
-    RespondService respondService;
+    public RecordingsHttpHandler(PropertiesConfig config,
+                                   QuestionRespondService questionRespondService,
+                                   RespondService respondService) {
+        this.config = config;
+        this.questionRespondService = questionRespondService;
+        this.respondService = respondService;
+    }
 
     @RequestMapping(value = "/{questionId}/{filename:.+}", method = RequestMethod.GET)
     public ResponseEntity<HttpStatus> handleGetRecording(@PathVariable String respondId,
